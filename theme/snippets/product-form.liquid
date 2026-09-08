@@ -8,10 +8,17 @@
   When the offer section drives the selection, pass `show_variant_picker: false`
   and it will keep the hidden `id` field in sync with the chosen bundle.
 
+  When the offer section supplies its own radios, it associates them with this
+  form through the HTML `form` attribute and tells the snippet to stop emitting
+  the field it is taking over — two fields of the same name in one form would
+  make the submitted value a coin toss.
+
   @param {product} product - The product being sold
   @param {string} [form_id] - id for the form element
   @param {boolean} [show_variant_picker] - Renders a native variant <select>
   @param {boolean} [show_quantity] - Renders the quantity stepper
+  @param {boolean} [omit_id] - Another element supplies the `id` field
+  @param {boolean} [omit_quantity] - Another element supplies the `quantity` field
   @param {boolean} [show_payment_button] - Renders the accelerated checkout button
   @param {string} [button_label] - Overrides the submit label
   @param {string} [button_id] - id for the submit button, watched by the sticky bar
@@ -64,13 +71,13 @@
         {%- endfor -%}
       </select>
     </div>
-  {%- else -%}
+  {%- elsif omit_id != true -%}
     <input type="hidden" name="id" value="{{ current_variant.id }}">
   {%- endif -%}
 
   {%- if show_quantity -%}
     {% render 'quantity-selector', form: form_id %}
-  {%- else -%}
+  {%- elsif omit_quantity != true -%}
     <input type="hidden" name="quantity" value="1">
   {%- endif -%}
 

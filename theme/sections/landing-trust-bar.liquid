@@ -1,0 +1,50 @@
+{% comment %}
+  A thin band of trust signals, usually placed straight under the hero.
+
+  It reuses the same trust-item block as the hero and the final call to
+  action, so the three places a visitor looks for reassurance stay worded
+  consistently without the copy being written three times.
+{% endcomment %}
+
+<div class="landing-trust-bar full-width">
+  <ul class="landing-trust-bar__list">
+    {% content_for 'blocks' %}
+  </ul>
+</div>
+
+{% stylesheet %}
+  .landing-trust-bar {
+    background-color: var(--color-surface);
+    padding-block: var(--space-md);
+  }
+
+  .landing-trust-bar__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-md) var(--space-xl);
+    margin: 0;
+    padding-inline: var(--page-margin);
+    list-style: none;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.trust_bar",
+  "tag": "section",
+  "blocks": [{ "type": "trust-item" }, { "type": "@app" }],
+  "settings": [],
+  "presets": [
+    {
+      "name": "t:sections.trust_bar",
+      "blocks": [
+        { "type": "trust-item", "settings": { "icon": "truck", "text": "Envíos a toda Colombia" } },
+        { "type": "trust-item", "settings": { "icon": "lock", "text": "Pago seguro" } },
+        { "type": "trust-item", "settings": { "icon": "refresh", "text": "Cambios y devoluciones" } },
+        { "type": "trust-item", "settings": { "icon": "chat", "text": "Te respondemos por WhatsApp" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

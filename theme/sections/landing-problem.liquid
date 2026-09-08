@@ -1,0 +1,83 @@
+{% comment %}
+  The situation the product exists to change, as a list of pain points.
+
+  Kept as a real <ul> so the structure survives a screen reader and so the
+  merchant can reorder the points in the theme editor.
+{% endcomment %}
+
+<landing-reveal class="landing-problem">
+  {% render 'section-header',
+    eyebrow: section.settings.eyebrow,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    center: section.settings.center
+  %}
+
+  <ul class="landing-problem__list">
+    {% content_for 'blocks' %}
+  </ul>
+</landing-reveal>
+
+{% stylesheet %}
+  .landing-problem {
+    display: block;
+  }
+
+  .landing-problem__list {
+    display: grid;
+    gap: var(--space-md);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .landing-problem__list {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg) var(--space-xl);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.problem",
+  "tag": "section",
+  "blocks": [{ "type": "problem-item" }, { "type": "@app" }],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Si esto te suena, no eres el único"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "t:labels.subheading"
+    },
+    {
+      "type": "checkbox",
+      "id": "center",
+      "label": "t:labels.center_header",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.problem",
+      "blocks": [
+        { "type": "problem-item" },
+        { "type": "problem-item" },
+        { "type": "problem-item" },
+        { "type": "problem-item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

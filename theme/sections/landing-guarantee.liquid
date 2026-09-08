@@ -1,0 +1,82 @@
+{% comment %}
+  The guarantee: what happens if the product does not work out.
+
+  The shop-wide policy text comes from the theme settings so it is written
+  once and stays identical on every landing.
+{% endcomment %}
+
+<landing-reveal class="landing-guarantee">
+  {% render 'section-header',
+    eyebrow: section.settings.eyebrow,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    center: true
+  %}
+
+  {%- if section.blocks.size > 0 -%}
+    <div
+      class="landing-grid"
+      style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: 1;"
+    >
+      {% content_for 'blocks' %}
+    </div>
+  {%- endif -%}
+
+  {%- if settings.guarantee_policy != blank -%}
+    <div class="landing-guarantee__policy muted">{{ settings.guarantee_policy }}</div>
+  {%- endif -%}
+</landing-reveal>
+
+{% stylesheet %}
+  .landing-guarantee__policy {
+    max-width: 55ch;
+    margin: var(--space-lg) auto 0;
+    text-align: center;
+    font-size: var(--font-size-sm);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.guarantee",
+  "tag": "section",
+  "blocks": [{ "type": "guarantee-item" }, { "type": "@app" }],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Compra sin riesgo"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "t:labels.subheading"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "t:labels.columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.guarantee",
+      "blocks": [
+        { "type": "guarantee-item" },
+        { "type": "guarantee-item", "settings": { "icon": "refresh" } },
+        { "type": "guarantee-item", "settings": { "icon": "chat" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

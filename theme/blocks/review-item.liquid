@@ -9,77 +9,32 @@
   Leaving `is_demo` on by default is deliberate. Placeholder copy that ships
   looking like a real testimonial is the failure mode worth preventing.
 
+  The card itself is a snippet shared with the metaobject path in the reviews
+  section, so both sources render identically.
+
   @example
   {% content_for 'block', type: 'review-item', id: 'review' %}
 {% enddoc %}
 
-<article class="review-item card reveal" {{ block.shopify_attributes }}>
-  {%- if block.settings.is_demo -%}
-    {% render 'demo-badge' %}
-  {%- endif -%}
-
-  {% render 'stars', rating: block.settings.rating %}
-
-  {%- if block.settings.body != blank -%}
-    <blockquote class="review-item__body">{{ block.settings.body }}</blockquote>
-  {%- endif -%}
-
-  <footer class="review-item__meta">
-    {%- if block.settings.image != blank -%}
-      {% render 'responsive-image',
-        image: block.settings.image,
-        sizes: '48px',
-        width: 96,
-        height: 96,
-        crop: 'center',
-        class: 'review-item__avatar'
-      %}
-    {%- endif -%}
-
-    <div>
-      {%- if block.settings.author != blank -%}
-        <p class="review-item__author">{{ block.settings.author }}</p>
-      {%- endif -%}
-      {%- if block.settings.location != blank -%}
-        <p class="muted review-item__location">{{ block.settings.location }}</p>
-      {%- endif -%}
-    </div>
-  </footer>
-</article>
+<div class="review-item" {{ block.shopify_attributes }}>
+  {% render 'review-card',
+    body: block.settings.body,
+    rating: block.settings.rating,
+    author: block.settings.author,
+    location: block.settings.location,
+    image: block.settings.image,
+    is_demo: block.settings.is_demo
+  %}
+</div>
 
 {% stylesheet %}
   .review-item {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    background-color: var(--color-background);
+    height: 100%;
   }
 
-  .review-item__body {
-    margin: 0;
-    font-style: italic;
-  }
-
-  .review-item__meta {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    margin-block-start: auto;
-  }
-
-  .review-item__avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-
-  .review-item__author {
-    font-weight: 700;
-  }
-
-  .review-item__location {
-    font-size: var(--font-size-sm);
+  .review-item > * {
+    flex: 1;
   }
 {% endstylesheet %}
 

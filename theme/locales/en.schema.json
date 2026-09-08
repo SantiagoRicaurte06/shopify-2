@@ -5,6 +5,7 @@
     "article": "Article",
     "block": "Block",
     "blog": "Blog",
+    "buy_form": "Buy form",
     "cart": "Cart",
     "collection": "Collection",
     "collection_card": "Collection card",
@@ -17,6 +18,7 @@
     "custom_section": "Custom section",
     "fonts": "Fonts",
     "footer": "Footer",
+    "gallery": "Gallery",
     "group": "Group",
     "header": "Header",
     "layout": "Layout",
@@ -41,21 +43,21 @@
     "whatsapp": "WhatsApp"
   },
   "sections": {
-    "benefits": "Landing · Benefits",
-    "demo": "Landing · Demo",
-    "faq": "Landing · FAQ",
-    "final_cta": "Landing · Final call to action",
-    "guarantee": "Landing · Guarantee",
-    "hero": "Landing · Hero",
-    "how_it_works": "Landing · How it works",
-    "offer": "Landing · Offer",
-    "problem": "Landing · Problem",
-    "reviews": "Landing · Reviews",
-    "shipping": "Landing · Shipping",
-    "solution": "Landing · Solution",
-    "sticky_cta": "Landing · Sticky mobile button",
-    "trust_bar": "Landing · Trust bar",
-    "ugc": "Landing · Customer content"
+    "hero": "LP · Hero",
+    "trust_bar": "LP · Trust bar",
+    "problem": "LP · Problem",
+    "solution": "LP · Solution",
+    "benefits": "LP · Benefits",
+    "demo": "LP · Demo",
+    "how_it_works": "LP · How it works",
+    "reviews": "LP · Reviews",
+    "ugc": "LP · Customer photos",
+    "offer": "LP · Offer",
+    "shipping": "LP · Shipping",
+    "guarantee": "LP · Guarantee",
+    "faq": "LP · FAQ",
+    "final_cta": "LP · Final CTA",
+    "sticky_cta": "LP · Sticky button"
   },
   "blocks": {
     "benefit_item": "Benefit",
@@ -83,11 +85,13 @@
     "border": "Border",
     "caption": "Caption",
     "card_corner_radius": "Card corner radius",
+    "center_header": "Center the header",
     "columns_desktop": "Columns on desktop",
     "columns_mobile": "Columns on mobile",
     "compare_at_price": "Compare-at price",
     "cta_background": "Button background",
     "cta_foreground": "Button text",
+    "cta_label": "Button label",
     "customer_account_menu": "Customer account menu",
     "date": "Date",
     "delivery_time": "Delivery time",
@@ -95,8 +99,10 @@
     "discount_percentage": "Declared discount (%)",
     "enable_product_json_ld": "Output product structured data",
     "external_video": "External video (YouTube or Vimeo)",
+    "eyebrow": "Eyebrow",
     "foreground": "Foreground",
     "full_width": "Full width",
+    "gallery_limit": "Gallery images",
     "grid_gap": "Grid spacing",
     "grid_item_width": "Grid item width",
     "guarantee_policy": "Guarantee policy",
@@ -117,6 +123,7 @@
     "link": "Link",
     "link_label": "Link label",
     "location": "City or region",
+    "media_position": "Media position",
     "media_type": "Media type",
     "menu": "Menu",
     "muted": "Muted text",
@@ -142,8 +149,13 @@
     "section_spacing": "Section spacing",
     "shipping_claim": "Shipping message",
     "shipping_policy": "Shipping policy",
+    "show_payment_button": "Show accelerated checkout button",
     "show_payment_icons": "Show payment icons",
+    "show_price": "Show price",
+    "show_quantity": "Show quantity",
     "show_rating": "Show rating",
+    "show_variant_picker": "Show variant picker",
+    "show_whatsapp": "Show WhatsApp link",
     "subheading": "Subheading",
     "surface": "Surface",
     "text": "Text",
@@ -155,7 +167,10 @@
     "whatsapp_message": "Preset message",
     "whatsapp_number": "WhatsApp number",
     "width": "Width",
-    "zone": "Destination"
+    "zone": "Destination",
+    "reviews_entries": "Metaobject reviews",
+    "reviews_limit": "Maximum reviews",
+    "help_text": "Help text"
   },
   "options": {
     "alignment": {
@@ -204,7 +219,8 @@
     },
     "reviews_source": {
       "metaobject": "Metaobject entries",
-      "app": "Reviews app"
+      "app": "Reviews app",
+      "blocks": "Written in this section"
     },
     "size": {
       "large": "Large",
@@ -221,6 +237,7 @@
     "cta_default_url": "Leave empty and the button jumps to the offer section on this page.",
     "enable_product_json_ld": "Turn this off if an SEO app already outputs product structured data. Two Product blocks on one page cause Search Console warnings.",
     "guarantee_policy": "Describe the guarantee you actually offer. Do not promise terms you cannot honor.",
+    "hero_heading": "Leave empty to use the product name. This text is the page main heading, the only level-one heading on it.",
     "is_demo": "Reviews marked as demo display a visible notice and are excluded from structured data.",
     "media_poster": "For Shopify-hosted video, this image is used as the poster.",
     "muted": "Used for supporting text. Check that it keeps AA contrast against the background.",
@@ -234,9 +251,12 @@
     "section_spacing": "Default vertical spacing between landing sections.",
     "shipping_claim": "Appears in the header and the trust bar.",
     "shipping_policy": "Short text shown next to the buy button.",
+    "show_variant_picker": "Turn this off if the offer section handles bundle selection.",
     "tier_title": "Leave empty to show the number of units.",
     "type_scale": "Multiplies the size of each heading level.",
     "whatsapp_message": "The text the conversation opens with.",
-    "whatsapp_number": "International format without symbols: 573001234567."
+    "whatsapp_number": "International format without symbols: 573001234567.",
+    "reviews_metaobject": "Requires the landing_review metaobject to exist in the shop. See docs/metaobjects.md.",
+    "ugc_rights": "Only upload photos you have permission to publish. A customer posting about your product does not license you to use their photo."
   }
 }

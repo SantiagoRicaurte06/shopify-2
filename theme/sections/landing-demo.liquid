@@ -1,0 +1,117 @@
+{% comment %}
+  The product in use: video, GIF, stills, or a before/after pair.
+
+  Every case is a media-item block, so this section is only responsible for the
+  heading and the layout. Set it to carousel when there are more items than fit
+  side by side.
+{% endcomment %}
+
+<landing-reveal class="landing-demo">
+  {% render 'section-header',
+    eyebrow: section.settings.eyebrow,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    center: section.settings.center
+  %}
+
+  {%- if section.settings.layout == 'carousel' -%}
+    <landing-carousel class="landing-demo__carousel">
+      <div class="landing-scroller" data-carousel-track>
+        {% content_for 'blocks' %}
+      </div>
+
+      <div class="landing-demo__controls">
+        <button
+          class="carousel-control"
+          type="button"
+          data-carousel-previous
+          aria-label="{{ 'landing.previous' | t }}"
+        >
+          {% render 'icon', name: 'chevron-left' %}
+        </button>
+        <button
+          class="carousel-control"
+          type="button"
+          data-carousel-next
+          aria-label="{{ 'landing.next' | t }}"
+        >
+          {% render 'icon', name: 'chevron-right' %}
+        </button>
+      </div>
+    </landing-carousel>
+  {%- else -%}
+    <div
+      class="landing-grid"
+      style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: 1;"
+    >
+      {% content_for 'blocks' %}
+    </div>
+  {%- endif -%}
+</landing-reveal>
+
+{% stylesheet %}
+  .landing-demo__controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-xs);
+    margin-block-start: var(--space-sm);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.demo",
+  "tag": "section",
+  "blocks": [{ "type": "media-item" }, { "type": "@app" }],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Míralo en acción"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "t:labels.subheading"
+    },
+    {
+      "type": "checkbox",
+      "id": "center",
+      "label": "t:labels.center_header",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:labels.layout",
+      "default": "grid",
+      "options": [
+        { "value": "grid", "label": "t:options.layout.grid" },
+        { "value": "carousel", "label": "t:options.layout.carousel" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "t:labels.columns_desktop",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2,
+      "visible_if": "{{ section.settings.layout == 'grid' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.demo",
+      "blocks": [{ "type": "media-item" }, { "type": "media-item" }]
+    }
+  ]
+}
+{% endschema %}

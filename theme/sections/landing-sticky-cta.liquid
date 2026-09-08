@@ -1,0 +1,99 @@
+{% comment %}
+  A fixed bar on small screens carrying the price and a jump to the offer.
+
+  It watches the hero's buy button and hides itself whenever that button is on
+  screen, so it never covers the control it duplicates. If the script does not
+  run, the bar simply stays hidden — a sticky bar that cannot hide is worse
+  than no sticky bar.
+
+  Desktop does not get one: there the offer is a short scroll away and a fixed
+  bar only takes space.
+{% endcomment %}
+
+<landing-sticky class="landing-sticky" data-watch="hero-buy-button" hidden>
+  <div class="landing-sticky__inner">
+    <div class="landing-sticky__price">
+      {%- if section.settings.show_price -%}
+        <span class="landing-sticky__label muted">{{ product.title | truncate: 28 }}</span>
+        <span data-offer-total>{{ product.selected_or_first_available_variant.price | money }}</span>
+      {%- endif -%}
+    </div>
+
+    {% render 'button',
+      label: section.settings.cta_label,
+      url: '#landing-offer'
+    %}
+  </div>
+</landing-sticky>
+
+{% stylesheet %}
+  .landing-sticky {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .landing-sticky {
+      display: block;
+      position: fixed;
+      inset-inline: 0;
+      inset-block-end: 0;
+      z-index: 5;
+      background-color: var(--color-background);
+      border-block-start: 1px solid var(--color-border);
+      padding: var(--space-xs) var(--page-margin);
+      padding-block-end: calc(var(--space-xs) + env(safe-area-inset-bottom));
+    }
+
+    .landing-sticky[hidden] {
+      display: none;
+    }
+  }
+
+  .landing-sticky__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .landing-sticky__price {
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .landing-sticky__label {
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.sticky_cta",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:labels.cta_label",
+      "default": "Comprar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "t:labels.show_price",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.sticky_cta"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

@@ -1,0 +1,210 @@
+{% comment %}
+  The offer: one, two or three units, in either of two modes.
+
+  MODE "variants" (the default). Each tier is a real Shopify variant. Every
+  figure on screen — price, compare-at price, availability — is read straight
+  off the variant, so the page and the checkout cannot disagree. Nothing is
+  computed and nothing is stored in the theme. This is the mode to use unless
+  there is a reason not to.
+
+  MODE "quantity". One variant, bought N times, with an automatic quantity
+  discount configured in the admin. Shopify applies that discount at the
+  checkout, not here, so showing the discounted total on the page means
+  restating the discount in a theme setting. That is a number in two places,
+  and two places drift. The offer-tier block therefore always shows the
+  undiscounted total struck through and states, in words, that the discount
+  applies at checkout. Use this mode when a single SKU matters more than an
+  exact price match on the page.
+
+  In both modes the selection controls live outside the <form> and are bound to
+  it with the HTML `form` attribute, so the whole thing submits correctly with
+  JavaScript switched off. The script only mirrors the choice into the sticky
+  bar.
+{% endcomment %}
+
+{%- liquid
+  assign mode = section.settings.mode
+  assign form_id = 'landing-offer-form'
+-%}
+
+<landing-reveal class="landing-offer" id="landing-offer">
+  {% render 'section-header',
+    eyebrow: section.settings.eyebrow,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    center: true
+  %}
+
+  <landing-offer class="landing-offer__inner" data-form="{{ form_id }}">
+    <fieldset class="landing-offer__tiers">
+      <legend class="landing-offer__legend">{{ 'landing.choose_pack' | t }}</legend>
+
+      {%- if mode == 'quantity' -%}
+        {% content_for 'blocks' %}
+      {%- else -%}
+        {%- for variant in product.variants -%}
+          {%- liquid
+            assign input_id = 'Variant-tier-' | append: variant.id
+            assign is_selected = false
+            if variant == product.selected_or_first_available_variant
+              assign is_selected = true
+            endif
+          -%}
+          <div
+            class="offer-tier"
+            data-tier
+            data-variant-id="{{ variant.id }}"
+            data-quantity="1"
+            data-total="{{ variant.price | money }}"
+          >
+            <input
+              class="offer-tier__input visually-hidden"
+              type="radio"
+              name="id"
+              id="{{ input_id }}"
+              value="{{ variant.id }}"
+              form="{{ form_id }}"
+              {% if is_selected %}
+                checked
+              {% endif %}
+              {% unless variant.available %}
+                disabled
+              {% endunless %}
+            >
+
+            <label class="offer-tier__label" for="{{ input_id }}">
+              <span class="offer-tier__head">
+                <span class="offer-tier__units">{{ variant.title }}</span>
+                {%- unless variant.available -%}
+                  <span class="muted">{{ 'landing.sold_out' | t }}</span>
+                {%- endunless -%}
+              </span>
+
+              <span class="offer-tier__pricing">
+                <span class="offer-tier__total">{{ variant.price | money }}</span>
+                {%- if variant.compare_at_price > variant.price -%}
+                  <s class="offer-tier__gross muted">{{ variant.compare_at_price | money }}</s>
+                {%- endif -%}
+              </span>
+            </label>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </fieldset>
+
+    <div class="landing-offer__buy">
+      {% render 'product-form',
+        product: product,
+        form_id: form_id,
+        show_variant_picker: false,
+        show_quantity: false,
+        show_payment_button: section.settings.show_payment_button,
+        button_label: section.settings.cta_label,
+        button_id: 'offer-buy-button',
+        omit_id: true,
+        omit_quantity: true
+      %}
+
+      {%- if settings.shipping_policy != blank -%}
+        <div class="muted landing-offer__note">{{ settings.shipping_policy }}</div>
+      {%- endif -%}
+
+      {% render 'payment-icons' %}
+    </div>
+  </landing-offer>
+</landing-reveal>
+
+{% stylesheet %}
+  .landing-offer__inner {
+    display: block;
+    max-width: 34rem;
+    margin-inline: auto;
+  }
+
+  .landing-offer__tiers {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin: 0 0 var(--space-lg);
+    padding: 0;
+    border: 0;
+  }
+
+  .landing-offer__legend {
+    padding: 0;
+    margin-block-end: var(--space-sm);
+    font-weight: 700;
+  }
+
+  .landing-offer__buy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  .landing-offer__buy .product-form {
+    width: 100%;
+  }
+
+  .landing-offer__note {
+    font-size: var(--font-size-sm);
+    text-align: center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.offer",
+  "tag": "section",
+  "blocks": [{ "type": "offer-tier" }, { "type": "@app" }],
+  "settings": [
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "t:labels.offer_mode",
+      "info": "t:info.offer_mode",
+      "default": "variants",
+      "options": [
+        { "value": "variants", "label": "t:options.offer_mode.variants" },
+        { "value": "quantity", "label": "t:options.offer_mode.quantity" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Elige tu paquete"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "t:labels.subheading"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:labels.cta_label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_button",
+      "label": "t:labels.show_payment_button",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.offer"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

@@ -1,0 +1,76 @@
+{% comment %}
+  Shipping expectations: a table of destinations and delivery times, plus the
+  shop-wide policy from the theme settings.
+
+  Delivery times are a promise. Only state what the carrier actually meets.
+{% endcomment %}
+
+<landing-reveal class="landing-shipping">
+  {% render 'section-header',
+    eyebrow: section.settings.eyebrow,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    center: true
+  %}
+
+  <div class="landing-shipping__panel card">
+    {%- if section.blocks.size > 0 -%}
+      <div class="landing-shipping__table">
+        {% content_for 'blocks' %}
+      </div>
+    {%- endif -%}
+
+    {%- if settings.shipping_policy != blank -%}
+      <div class="landing-shipping__policy muted">{{ settings.shipping_policy }}</div>
+    {%- endif -%}
+  </div>
+</landing-reveal>
+
+{% stylesheet %}
+  .landing-shipping__panel {
+    max-width: 42rem;
+    margin-inline: auto;
+    background-color: var(--color-background);
+  }
+
+  .landing-shipping__table > :last-child {
+    border-block-end: 0;
+  }
+
+  .landing-shipping__policy {
+    margin-block-start: var(--space-md);
+    font-size: var(--font-size-sm);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.shipping",
+  "tag": "section",
+  "blocks": [{ "type": "shipping-row" }, { "type": "@app" }],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Envíos"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "t:labels.subheading"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.shipping",
+      "blocks": [{ "type": "shipping-row" }, { "type": "shipping-row" }]
+    }
+  ]
+}
+{% endschema %}

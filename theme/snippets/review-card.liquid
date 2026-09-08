@@ -1,0 +1,92 @@
+{% doc %}
+  Renders one review card.
+
+  Two callers feed this: the review-item block (a review typed in the theme
+  editor) and the reviews section (a `landing_review` metaobject entry). They
+  share this file so the two sources cannot drift into looking different.
+
+  Whatever the source, a review marked as a demo carries a visible label
+  saying it is fictional.
+
+  @param {string} [body] - The review text
+  @param {number} [rating] - Rating out of five
+  @param {string} [author] - Who wrote it
+  @param {string} [location] - City or region
+  @param {image} [image] - Author avatar
+  @param {boolean} [is_demo] - Marks the review as fictional
+
+  @example
+  {% render 'review-card', body: block.settings.body, rating: block.settings.rating %}
+{% enddoc %}
+
+<article class="review-card card reveal">
+  {%- if is_demo -%}
+    {% render 'demo-badge' %}
+  {%- endif -%}
+
+  {% render 'stars', rating: rating %}
+
+  {%- if body != blank -%}
+    <blockquote class="review-card__body">{{ body }}</blockquote>
+  {%- endif -%}
+
+  {%- if author != blank or location != blank or image != blank -%}
+    <footer class="review-card__meta">
+      {%- if image != blank -%}
+        {% render 'responsive-image',
+          image: image,
+          sizes: '48px',
+          width: 96,
+          height: 96,
+          crop: 'center',
+          class: 'review-card__avatar'
+        %}
+      {%- endif -%}
+
+      <div>
+        {%- if author != blank -%}
+          <p class="review-card__author">{{ author }}</p>
+        {%- endif -%}
+        {%- if location != blank -%}
+          <p class="muted review-card__location">{{ location }}</p>
+        {%- endif -%}
+      </div>
+    </footer>
+  {%- endif -%}
+</article>
+
+{% stylesheet %}
+  .review-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    background-color: var(--color-background);
+  }
+
+  .review-card__body {
+    margin: 0;
+    font-style: italic;
+  }
+
+  .review-card__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-block-start: auto;
+  }
+
+  .review-card__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .review-card__author {
+    font-weight: 700;
+  }
+
+  .review-card__location {
+    font-size: var(--font-size-sm);
+  }
+{% endstylesheet %}

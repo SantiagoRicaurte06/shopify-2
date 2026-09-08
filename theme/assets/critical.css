@@ -285,3 +285,97 @@ body {
   border: 0;
   border-radius: var(--style-border-radius-cards);
 }
+
+/** Carousel controls, shared by the hero gallery and the demo carousel. */
+.carousel-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tap-target);
+  min-height: var(--tap-target);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background-color: var(--color-background);
+  color: inherit;
+  cursor: pointer;
+}
+
+.carousel-control[disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/** Bundle tiers. Shared by the offer-tier block (quantity mode) and the
+    offer section itself (variants mode), so the two modes look identical. */
+  .offer-tier {
+    position: relative;
+    border: 2px solid var(--color-border);
+    border-radius: var(--style-border-radius-cards);
+    padding: var(--space-md);
+  }
+
+  .offer-tier--highlight {
+    border-color: var(--color-accent);
+  }
+
+  /* The radio is visually hidden but still focusable, so the ring has to be
+     drawn on the tier it controls. */
+  .offer-tier:has(.offer-tier__input:focus-visible) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .offer-tier:has(.offer-tier__input:checked),
+  .offer-tier.is-selected {
+    border-color: var(--color-cta-background);
+    background-color: var(--color-accent-soft);
+  }
+
+  .offer-tier__label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    min-height: var(--tap-target);
+    cursor: pointer;
+  }
+
+  .offer-tier__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .offer-tier__units {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+  }
+
+  .offer-tier__badge {
+    background-color: var(--color-accent);
+    color: var(--color-cta-foreground);
+    border-radius: var(--style-border-radius-inputs);
+    padding: 0.1em 0.5em;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+  }
+
+  .offer-tier__pricing {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .offer-tier__total {
+    font-weight: 700;
+  }
+
+  .offer-tier__unit,
+  .offer-tier__gross {
+    font-size: var(--font-size-sm);
+  }
+
+  .offer-tier__notice {
+    margin-block-start: var(--space-2xs);
+    font-size: var(--font-size-sm);
+  }

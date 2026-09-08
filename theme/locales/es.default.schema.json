@@ -5,6 +5,7 @@
     "article": "Artículo",
     "block": "Bloque",
     "blog": "Blog",
+    "buy_form": "Formulario de compra",
     "cart": "Carrito",
     "collection": "Colección",
     "collection_card": "Tarjeta de colección",
@@ -17,6 +18,7 @@
     "custom_section": "Sección personalizada",
     "fonts": "Tipografías",
     "footer": "Pie de página",
+    "gallery": "Galería",
     "group": "Grupo",
     "header": "Encabezado",
     "layout": "Diseño",
@@ -41,21 +43,21 @@
     "whatsapp": "WhatsApp"
   },
   "sections": {
-    "benefits": "Landing · Beneficios",
-    "demo": "Landing · Demostración",
-    "faq": "Landing · Preguntas frecuentes",
-    "final_cta": "Landing · Llamada final",
-    "guarantee": "Landing · Garantía",
-    "hero": "Landing · Portada",
-    "how_it_works": "Landing · Cómo funciona",
-    "offer": "Landing · Oferta",
-    "problem": "Landing · Problema",
-    "reviews": "Landing · Opiniones",
-    "shipping": "Landing · Envíos",
-    "solution": "Landing · Solución",
-    "sticky_cta": "Landing · Botón fijo móvil",
-    "trust_bar": "Landing · Barra de confianza",
-    "ugc": "Landing · Contenido de clientes"
+    "hero": "LP · Portada",
+    "trust_bar": "LP · Barra de confianza",
+    "problem": "LP · Problema",
+    "solution": "LP · Solución",
+    "benefits": "LP · Beneficios",
+    "demo": "LP · Demostración",
+    "how_it_works": "LP · Cómo funciona",
+    "reviews": "LP · Opiniones",
+    "ugc": "LP · Fotos de clientes",
+    "offer": "LP · Oferta",
+    "shipping": "LP · Envíos",
+    "guarantee": "LP · Garantía",
+    "faq": "LP · Preguntas frecuentes",
+    "final_cta": "LP · Llamada final",
+    "sticky_cta": "LP · Botón fijo móvil"
   },
   "blocks": {
     "benefit_item": "Beneficio",
@@ -83,11 +85,13 @@
     "border": "Borde",
     "caption": "Pie de foto",
     "card_corner_radius": "Redondeo de tarjetas",
+    "center_header": "Centrar el encabezado",
     "columns_desktop": "Columnas en escritorio",
     "columns_mobile": "Columnas en móvil",
     "compare_at_price": "Precio de referencia",
     "cta_background": "Fondo del botón",
     "cta_foreground": "Texto del botón",
+    "cta_label": "Texto del botón",
     "customer_account_menu": "Menú de cuenta",
     "date": "Fecha",
     "delivery_time": "Tiempo de entrega",
@@ -95,8 +99,10 @@
     "discount_percentage": "Descuento declarado (%)",
     "enable_product_json_ld": "Publicar datos estructurados del producto",
     "external_video": "Vídeo externo (YouTube o Vimeo)",
+    "eyebrow": "Antetítulo",
     "foreground": "Texto",
     "full_width": "Ancho completo",
+    "gallery_limit": "Imágenes en la galería",
     "grid_gap": "Espaciado de la cuadrícula",
     "grid_item_width": "Ancho de los elementos",
     "guarantee_policy": "Política de garantía",
@@ -117,6 +123,7 @@
     "link": "Enlace",
     "link_label": "Texto del enlace",
     "location": "Ciudad o región",
+    "media_position": "Posición del medio",
     "media_type": "Tipo de medio",
     "menu": "Menú",
     "muted": "Texto secundario",
@@ -142,8 +149,13 @@
     "section_spacing": "Separación entre secciones",
     "shipping_claim": "Mensaje de envío",
     "shipping_policy": "Política de envíos",
+    "show_payment_button": "Mostrar botón de pago rápido",
     "show_payment_icons": "Mostrar medios de pago",
+    "show_price": "Mostrar precio",
+    "show_quantity": "Mostrar cantidad",
     "show_rating": "Mostrar valoración",
+    "show_variant_picker": "Mostrar selector de variantes",
+    "show_whatsapp": "Mostrar enlace de WhatsApp",
     "subheading": "Subtítulo",
     "surface": "Superficie",
     "text": "Texto",
@@ -155,7 +167,10 @@
     "whatsapp_message": "Mensaje predefinido",
     "whatsapp_number": "Número de WhatsApp",
     "width": "Ancho",
-    "zone": "Destino"
+    "zone": "Destino",
+    "reviews_entries": "Opiniones del metaobjeto",
+    "reviews_limit": "Máximo de opiniones",
+    "help_text": "Texto de ayuda"
   },
   "options": {
     "alignment": {
@@ -204,7 +219,8 @@
     },
     "reviews_source": {
       "metaobject": "Entradas de metaobjeto",
-      "app": "App de opiniones"
+      "app": "App de opiniones",
+      "blocks": "Escritas en esta sección"
     },
     "size": {
       "large": "Grande",
@@ -221,6 +237,7 @@
     "cta_default_url": "Si lo dejas vacío, el botón lleva a la sección de oferta de esta misma página.",
     "enable_product_json_ld": "Desactívalo si una app de SEO ya publica datos estructurados del producto. Dos bloques Product en la misma página generan avisos en Search Console.",
     "guarantee_policy": "Describe la garantía real que ofreces. No prometas plazos que no puedas cumplir.",
+    "hero_heading": "Si lo dejas vacío se usa el nombre del producto. Este texto es el encabezado principal, el único de nivel 1 de la página.",
     "is_demo": "Las opiniones marcadas como demo muestran un aviso visible y quedan excluidas de los datos estructurados.",
     "media_poster": "En vídeo de Shopify, esta imagen se usa como póster.",
     "muted": "Se usa en textos de apoyo. Comprueba que mantenga contraste AA sobre el fondo.",
@@ -234,9 +251,12 @@
     "section_spacing": "Separación vertical por defecto entre secciones de la landing.",
     "shipping_claim": "Aparece en el encabezado y en la barra de confianza.",
     "shipping_policy": "Texto corto que se muestra junto al botón de compra.",
+    "show_variant_picker": "Desactívalo si usas la sección de oferta para elegir el paquete.",
     "tier_title": "Si lo dejas vacío se muestra el número de unidades.",
     "type_scale": "Multiplica el tamaño de cada nivel de título.",
     "whatsapp_message": "Texto con el que se abre la conversación.",
-    "whatsapp_number": "Formato internacional sin signos: 573001234567."
+    "whatsapp_number": "Formato internacional sin signos: 573001234567.",
+    "reviews_metaobject": "Requiere que el metaobjeto landing_review exista en la tienda. Consulta docs/metaobjects.md.",
+    "ugc_rights": "Sube solo fotos que tengas permiso para publicar. Que un cliente publique sobre tu producto no te da licencia para usar su foto."
   }
 }

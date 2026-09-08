@@ -1,0 +1,98 @@
+{% comment %}
+  Frequently asked questions.
+
+  Every item is a <details> element, so this section ships no JavaScript at
+  all: it opens, closes, works with a keyboard and is searchable by the
+  browser's own find-in-page.
+
+  FAQPage structured data is deliberately not emitted here. Google restricted
+  FAQ rich results to a narrow set of sites, and marking up questions the
+  merchant wrote about their own product invites a manual action for little
+  return. The questions still help the reader, which is the point.
+{% endcomment %}
+
+<landing-reveal class="landing-faq">
+  {% render 'section-header',
+    eyebrow: section.settings.eyebrow,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    center: true
+  %}
+
+  <div class="landing-faq__list">
+    {% content_for 'blocks' %}
+  </div>
+
+  {%- if section.settings.show_whatsapp -%}
+    <div class="landing-faq__help">
+      <p class="muted">{{ section.settings.help_text }}</p>
+      {% render 'whatsapp-link', product: product %}
+    </div>
+  {%- endif -%}
+</landing-reveal>
+
+{% stylesheet %}
+  .landing-faq__list {
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+
+  .landing-faq__help {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-xl);
+    text-align: center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.faq",
+  "tag": "section",
+  "blocks": [{ "type": "faq-item" }, { "type": "@app" }],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Preguntas frecuentes"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "t:labels.subheading"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "t:labels.show_whatsapp",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "help_text",
+      "label": "t:labels.help_text",
+      "default": "¿Te queda otra duda?",
+      "visible_if": "{{ section.settings.show_whatsapp }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.faq",
+      "blocks": [
+        { "type": "faq-item" },
+        { "type": "faq-item" },
+        { "type": "faq-item" },
+        { "type": "faq-item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

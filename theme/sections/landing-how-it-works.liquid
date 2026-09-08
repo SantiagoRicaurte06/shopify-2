@@ -1,0 +1,78 @@
+{% comment %}
+  The three or four steps from buying to the result.
+
+  The list carries the CSS counter that step-item increments, which is why the
+  numbering lives here and not in each block's settings.
+{% endcomment %}
+
+<landing-reveal class="landing-how">
+  {% render 'section-header',
+    eyebrow: section.settings.eyebrow,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    center: section.settings.center
+  %}
+
+  <ol
+    class="landing-grid landing-how__list"
+    style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: 1;"
+  >
+    {% content_for 'blocks' %}
+  </ol>
+</landing-reveal>
+
+{% stylesheet %}
+  .landing-how__list {
+    counter-reset: step;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.how_it_works",
+  "tag": "section",
+  "blocks": [{ "type": "step-item" }, { "type": "@app" }],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Cómo funciona"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "t:labels.subheading"
+    },
+    {
+      "type": "checkbox",
+      "id": "center",
+      "label": "t:labels.center_header",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "t:labels.columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.how_it_works",
+      "blocks": [{ "type": "step-item" }, { "type": "step-item" }, { "type": "step-item" }]
+    }
+  ]
+}
+{% endschema %}
