@@ -23,13 +23,28 @@
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
 
+    {% comment %}
+      Structured data is rendered separately from the meta tags so the merchant
+      can turn it off when an SEO app already emits its own Product JSON-LD.
+    {% endcomment %}
+    {% render 'structured-data' %}
+
+    {% # Deferred, dependency-free behaviour for the landing sections. %}
+    <script src="{{ 'landing.js' | asset_url }}" type="module"></script>
+
     {{ content_for_header }}
   </head>
 
   <body>
+    <a class="skip-to-content button" href="#MainContent">
+      {{- 'landing.skip_to_content' | t -}}
+    </a>
+
     {% sections 'header-group' %}
 
-    {{ content_for_layout }}
+    <main id="MainContent" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
 
     {% sections 'footer-group' %}
   </body>

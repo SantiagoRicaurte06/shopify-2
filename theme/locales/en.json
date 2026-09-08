@@ -48,5 +48,40 @@
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
+  },
+  "landing": {
+    "add_to_cart": "Add to cart",
+    "buy_now": "Buy now",
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable",
+    "quantity": "Quantity",
+    "decrease": "Remove one unit",
+    "increase": "Add one unit",
+    "choose_option": "Choose an option",
+    "choose_pack": "Choose your bundle",
+    "save_amount": "You save {{ amount }}",
+    "save_percent": "You save {{ percent }}%",
+    "per_unit": "{{ price }} per unit",
+    "most_popular": "Most popular",
+    "best_value": "Best value",
+    "discount_at_checkout": "The discount is applied at checkout.",
+    "rating_aria": "Average rating of {{ rating }} out of {{ max }}",
+    "rating_count": {
+      "one": "{{ count }} review",
+      "other": "{{ count }} reviews"
+    },
+    "demo_badge": "Demo testimonial — fictional content",
+    "demo_notice": "This section shows sample content. Replace it with real reviews before publishing.",
+    "verified_buyer": "Verified purchase",
+    "previous": "Previous",
+    "next": "Next",
+    "play_video": "Play video",
+    "whatsapp_cta": "Message us on WhatsApp",
+    "faq_title": "Frequently asked questions",
+    "skip_to_content": "Skip to content",
+    "menu": "Menu",
+    "close": "Close",
+    "before": "Before",
+    "after": "After"
   }
 }

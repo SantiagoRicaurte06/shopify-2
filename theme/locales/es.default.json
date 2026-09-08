@@ -1,0 +1,87 @@
+{
+  "404": {
+    "title": "404",
+    "not_found": "No encontramos esta página.",
+    "back_to_shopping": "Volver a la tienda"
+  },
+  "blog": {
+    "article_comments": "Comentarios",
+    "article_metadata_html": "{{ date }} por {{ author }}",
+    "comment_form_body": "Comentario",
+    "comment_form_email": "Correo electrónico",
+    "comment_form_name": "Nombre",
+    "comment_form_submit": "Publicar",
+    "comment_form_title": "Añadir un comentario"
+  },
+  "cart": {
+    "checkout": "Finalizar compra",
+    "title": "Carrito",
+    "update": "Actualizar",
+    "remove": "Quitar"
+  },
+  "customers": {
+    "login": {
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Entrar",
+      "title": "Iniciar sesión"
+    }
+  },
+  "collections": {
+    "title": "Colecciones"
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Añadir a Apple Wallet",
+    "card": "Tarjeta de regalo",
+    "expired": "Esta tarjeta de regalo ha caducado",
+    "expires_on": "Caduca el {{ expires_on }}",
+    "use_at_checkout": "Usa esta tarjeta al finalizar la compra"
+  },
+  "password": {
+    "title": "Esta tienda es privada",
+    "password": "Contraseña",
+    "enter": "Entrar"
+  },
+  "search": {
+    "title": "Buscar",
+    "placeholder": "Busca artículos, páginas o productos",
+    "submit": "Buscar",
+    "no_results_html": "No hay resultados para {{ terms }}",
+    "results_for_html": "{{ count }} resultados para {{ terms }}"
+  },
+  "landing": {
+    "add_to_cart": "Agregar al carrito",
+    "buy_now": "Comprar ahora",
+    "sold_out": "Agotado",
+    "unavailable": "No disponible",
+    "quantity": "Cantidad",
+    "decrease": "Quitar una unidad",
+    "increase": "Añadir una unidad",
+    "choose_option": "Elige una opción",
+    "choose_pack": "Elige tu paquete",
+    "save_amount": "Ahorras {{ amount }}",
+    "save_percent": "Ahorras {{ percent }} %",
+    "per_unit": "{{ price }} por unidad",
+    "most_popular": "Más elegido",
+    "best_value": "Mejor precio",
+    "discount_at_checkout": "El descuento se aplica al finalizar la compra.",
+    "rating_aria": "Valoración media de {{ rating }} sobre {{ max }}",
+    "rating_count": {
+      "one": "{{ count }} opinión",
+      "other": "{{ count }} opiniones"
+    },
+    "demo_badge": "Testimonio demo — contenido ficticio",
+    "demo_notice": "Esta sección muestra contenido de ejemplo. Sustitúyelo por opiniones reales antes de publicar.",
+    "verified_buyer": "Compra verificada",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "play_video": "Reproducir vídeo",
+    "whatsapp_cta": "Escríbenos por WhatsApp",
+    "faq_title": "Preguntas frecuentes",
+    "skip_to_content": "Saltar al contenido",
+    "menu": "Menú",
+    "close": "Cerrar",
+    "before": "Antes",
+    "after": "Después"
+  }
+}

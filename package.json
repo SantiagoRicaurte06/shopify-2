@@ -1,0 +1,24 @@
+{
+  "name": "shopify-landings-colombia",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sistema reutilizable de landings de producto para Shopify — mercado colombiano",
+  "license": "MIT",
+  "scripts": {
+    "check": "shopify theme check --path theme",
+    "format": "prettier --write \"theme/**/*.{liquid,json,css,js}\"",
+    "format:check": "prettier --check \"theme/**/*.{liquid,json,css,js}\"",
+    "dev": "shopify theme dev --path theme",
+    "push": "shopify theme push --unpublished --path theme"
+  },
+  "devDependencies": {
+    "@shopify/cli": "^3.87.2",
+    "@shopify/prettier-plugin-liquid": "^1.9.3",
+    "prettier": "^3.6.2"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "plugins": ["@shopify/prettier-plugin-liquid"]
+  }
+}

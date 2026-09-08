@@ -4,15 +4,55 @@
   {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {{ settings.type_heading_font | font_face: font_display: 'swap' }}
+  {{ settings.type_heading_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
 
   :root {
     --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
     --font-primary--style: {{ settings.type_primary_font.style }};
     --font-primary--weight: {{ settings.type_primary_font.weight }};
+    --font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+    --font-heading--style: {{ settings.type_heading_font.style }};
+    --font-heading--weight: {{ settings.type_heading_font.weight }};
+
+    {% # Modular type scale. Each step multiplies the previous one. %}
+    --type-scale: {{ settings.type_scale }};
+    --font-size-base: 1rem;
+    --font-size-sm: calc(var(--font-size-base) / var(--type-scale));
+    --font-size-lg: calc(var(--font-size-base) * var(--type-scale));
+    --font-size-xl: calc(var(--font-size-lg) * var(--type-scale));
+    --font-size-2xl: calc(var(--font-size-xl) * var(--type-scale));
+    --font-size-3xl: calc(var(--font-size-2xl) * var(--type-scale));
+
     --page-width: {{ settings.max_page_width }};
     --page-margin: {{ settings.min_page_margin }}px;
+    --section-spacing: {{ settings.section_spacing }}px;
+
     --color-background: {{ settings.background_color }};
     --color-foreground: {{ settings.foreground_color }};
+    --color-muted: {{ settings.muted_color }};
+    --color-surface: {{ settings.surface_color }};
+    --color-border: {{ settings.border_color }};
+    --color-accent: {{ settings.accent_color }};
+    --color-cta-background: {{ settings.cta_background_color }};
+    --color-cta-foreground: {{ settings.cta_foreground_color }};
+    --color-sale: {{ settings.sale_color }};
+
+    {% # Translucent variants derived from the merchant's own colors. %}
+    --color-accent-soft: {{ settings.accent_color | color_mix: settings.background_color, 12 }};
+    --color-foreground-soft: {{ settings.foreground_color | color_mix: settings.background_color, 8 }};
+
     --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
+    --style-border-radius-cards: {{ settings.card_corner_radius }}px;
+
+    --space-2xs: 0.25rem;
+    --space-xs: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2.5rem;
+    --space-2xl: 4rem;
+
+    --tap-target: 44px;
   }
 {% endstyle %}

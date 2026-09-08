@@ -1,0 +1,75 @@
+{% doc %}
+  Emits Product JSON-LD for product pages.
+
+  Two deliberate decisions live here:
+
+  1. The merchant can turn this off. SEO apps commonly emit their own Product
+     JSON-LD, and two Product nodes on one page produce Search Console warnings.
+
+  2. `aggregateRating` is emitted ONLY from the standard `reviews.rating` and
+     `reviews.rating_count` metafields, which a reviews app writes. Demo
+     testimonials configured in the theme editor never reach this markup —
+     rich results must reflect real reviews.
+
+  The markup is built by hand rather than with the `structured_data` filter
+  because that filter does not output ratings, and the rating is the part we
+  care most about getting right.
+
+  @example
+  {% render 'structured-data' %}
+{% enddoc %}
+
+{%- if settings.enable_product_json_ld and request.page_type == 'product' -%}
+  {%- liquid
+    assign rating = product.metafields.reviews.rating.value
+    assign rating_count = product.metafields.reviews.rating_count.value | plus: 0
+    assign has_rating = false
+    if rating != blank and rating.rating != blank and rating_count > 0
+      assign has_rating = true
+    endif
+  -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": {{ product.title | json }},
+      "url": {{ request.origin | append: product.url | json }},
+      "description": {{ product.description | strip_html | truncate: 5000 | json }}
+      {%- if product.featured_media -%}
+        ,"image": [{{ product.featured_media | image_url: width: 1920 | prepend: 'https:' | json }}]
+      {%- endif -%}
+      {%- if product.vendor != blank -%}
+        ,"brand": {
+          "@type": "Brand",
+          "name": {{ product.vendor | json }}
+        }
+      {%- endif -%}
+      {%- if has_rating -%}
+        ,"aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": {{ rating.rating | json }},
+          "bestRating": {{ rating.scale_max | json }},
+          "worstRating": {{ rating.scale_min | json }},
+          "ratingCount": {{ rating_count | json }}
+        }
+      {%- endif -%}
+      ,"offers": [
+        {%- for variant in product.variants -%}
+          {
+            "@type": "Offer",
+            "url": {{ request.origin | append: variant.url | json }},
+            "price": {{ variant.price | divided_by: 100.0 | json }},
+            "priceCurrency": {{ cart.currency.iso_code | json }},
+            "availability": {% if variant.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %}
+            {%- if variant.sku != blank -%}
+              ,"sku": {{ variant.sku | json }}
+            {%- endif -%}
+            {%- if variant.barcode != blank -%}
+              ,"gtin": {{ variant.barcode | json }}
+            {%- endif -%}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
