@@ -6,7 +6,25 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
+ *
+ * Only the settings that have no default in settings_schema.json are seeded
+ * here, and they are seeded with placeholder text so an unconfigured store
+ * never publishes a promise it has not made.
+ *
+ * whatsapp_number is deliberately empty: the WhatsApp link renders nothing
+ * until a real number is entered, which is better than shipping a dead button.
  */
 {
-  "current": {}
+  "current": {
+    "shipping_policy": "<p>Texto de demostración. Escribe aquí tu política de envíos real antes de publicar.</p>",
+    "guarantee_policy": "<p>Texto de demostración. Escribe aquí la garantía que ofreces de verdad antes de publicar.</p>",
+    "whatsapp_number": "",
+    "payment_card": true,
+    "payment_pse": true,
+    "payment_nequi": true,
+    "payment_daviplata": false,
+    "payment_bancolombia": true,
+    "payment_cash": false,
+    "payment_bnpl": false
+  }
 }

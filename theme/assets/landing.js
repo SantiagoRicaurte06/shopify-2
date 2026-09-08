@@ -10,7 +10,7 @@
  * re-renders them.
  */
 
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 /**
  * Fades elements in as they enter the viewport.
@@ -20,10 +20,10 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
  */
 class LandingReveal extends HTMLElement {
   connectedCallback() {
-    const targets = this.querySelectorAll('.reveal');
+    const targets = this.querySelectorAll(".reveal");
 
-    if (prefersReducedMotion.matches || !('IntersectionObserver' in window)) {
-      targets.forEach((el) => el.classList.add('is-visible'));
+    if (prefersReducedMotion.matches || !("IntersectionObserver" in window)) {
+      targets.forEach((el) => el.classList.add("is-visible"));
       return;
     }
 
@@ -31,11 +31,11 @@ class LandingReveal extends HTMLElement {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-visible');
+          entry.target.classList.add("is-visible");
           this.observer.unobserve(entry.target);
         });
       },
-      { rootMargin: '0px 0px -10% 0px' }
+      { rootMargin: "0px 0px -10% 0px" },
     );
 
     targets.forEach((el) => this.observer.observe(el));
@@ -58,7 +58,7 @@ class LandingSticky extends HTMLElement {
     const targetId = this.dataset.watch;
     const target = targetId ? document.getElementById(targetId) : null;
 
-    if (!target || !('IntersectionObserver' in window)) {
+    if (!target || !("IntersectionObserver" in window)) {
       this.hidden = false;
       return;
     }
@@ -67,7 +67,7 @@ class LandingSticky extends HTMLElement {
       ([entry]) => {
         this.hidden = entry.isIntersecting;
       },
-      { threshold: 0 }
+      { threshold: 0 },
     );
 
     this.observer.observe(target);
@@ -86,9 +86,9 @@ class LandingSticky extends HTMLElement {
  */
 class LandingCarousel extends HTMLElement {
   connectedCallback() {
-    this.track = this.querySelector('[data-carousel-track]');
-    this.previous = this.querySelector('[data-carousel-previous]');
-    this.next = this.querySelector('[data-carousel-next]');
+    this.track = this.querySelector("[data-carousel-track]");
+    this.previous = this.querySelector("[data-carousel-previous]");
+    this.next = this.querySelector("[data-carousel-next]");
 
     if (!this.track) return;
 
@@ -96,17 +96,17 @@ class LandingCarousel extends HTMLElement {
     this.onNext = () => this.scrollByPage(1);
     this.onScroll = () => this.updateControls();
 
-    this.previous?.addEventListener('click', this.onPrevious);
-    this.next?.addEventListener('click', this.onNext);
-    this.track.addEventListener('scroll', this.onScroll, { passive: true });
+    this.previous?.addEventListener("click", this.onPrevious);
+    this.next?.addEventListener("click", this.onNext);
+    this.track.addEventListener("scroll", this.onScroll, { passive: true });
 
     this.updateControls();
   }
 
   disconnectedCallback() {
-    this.previous?.removeEventListener('click', this.onPrevious);
-    this.next?.removeEventListener('click', this.onNext);
-    this.track?.removeEventListener('scroll', this.onScroll);
+    this.previous?.removeEventListener("click", this.onPrevious);
+    this.next?.removeEventListener("click", this.onNext);
+    this.track?.removeEventListener("scroll", this.onScroll);
   }
 
   scrollByPage(direction) {
@@ -115,7 +115,7 @@ class LandingCarousel extends HTMLElement {
 
     this.track.scrollBy({
       left: amount * direction,
-      behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
+      behavior: prefersReducedMotion.matches ? "auto" : "smooth",
     });
   }
 
@@ -139,27 +139,29 @@ class LandingCarousel extends HTMLElement {
  */
 class LandingOffer extends HTMLElement {
   connectedCallback() {
-    this.form = this.dataset.form ? document.getElementById(this.dataset.form) : this.querySelector('form');
+    this.form = this.dataset.form
+      ? document.getElementById(this.dataset.form)
+      : this.querySelector("form");
     this.onChange = (event) => {
-      const tier = event.target.closest('[data-tier]');
+      const tier = event.target.closest("[data-tier]");
       if (tier) this.select(tier);
     };
 
-    this.addEventListener('change', this.onChange);
+    this.addEventListener("change", this.onChange);
 
-    const checked = this.querySelector('[data-tier] input:checked');
-    if (checked) this.select(checked.closest('[data-tier]'));
+    const checked = this.querySelector("[data-tier] input:checked");
+    if (checked) this.select(checked.closest("[data-tier]"));
   }
 
   disconnectedCallback() {
-    this.removeEventListener('change', this.onChange);
+    this.removeEventListener("change", this.onChange);
   }
 
   select(tier) {
     const { variantId, quantity, total } = tier.dataset;
 
-    this.querySelectorAll('[data-tier]').forEach((el) => {
-      el.classList.toggle('is-selected', el === tier);
+    this.querySelectorAll("[data-tier]").forEach((el) => {
+      el.classList.toggle("is-selected", el === tier);
     });
 
     if (this.form) {
@@ -170,7 +172,7 @@ class LandingOffer extends HTMLElement {
       if (quantityInput && quantity) quantityInput.value = quantity;
     }
 
-    document.querySelectorAll('[data-offer-total]').forEach((el) => {
+    document.querySelectorAll("[data-offer-total]").forEach((el) => {
       if (total) el.textContent = total;
     });
   }
@@ -186,7 +188,7 @@ class QuantitySelector extends HTMLElement {
   connectedCallback() {
     this.input = this.querySelector('input[type="number"]');
     this.onClick = (event) => {
-      const button = event.target.closest('button[data-step]');
+      const button = event.target.closest("button[data-step]");
       if (!button || !this.input) return;
 
       const step = Number(button.dataset.step);
@@ -194,19 +196,19 @@ class QuantitySelector extends HTMLElement {
       const next = Math.max(min, Number(this.input.value || min) + step);
 
       this.input.value = next;
-      this.input.dispatchEvent(new Event('change', { bubbles: true }));
+      this.input.dispatchEvent(new Event("change", { bubbles: true }));
     };
 
-    this.addEventListener('click', this.onClick);
+    this.addEventListener("click", this.onClick);
   }
 
   disconnectedCallback() {
-    this.removeEventListener('click', this.onClick);
+    this.removeEventListener("click", this.onClick);
   }
 }
 
-customElements.define('landing-reveal', LandingReveal);
-customElements.define('landing-sticky', LandingSticky);
-customElements.define('landing-carousel', LandingCarousel);
-customElements.define('landing-offer', LandingOffer);
-customElements.define('quantity-selector', QuantitySelector);
+customElements.define("landing-reveal", LandingReveal);
+customElements.define("landing-sticky", LandingSticky);
+customElements.define("landing-carousel", LandingCarousel);
+customElements.define("landing-offer", LandingOffer);
+customElements.define("quantity-selector", QuantitySelector);

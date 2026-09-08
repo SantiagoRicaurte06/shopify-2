@@ -18,7 +18,9 @@
   },
   "prettier": {
     "printWidth": 100,
-    "singleQuote": true,
-    "plugins": ["@shopify/prettier-plugin-liquid"]
+    "singleQuote": false,
+    "plugins": [
+      "@shopify/prettier-plugin-liquid"
+    ]
   }
 }

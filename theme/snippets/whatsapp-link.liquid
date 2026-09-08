@@ -30,7 +30,11 @@
     assign link_label = label | default: default_label
   -%}
 
-  <a class="whatsapp-link button button--{{ style | default: 'secondary' }}" href="{{ href }}" rel="noopener">
+  <a
+    class="whatsapp-link button button--{{ style | default: 'secondary' }}"
+    href="{{ href }}"
+    rel="noopener"
+  >
     {% render 'icon', name: 'whatsapp' %}
     {{ link_label }}
   </a>

@@ -15,14 +15,13 @@
     <div class="landing-sticky__price">
       {%- if section.settings.show_price -%}
         <span class="landing-sticky__label muted">{{ product.title | truncate: 28 }}</span>
-        <span data-offer-total>{{ product.selected_or_first_available_variant.price | money }}</span>
+        <span data-offer-total>
+          {{- product.selected_or_first_available_variant.price | money -}}
+        </span>
       {%- endif -%}
     </div>
 
-    {% render 'button',
-      label: section.settings.cta_label,
-      url: '#landing-offer'
-    %}
+    {% render 'button', label: section.settings.cta_label, url: '#landing-offer' %}
   </div>
 </landing-sticky>
 
