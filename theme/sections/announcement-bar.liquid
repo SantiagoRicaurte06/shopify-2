@@ -1,0 +1,52 @@
+{% comment %}
+  A thin band above the header carrying the shipping claim.
+
+  The text defaults to the shop-wide claim in the theme settings, so changing
+  it once changes it on every landing.
+{% endcomment %}
+
+{%- liquid
+  assign text = section.settings.text | default: settings.shipping_claim
+-%}
+
+{%- if text != blank -%}
+  <div class="announcement-bar full-width">
+    <p class="announcement-bar__text">
+      {% render 'icon', name: 'truck' %}
+      {{ text }}
+    </p>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .announcement-bar {
+    background-color: var(--color-cta-background);
+    color: var(--color-cta-foreground);
+    padding-block: var(--space-xs);
+  }
+
+  .announcement-bar__text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding-inline: var(--page-margin);
+    font-size: var(--font-size-sm);
+    text-align: center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.announcement_bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:labels.text",
+      "info": "t:info.announcement_text"
+    }
+  ],
+  "presets": [{ "name": "t:general.announcement_bar" }]
+}
+{% endschema %}

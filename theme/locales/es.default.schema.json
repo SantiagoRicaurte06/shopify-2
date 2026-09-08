@@ -40,7 +40,8 @@
     "text": "Texto",
     "theme": "Theme",
     "typography": "Tipografía",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+    "announcement_bar": "Barra de anuncio"
   },
   "sections": {
     "hero": "LP · Portada",
@@ -170,7 +171,9 @@
     "zone": "Destino",
     "reviews_entries": "Opiniones del metaobjeto",
     "reviews_limit": "Máximo de opiniones",
-    "help_text": "Texto de ayuda"
+    "help_text": "Texto de ayuda",
+    "logo": "Logotipo",
+    "show_shipping_claim": "Mostrar mensaje de envío"
   },
   "options": {
     "alignment": {
@@ -257,6 +260,7 @@
     "whatsapp_message": "Texto con el que se abre la conversación.",
     "whatsapp_number": "Formato internacional sin signos: 573001234567.",
     "reviews_metaobject": "Requiere que el metaobjeto landing_review exista en la tienda. Consulta docs/metaobjects.md.",
-    "ugc_rights": "Sube solo fotos que tengas permiso para publicar. Que un cliente publique sobre tu producto no te da licencia para usar su foto."
+    "ugc_rights": "Sube solo fotos que tengas permiso para publicar. Que un cliente publique sobre tu producto no te da licencia para usar su foto.",
+    "announcement_text": "Si lo dejas vacío se usa el mensaje de envío de los ajustes del theme."
   }
 }

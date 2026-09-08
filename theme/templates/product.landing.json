@@ -1,0 +1,425 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ *
+ * This is the landing template. Assign a product to it from the product page
+ * in the admin (Online store > Theme template), or duplicate it from the
+ * theme editor to give a product its own arrangement.
+ *
+ * The copy below is placeholder text in Spanish. Replace it before publishing.
+ * The reviews are marked as demos and render a visible "fictional content"
+ * label until you turn that off, which you should only do for real reviews.
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "landing-hero",
+      "blocks": {
+        "trust-shipping": {
+          "type": "trust-item",
+          "settings": {
+            "icon": "truck",
+            "text": "Envíos a toda Colombia"
+          }
+        },
+        "trust-secure": {
+          "type": "trust-item",
+          "settings": {
+            "icon": "lock",
+            "text": "Pago seguro con tarjeta, PSE o Nequi"
+          }
+        },
+        "trust-support": {
+          "type": "trust-item",
+          "settings": {
+            "icon": "chat",
+            "text": "Te respondemos por WhatsApp"
+          }
+        }
+      },
+      "block_order": ["trust-shipping", "trust-secure", "trust-support"],
+      "settings": {
+        "eyebrow": "TEXTO DE DEMOSTRACIÓN",
+        "subheading": "<p>Sustituye este subtítulo por la promesa concreta de tu producto: qué resuelve y en cuánto tiempo.</p>",
+        "show_rating": true,
+        "show_price": true,
+        "cta_label": "Agregar al carrito",
+        "show_variant_picker": true,
+        "show_quantity": false,
+        "show_payment_button": false,
+        "show_whatsapp": true,
+        "gallery_limit": 5
+      }
+    },
+    "trust-bar": {
+      "type": "landing-trust-bar",
+      "blocks": {
+        "bar-shipping": {
+          "type": "trust-item",
+          "settings": { "icon": "truck", "text": "Envíos a toda Colombia" }
+        },
+        "bar-secure": {
+          "type": "trust-item",
+          "settings": { "icon": "lock", "text": "Pago seguro" }
+        },
+        "bar-returns": {
+          "type": "trust-item",
+          "settings": { "icon": "refresh", "text": "Cambios y devoluciones" }
+        },
+        "bar-support": {
+          "type": "trust-item",
+          "settings": { "icon": "chat", "text": "Soporte por WhatsApp" }
+        }
+      },
+      "block_order": ["bar-shipping", "bar-secure", "bar-returns", "bar-support"],
+      "settings": {}
+    },
+    "problem": {
+      "type": "landing-problem",
+      "blocks": {
+        "problem-1": {
+          "type": "problem-item",
+          "settings": {
+            "heading": "Primer punto de dolor",
+            "body": "<p>Describe una situación concreta que tu cliente reconozca al instante. Texto de demostración.</p>"
+          }
+        },
+        "problem-2": {
+          "type": "problem-item",
+          "settings": {
+            "heading": "Segundo punto de dolor",
+            "body": "<p>Otra molestia real, en las palabras que usaría el cliente. Texto de demostración.</p>"
+          }
+        },
+        "problem-3": {
+          "type": "problem-item",
+          "settings": {
+            "heading": "Tercer punto de dolor",
+            "body": "<p>Lo que ya intentó y no le funcionó. Texto de demostración.</p>"
+          }
+        },
+        "problem-4": {
+          "type": "problem-item",
+          "settings": {
+            "heading": "Cuarto punto de dolor",
+            "body": "<p>El coste de seguir igual. Texto de demostración.</p>"
+          }
+        }
+      },
+      "block_order": ["problem-1", "problem-2", "problem-3", "problem-4"],
+      "settings": {
+        "eyebrow": "TEXTO DE DEMOSTRACIÓN",
+        "heading": "Si esto te suena, no eres el único",
+        "center": true
+      }
+    },
+    "solution": {
+      "type": "landing-solution",
+      "blocks": {
+        "solution-media": {
+          "type": "media-item",
+          "settings": { "media_type": "image" }
+        }
+      },
+      "block_order": ["solution-media"],
+      "settings": {
+        "media_position": "left",
+        "eyebrow": "TEXTO DE DEMOSTRACIÓN",
+        "heading": "La forma sencilla de resolverlo",
+        "body": "<p>Explica en dos o tres frases cómo funciona tu producto y por qué es distinto de lo que ya probó. Sin superlativos que no puedas sostener.</p>"
+      }
+    },
+    "benefits": {
+      "type": "landing-benefits",
+      "blocks": {
+        "benefit-1": {
+          "type": "benefit-item",
+          "settings": {
+            "icon": "check",
+            "heading": "Primer beneficio",
+            "body": "<p>Un beneficio concreto y comprobable. Texto de demostración.</p>"
+          }
+        },
+        "benefit-2": {
+          "type": "benefit-item",
+          "settings": {
+            "icon": "clock",
+            "heading": "Segundo beneficio",
+            "body": "<p>Qué gana el cliente en tiempo o esfuerzo. Texto de demostración.</p>"
+          }
+        },
+        "benefit-3": {
+          "type": "benefit-item",
+          "settings": {
+            "icon": "shield",
+            "heading": "Tercer beneficio",
+            "body": "<p>Qué riesgo le quitas de encima. Texto de demostración.</p>"
+          }
+        }
+      },
+      "block_order": ["benefit-1", "benefit-2", "benefit-3"],
+      "settings": {
+        "eyebrow": "TEXTO DE DEMOSTRACIÓN",
+        "heading": "Por qué funciona",
+        "center": true,
+        "columns_desktop": 3,
+        "columns_mobile": 1
+      }
+    },
+    "demo": {
+      "type": "landing-demo",
+      "blocks": {
+        "demo-1": { "type": "media-item", "settings": { "media_type": "image" } },
+        "demo-2": { "type": "media-item", "settings": { "media_type": "image" } }
+      },
+      "block_order": ["demo-1", "demo-2"],
+      "settings": {
+        "eyebrow": "TEXTO DE DEMOSTRACIÓN",
+        "heading": "Míralo en acción",
+        "center": true,
+        "layout": "grid",
+        "columns_desktop": 2
+      }
+    },
+    "how-it-works": {
+      "type": "landing-how-it-works",
+      "blocks": {
+        "step-1": {
+          "type": "step-item",
+          "settings": {
+            "heading": "Haz tu pedido",
+            "body": "<p>Elige tu paquete y paga en línea de forma segura. Texto de demostración.</p>"
+          }
+        },
+        "step-2": {
+          "type": "step-item",
+          "settings": {
+            "heading": "Lo despachamos",
+            "body": "<p>Preparamos el envío y te avisamos cuando salga. Texto de demostración.</p>"
+          }
+        },
+        "step-3": {
+          "type": "step-item",
+          "settings": {
+            "heading": "Lo recibes en casa",
+            "body": "<p>Llega a tu dirección en toda Colombia. Texto de demostración.</p>"
+          }
+        }
+      },
+      "block_order": ["step-1", "step-2", "step-3"],
+      "settings": {
+        "heading": "Cómo funciona",
+        "center": true,
+        "columns_desktop": 3
+      }
+    },
+    "reviews": {
+      "type": "landing-reviews",
+      "blocks": {
+        "review-1": {
+          "type": "review-item",
+          "settings": {
+            "is_demo": true,
+            "rating": 5,
+            "body": "<p>Contenido de ejemplo. Sustitúyelo por una opinión real de un cliente real antes de publicar.</p>",
+            "author": "Nombre de ejemplo",
+            "location": "Ciudad de ejemplo"
+          }
+        },
+        "review-2": {
+          "type": "review-item",
+          "settings": {
+            "is_demo": true,
+            "rating": 5,
+            "body": "<p>Contenido de ejemplo. Sustitúyelo por una opinión real de un cliente real antes de publicar.</p>",
+            "author": "Nombre de ejemplo",
+            "location": "Ciudad de ejemplo"
+          }
+        },
+        "review-3": {
+          "type": "review-item",
+          "settings": {
+            "is_demo": true,
+            "rating": 4,
+            "body": "<p>Contenido de ejemplo. Sustitúyelo por una opinión real de un cliente real antes de publicar.</p>",
+            "author": "Nombre de ejemplo",
+            "location": "Ciudad de ejemplo"
+          }
+        }
+      },
+      "block_order": ["review-1", "review-2", "review-3"],
+      "settings": {
+        "heading": "Lo que dicen quienes ya lo compraron",
+        "show_aggregate": true,
+        "source": "blocks",
+        "limit": 6,
+        "columns_desktop": 3
+      }
+    },
+    "ugc": {
+      "type": "landing-ugc",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "heading": "Nuestros clientes"
+      }
+    },
+    "offer": {
+      "type": "landing-offer",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "mode": "variants",
+        "heading": "Elige tu paquete",
+        "subheading": "<p>Cuantas más unidades, mejor precio por unidad.</p>",
+        "cta_label": "Agregar al carrito",
+        "show_payment_button": false
+      }
+    },
+    "shipping": {
+      "type": "landing-shipping",
+      "blocks": {
+        "ship-1": {
+          "type": "shipping-row",
+          "settings": {
+            "zone": "Bogotá, Medellín, Cali, Barranquilla",
+            "time": "Tiempo de demostración",
+            "note": "Sustituye estos plazos por los que tu transportadora cumple de verdad."
+          }
+        },
+        "ship-2": {
+          "type": "shipping-row",
+          "settings": {
+            "zone": "Resto del país",
+            "time": "Tiempo de demostración"
+          }
+        }
+      },
+      "block_order": ["ship-1", "ship-2"],
+      "settings": {
+        "heading": "Envíos"
+      }
+    },
+    "guarantee": {
+      "type": "landing-guarantee",
+      "blocks": {
+        "guarantee-1": {
+          "type": "guarantee-item",
+          "settings": {
+            "icon": "shield",
+            "heading": "Garantía",
+            "body": "<p>Describe la garantía real que ofreces. Texto de demostración.</p>"
+          }
+        },
+        "guarantee-2": {
+          "type": "guarantee-item",
+          "settings": {
+            "icon": "refresh",
+            "heading": "Cambios y devoluciones",
+            "body": "<p>Explica el proceso y los plazos reales. Texto de demostración.</p>"
+          }
+        },
+        "guarantee-3": {
+          "type": "guarantee-item",
+          "settings": {
+            "icon": "chat",
+            "heading": "Acompañamiento",
+            "body": "<p>Di cómo y cuándo pueden contactarte. Texto de demostración.</p>"
+          }
+        }
+      },
+      "block_order": ["guarantee-1", "guarantee-2", "guarantee-3"],
+      "settings": {
+        "heading": "Compra sin riesgo",
+        "columns_desktop": 3
+      }
+    },
+    "faq": {
+      "type": "landing-faq",
+      "blocks": {
+        "faq-1": {
+          "type": "faq-item",
+          "settings": {
+            "question": "¿Cuánto tarda el envío?",
+            "answer": "<p>Responde con los plazos reales por zona. Texto de demostración.</p>"
+          }
+        },
+        "faq-2": {
+          "type": "faq-item",
+          "settings": {
+            "question": "¿Cómo puedo pagar?",
+            "answer": "<p>Enumera solo los medios que tienes activos en tu pasarela. Texto de demostración.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "faq-item",
+          "settings": {
+            "question": "¿Puedo cambiarlo o devolverlo?",
+            "answer": "<p>Explica el proceso real y los plazos. Texto de demostración.</p>"
+          }
+        },
+        "faq-4": {
+          "type": "faq-item",
+          "settings": {
+            "question": "¿Cómo hago seguimiento a mi pedido?",
+            "answer": "<p>Di cómo recibirá el número de guía y dónde consultarlo. Texto de demostración.</p>"
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4"],
+      "settings": {
+        "heading": "Preguntas frecuentes",
+        "show_whatsapp": true,
+        "help_text": "¿Te queda otra duda?"
+      }
+    },
+    "final-cta": {
+      "type": "landing-final-cta",
+      "blocks": {
+        "final-shipping": {
+          "type": "trust-item",
+          "settings": { "icon": "truck", "text": "Envíos a toda Colombia" }
+        },
+        "final-secure": {
+          "type": "trust-item",
+          "settings": { "icon": "lock", "text": "Pago seguro" }
+        }
+      },
+      "block_order": ["final-shipping", "final-secure"],
+      "settings": {
+        "heading": "Pídelo hoy",
+        "cta_label": "Elegir mi paquete",
+        "show_whatsapp": true
+      }
+    },
+    "sticky-cta": {
+      "type": "landing-sticky-cta",
+      "settings": {
+        "cta_label": "Comprar",
+        "show_price": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "trust-bar",
+    "problem",
+    "solution",
+    "benefits",
+    "demo",
+    "how-it-works",
+    "reviews",
+    "ugc",
+    "offer",
+    "shipping",
+    "guarantee",
+    "faq",
+    "final-cta",
+    "sticky-cta"
+  ]
+}

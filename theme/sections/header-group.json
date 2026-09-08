@@ -11,12 +11,19 @@
   "type": "header",
   "name": "t:general.header",
   "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {}
+    },
     "header": {
       "type": "header",
-      "settings": {}
+      "settings": {
+        "show_shipping_claim": true
+      }
     }
   },
   "order": [
+    "announcement-bar",
     "header"
-  ],
+  ]
 }

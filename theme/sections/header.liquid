@@ -1,59 +1,193 @@
-<header>
-  <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
-  </h2>
+{% comment %}
+  The header. Deliberately light: on a landing, navigation competes with the
+  one action the page is asking for.
 
-  <div class="header__menu">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
+  The mobile menu is a <details> element, which gives a real disclosure widget
+  with keyboard support and correct semantics without a line of script. The
+  `scroll-lock` attribute is the hook the skeleton's critical CSS already uses
+  to stop the page scrolling behind an open panel.
+{% endcomment %}
+
+<header class="header">
+  <div class="header__brand">
+    {%- if section.settings.logo != blank -%}
+      <a class="header__logo" href="{{ routes.root_url }}">
+        {% render 'responsive-image',
+          image: section.settings.logo,
+          sizes: '160px',
+          width: 320,
+          section_index: 1,
+          alt: shop.name
+        %}
+      </a>
+    {%- else -%}
+      <p class="header__title">
+        {{ shop.name | link_to: routes.root_url }}
+      </p>
+    {%- endif -%}
   </div>
 
-  <div class="header__icons">
-    {% if shop.customer_accounts_enabled %}
+  {%- if section.settings.menu.links.size > 0 -%}
+    <nav class="header__nav" aria-label="{{ 'landing.menu' | t }}">
+      <ul class="header__menu">
+        {%- for link in section.settings.menu.links -%}
+          <li>{{ link.title | link_to: link.url }}</li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  {%- endif -%}
+
+  <div class="header__actions">
+    {%- if section.settings.show_shipping_claim and settings.shipping_claim != blank -%}
+      <span class="header__claim muted">{{ settings.shipping_claim }}</span>
+    {%- endif -%}
+
+    {%- if shop.customer_accounts_enabled -%}
       <shopify-account menu="{{ section.settings.customer_account_menu }}">
         {{ 'icon-account.svg' | inline_asset_content }}
       </shopify-account>
-    {% endif %}
+    {%- endif -%}
 
-    <a href="{{ routes.cart_url }}">
-      {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
-      {% endif %}
-
-      {{ 'icon-cart.svg' | inline_asset_content }}
+    <a class="header__cart" href="{{ routes.cart_url }}">
+      <span class="visually-hidden">{{ 'cart.title' | t }}</span>
+      {% render 'icon', name: 'cart' %}
+      {%- if cart.item_count > 0 -%}
+        <span class="header__count">{{ cart.item_count }}</span>
+      {%- endif -%}
     </a>
+
+    {%- if section.settings.menu.links.size > 0 -%}
+      <details class="header__disclosure" scroll-lock>
+        <summary class="header__toggle">
+          <span class="visually-hidden">{{ 'landing.menu' | t }}</span>
+          {% render 'icon', name: 'menu' %}
+        </summary>
+
+        <nav class="header__panel" aria-label="{{ 'landing.menu' | t }}">
+          <ul>
+            {%- for link in section.settings.menu.links -%}
+              <li>{{ link.title | link_to: link.url }}</li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      </details>
+    {%- endif -%}
   </div>
 </header>
 
 {% stylesheet %}
-  header {
-    height: 5rem;
+  .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: var(--space-md);
+    min-height: 4rem;
   }
-  header a {
-    position: relative;
+
+  .header a {
+    color: inherit;
     text-decoration: none;
-    color: var(--color-foreground);
+  }
+
+  .header__title {
+    font-family: var(--font-heading--family);
+    font-weight: 700;
+    font-size: var(--font-size-lg);
+  }
+
+  .header__nav {
+    display: none;
+  }
+
+  .header__menu {
+    display: flex;
+    gap: var(--space-lg);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .header__claim {
+    display: none;
+    font-size: var(--font-size-sm);
+  }
+
+  .header__cart {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: var(--tap-target);
+    min-height: var(--tap-target);
   }
-  header a sup {
+
+  .header__count {
     position: absolute;
-    left: 100%;
-    overflow: hidden;
-    max-width: var(--page-margin);
+    inset-block-start: 0.25rem;
+    inset-inline-end: 0.25rem;
+    min-width: 1.15rem;
+    padding: 0 0.25rem;
+    border-radius: 1rem;
+    background-color: var(--color-accent);
+    color: var(--color-cta-foreground);
+    font-size: 0.7rem;
+    line-height: 1.15rem;
+    text-align: center;
   }
-  header svg {
-    width: 2rem;
-  }
-  header .header__menu,
-  header .header__icons {
+
+  .header__toggle {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--tap-target);
+    min-height: var(--tap-target);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .header__toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .header__panel {
+    position: absolute;
+    inset-inline: 0;
+    z-index: 4;
+    padding: var(--space-md) var(--page-margin);
+    background-color: var(--color-background);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .header__panel ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .header__panel a {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-target);
+  }
+
+  @media screen and (min-width: 750px) {
+    .header__nav,
+    .header__claim {
+      display: block;
+    }
+
+    .header__disclosure {
+      display: none;
+    }
   }
 {% endstylesheet %}
 
@@ -62,9 +196,20 @@
   "name": "t:general.header",
   "settings": [
     {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "t:labels.logo"
+    },
+    {
       "type": "link_list",
       "id": "menu",
       "label": "t:labels.menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_claim",
+      "label": "t:labels.show_shipping_claim",
+      "default": true
     },
     {
       "type": "link_list",

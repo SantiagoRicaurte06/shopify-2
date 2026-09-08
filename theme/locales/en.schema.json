@@ -40,7 +40,8 @@
     "text": "Text",
     "theme": "Theme",
     "typography": "Typography",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+    "announcement_bar": "Announcement bar"
   },
   "sections": {
     "hero": "LP · Hero",
@@ -170,7 +171,9 @@
     "zone": "Destination",
     "reviews_entries": "Metaobject reviews",
     "reviews_limit": "Maximum reviews",
-    "help_text": "Help text"
+    "help_text": "Help text",
+    "logo": "Logo",
+    "show_shipping_claim": "Show shipping message"
   },
   "options": {
     "alignment": {
@@ -257,6 +260,7 @@
     "whatsapp_message": "The text the conversation opens with.",
     "whatsapp_number": "International format without symbols: 573001234567.",
     "reviews_metaobject": "Requires the landing_review metaobject to exist in the shop. See docs/metaobjects.md.",
-    "ugc_rights": "Only upload photos you have permission to publish. A customer posting about your product does not license you to use their photo."
+    "ugc_rights": "Only upload photos you have permission to publish. A customer posting about your product does not license you to use their photo.",
+    "announcement_text": "Leave empty to use the shipping message from the theme settings."
   }
 }
