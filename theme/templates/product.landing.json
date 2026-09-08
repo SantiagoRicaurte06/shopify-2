@@ -168,7 +168,7 @@
         "heading": "Por qué funciona",
         "center": true,
         "columns_desktop": 3,
-        "columns_mobile": 1
+        "columns_mobile": "1"
       }
     },
     "demo": {

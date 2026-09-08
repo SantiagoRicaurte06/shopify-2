@@ -4,7 +4,19 @@
   Every case is a media-item block, so this section is only responsible for the
   heading and the layout. Set it to carousel when there are more items than fit
   side by side.
+
+  Both layouts share a single block-rendering tag. Shopify rejects a section
+  that renders its blocks twice, even in branches that can never both run, so
+  the layout is switched with a class rather than by duplicating the container.
 {% endcomment %}
+
+{%- liquid
+  if section.settings.layout == 'carousel'
+    assign track_class = 'landing-scroller'
+  else
+    assign track_class = 'landing-grid'
+  endif
+-%}
 
 <landing-reveal class="landing-demo">
   {% render 'section-header',
@@ -14,12 +26,16 @@
     center: section.settings.center
   %}
 
-  {%- if section.settings.layout == 'carousel' -%}
-    <landing-carousel class="landing-demo__carousel">
-      <div class="landing-scroller" data-carousel-track>
-        {% content_for 'blocks' %}
-      </div>
+  <landing-carousel class="landing-demo__carousel">
+    <div
+      class="{{ track_class }}"
+      data-carousel-track
+      style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: 1;"
+    >
+      {% content_for 'blocks' %}
+    </div>
 
+    {%- if section.settings.layout == 'carousel' -%}
       <div class="landing-demo__controls">
         <button
           class="carousel-control"
@@ -38,15 +54,8 @@
           {% render 'icon', name: 'chevron-right' %}
         </button>
       </div>
-    </landing-carousel>
-  {%- else -%}
-    <div
-      class="landing-grid"
-      style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: 1;"
-    >
-      {% content_for 'blocks' %}
-    </div>
-  {%- endif -%}
+    {%- endif -%}
+  </landing-carousel>
 </landing-reveal>
 
 {% stylesheet %}
