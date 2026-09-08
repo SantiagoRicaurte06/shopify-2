@@ -1,45 +1,82 @@
 {% comment %}
-  This section is used in the product template to render product page with
-  media, content, and add-to-cart form.
+  The plain product page, used by templates/product.json.
+
+  This is the fallback for products that do not have a landing. It is
+  deliberately ordinary: gallery, title, price, buy form, description. The
+  selling work happens in the landing template.
 
   https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 {% endcomment %}
 
-<div class="product-images">
-  {% for image in product.images %}
-    {% render 'image', class: 'product-image', image: image %}
-  {% endfor %}
+<div class="product">
+  <div class="product__media">
+    {%- for media in product.media -%}
+      {% render 'media',
+        media: media,
+        section_index: section.index,
+        lcp: forloop.first,
+        sizes: '(min-width: 750px) 50vw, 100vw'
+      %}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'product__placeholder' }}
+    {%- endfor -%}
+  </div>
+
+  <div class="product__info">
+    <h1>{{ product.title }}</h1>
+
+    {% render 'stars', product: product, show_count: true %}
+    {% render 'price', product: product, show_saving: true %}
+
+    {% render 'product-form',
+      product: product,
+      form_id: 'product-form',
+      show_variant_picker: true,
+      show_quantity: true,
+      show_payment_button: true
+    %}
+
+    {% render 'payment-icons' %}
+
+    <div class="product__description rte">{{ product.description }}</div>
+  </div>
 </div>
 
-<div class="product-info">
-  <h1>{{ product.title }}</h1>
-  <p>{{ product.price | money }}</p>
-  <p>{{ product.description }}</p>
-</div>
+{% stylesheet %}
+  .product {
+    display: grid;
+    gap: var(--space-xl);
+  }
 
-<div class="product-form">
-  {% form 'product', product %}
-    {% assign current_variant = product.selected_or_first_available_variant %}
+  @media screen and (min-width: 750px) {
+    .product {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
 
-    <select name="id">
-      {% for variant in product.variants %}
-        <option
-          value="{{ variant.id }}"
-          {% if variant == current_variant %}
-            selected="selected"
-          {% endif %}
-        >
-          {{ variant.title }} - {{ variant.price | money }}
-        </option>
-      {% endfor %}
-    </select>
+  .product__media {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
 
-    <input type="text" name="quantity" min="1" value="1">
+  .product__media img,
+  .product__media video {
+    width: 100%;
+    border-radius: var(--style-border-radius-cards);
+  }
 
-    <input type="submit" value="Add to cart">
-    {{ form | payment_button }}
-  {% endform %}
-</div>
+  .product__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .product__description > * + * {
+    margin-block-start: var(--space-sm);
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

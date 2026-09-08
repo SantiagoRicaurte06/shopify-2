@@ -1,0 +1,79 @@
+{% doc %}
+  One question and its answer.
+
+  Built on <details>/<summary>, so it opens, closes, is keyboard operable and
+  is found by the browser's in-page search with no JavaScript at all. This is
+  the reason the FAQ section ships zero script.
+
+  @example
+  {% content_for 'block', type: 'faq-item', id: 'faq' %}
+{% enddoc %}
+
+<details class="faq-item" {{ block.shopify_attributes }}>
+  <summary class="faq-item__question">
+    <span>{{ block.settings.question }}</span>
+    <span class="faq-item__marker" aria-hidden="true">{% render 'icon', name: 'plus' %}</span>
+  </summary>
+  <div class="faq-item__answer muted">{{ block.settings.answer }}</div>
+</details>
+
+{% stylesheet %}
+  .faq-item {
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .faq-item__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+    min-height: var(--tap-target);
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  /* Safari renders its own disclosure triangle without this. */
+  .faq-item__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item__marker {
+    color: var(--color-accent);
+  }
+
+  .faq-item[open] .faq-item__marker {
+    transform: rotate(45deg);
+  }
+
+  .faq-item__answer {
+    padding-block-end: var(--space-md);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .faq-item__marker {
+      transition: transform 0.2s ease;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks.faq_item",
+  "settings": [
+    {
+      "type": "text",
+      "id": "question",
+      "label": "t:labels.question",
+      "default": "¿Cuánto tarda el envío?"
+    },
+    {
+      "type": "richtext",
+      "id": "answer",
+      "label": "t:labels.answer"
+    }
+  ],
+  "presets": [{ "name": "t:blocks.faq_item" }]
+}
+{% endschema %}

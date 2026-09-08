@@ -1,0 +1,220 @@
+{% doc %}
+  One bundle tier in the "quantity" offer mode: N units of the current variant.
+
+  This block exists only for the quantity mode. In the default "variants" mode
+  the tiers are real variants and every figure comes straight from Shopify, so
+  no block is needed and nothing can drift.
+
+  The honesty problem this block has to solve: Shopify applies an automatic
+  quantity discount at the checkout, not on the product page. To show the
+  discounted total here, the merchant has to restate that discount in
+  `discount_percentage`. If the two ever disagree, the customer sees one price
+  and is charged another.
+
+  Two things follow from that, and both are deliberate:
+
+  1. The undiscounted total is always shown too, struck through, so nothing is
+     hidden.
+  2. Whenever a discount is declared, the tier states in words that it is
+     applied at checkout. That line is not optional and not a setting.
+
+  The radio is named `quantity` and carries the unit count as its value, so the
+  form submits the right amount with no JavaScript at all.
+
+  @example
+  {% content_for 'block', type: 'offer-tier', id: 'tier' %}
+{% enddoc %}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign units = block.settings.quantity | at_least: 1
+
+  assign gross = variant.price | times: units
+  assign discount = block.settings.discount_percentage | default: 0
+  assign remainder = 100 | minus: discount
+  assign net = gross | times: remainder | divided_by: 100
+  assign per_unit = net | divided_by: units
+  assign per_unit_money = per_unit | money
+
+  assign has_discount = false
+  if discount > 0
+    assign has_discount = true
+  endif
+
+  assign input_id = 'Tier-' | append: block.id
+-%}
+
+<div
+  class="offer-tier{% if block.settings.highlight %} offer-tier--highlight{% endif %}"
+  data-tier
+  data-variant-id="{{ variant.id }}"
+  data-quantity="{{ units }}"
+  data-total="{{ net | money }}"
+  {{ block.shopify_attributes }}
+>
+  <input
+    class="offer-tier__input visually-hidden"
+    type="radio"
+    name="quantity"
+    id="{{ input_id }}"
+    value="{{ units }}"
+    {% if block.settings.preselected %}
+      checked
+    {% endif %}
+  >
+
+  <label class="offer-tier__label" for="{{ input_id }}">
+    <span class="offer-tier__head">
+      <span class="offer-tier__units">
+        {{- block.settings.title | default: units -}}
+      </span>
+
+      {%- if block.settings.badge != blank -%}
+        <span class="offer-tier__badge">{{ block.settings.badge }}</span>
+      {%- endif -%}
+    </span>
+
+    <span class="offer-tier__pricing">
+      <span class="offer-tier__total">{{ net | money }}</span>
+
+      {%- if has_discount -%}
+        <s class="offer-tier__gross muted">{{ gross | money }}</s>
+      {%- endif -%}
+
+      <span class="offer-tier__unit muted">
+        {{- 'landing.per_unit' | t: price: per_unit_money -}}
+      </span>
+    </span>
+  </label>
+
+  {%- if has_discount -%}
+    <p class="offer-tier__notice muted">{{ 'landing.discount_at_checkout' | t }}</p>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .offer-tier {
+    position: relative;
+    border: 2px solid var(--color-border);
+    border-radius: var(--style-border-radius-cards);
+    padding: var(--space-md);
+  }
+
+  .offer-tier--highlight {
+    border-color: var(--color-accent);
+  }
+
+  /* The radio is visually hidden but still focusable, so the ring has to be
+     drawn on the tier it controls. */
+  .offer-tier:has(.offer-tier__input:focus-visible) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .offer-tier:has(.offer-tier__input:checked),
+  .offer-tier.is-selected {
+    border-color: var(--color-cta-background);
+    background-color: var(--color-accent-soft);
+  }
+
+  .offer-tier__label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    min-height: var(--tap-target);
+    cursor: pointer;
+  }
+
+  .offer-tier__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .offer-tier__units {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+  }
+
+  .offer-tier__badge {
+    background-color: var(--color-accent);
+    color: var(--color-cta-foreground);
+    border-radius: var(--style-border-radius-inputs);
+    padding: 0.1em 0.5em;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+  }
+
+  .offer-tier__pricing {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .offer-tier__total {
+    font-weight: 700;
+  }
+
+  .offer-tier__unit,
+  .offer-tier__gross {
+    font-size: var(--font-size-sm);
+  }
+
+  .offer-tier__notice {
+    margin-block-start: var(--space-2xs);
+    font-size: var(--font-size-sm);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks.offer_tier",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:labels.title",
+      "info": "t:info.tier_title"
+    },
+    {
+      "type": "range",
+      "id": "quantity",
+      "label": "t:labels.quantity",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "discount_percentage",
+      "label": "t:labels.discount_percentage",
+      "info": "t:info.quantity_discount",
+      "min": 0,
+      "max": 70,
+      "step": 1,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "t:labels.badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "highlight",
+      "label": "t:labels.highlight",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "preselected",
+      "label": "t:labels.preselected",
+      "default": false
+    }
+  ],
+  "presets": [{ "name": "t:blocks.offer_tier" }]
+}
+{% endschema %}

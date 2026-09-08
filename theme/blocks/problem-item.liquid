@@ -1,0 +1,66 @@
+{% doc %}
+  One pain point the product addresses.
+
+  Rendered as a list item so the problem section can be a real list, and
+  styled distinctly from a benefit so the contrast between the situation
+  before and after reads at a glance.
+
+  @example
+  {% content_for 'block', type: 'problem-item', id: 'problem' %}
+{% enddoc %}
+
+<li class="problem-item reveal" {{ block.shopify_attributes }}>
+  <span class="problem-item__mark" aria-hidden="true">{% render 'icon', name: 'close' %}</span>
+  <div>
+    {%- if block.settings.heading != blank -%}
+      <p class="problem-item__heading">{{ block.settings.heading }}</p>
+    {%- endif -%}
+    {%- if block.settings.body != blank -%}
+      <div class="muted">{{ block.settings.body }}</div>
+    {%- endif -%}
+  </div>
+</li>
+
+{% stylesheet %}
+  .problem-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .problem-item__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background-color: var(--color-surface);
+    color: var(--color-sale);
+  }
+
+  .problem-item__heading {
+    font-weight: 700;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks.problem_item",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Lo que pasa hoy"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "t:labels.body"
+    }
+  ],
+  "presets": [{ "name": "t:blocks.problem_item" }]
+}
+{% endschema %}

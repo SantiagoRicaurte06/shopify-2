@@ -1,0 +1,66 @@
+{% doc %}
+  One row of the shipping table: a destination and its stated delivery time.
+
+  Rendered as a definition-style row rather than a real <table> so it reflows
+  on a phone without horizontal scrolling.
+
+  @example
+  {% content_for 'block', type: 'shipping-row', id: 'shipping-row' %}
+{% enddoc %}
+
+<div class="shipping-row" {{ block.shopify_attributes }}>
+  <span class="shipping-row__label">{{ block.settings.zone }}</span>
+  <span class="shipping-row__value">{{ block.settings.time }}</span>
+  {%- if block.settings.note != blank -%}
+    <span class="shipping-row__note muted">{{ block.settings.note }}</span>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .shipping-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-2xs) var(--space-md);
+    padding-block: var(--space-sm);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .shipping-row__label {
+    font-weight: 700;
+  }
+
+  .shipping-row__value {
+    text-align: end;
+  }
+
+  .shipping-row__note {
+    grid-column: 1 / -1;
+    font-size: var(--font-size-sm);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks.shipping_row",
+  "settings": [
+    {
+      "type": "text",
+      "id": "zone",
+      "label": "t:labels.zone",
+      "default": "Ciudades principales"
+    },
+    {
+      "type": "text",
+      "id": "time",
+      "label": "t:labels.delivery_time",
+      "default": "2 a 3 días hábiles"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "t:labels.note"
+    }
+  ],
+  "presets": [{ "name": "t:blocks.shipping_row" }]
+}
+{% endschema %}

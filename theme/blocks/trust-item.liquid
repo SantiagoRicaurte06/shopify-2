@@ -1,0 +1,58 @@
+{% doc %}
+  A short trust signal: an icon and a line of text.
+
+  Shared by the hero, the trust bar and the final call to action, which is the
+  whole reason it lives in /blocks instead of inside one section.
+
+  @example
+  {% content_for 'block', type: 'trust-item', id: 'trust' %}
+{% enddoc %}
+
+<li class="trust-item" {{ block.shopify_attributes }}>
+  {% render 'icon', name: block.settings.icon %}
+  <span>{{ block.settings.text }}</span>
+</li>
+
+{% stylesheet %}
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--color-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .trust-item .icon {
+    color: var(--color-accent);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks.trust_item",
+  "settings": [
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:labels.icon",
+      "default": "truck",
+      "options": [
+        { "value": "check", "label": "t:options.icon.check" },
+        { "value": "truck", "label": "t:options.icon.truck" },
+        { "value": "shield", "label": "t:options.icon.shield" },
+        { "value": "lock", "label": "t:options.icon.lock" },
+        { "value": "clock", "label": "t:options.icon.clock" },
+        { "value": "refresh", "label": "t:options.icon.refresh" },
+        { "value": "chat", "label": "t:options.icon.chat" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:labels.text",
+      "default": "Envíos a toda Colombia"
+    }
+  ],
+  "presets": [{ "name": "t:blocks.trust_item" }]
+}
+{% endschema %}

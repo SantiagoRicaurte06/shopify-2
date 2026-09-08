@@ -275,3 +275,13 @@ body {
     transform: none;
   }
 }
+
+/** Shared by the media snippet and the media-item block. */
+.media--external iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+  border-radius: var(--style-border-radius-cards);
+}

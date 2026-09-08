@@ -1,0 +1,80 @@
+{% doc %}
+  One piece of customer content: a photo with an optional handle and caption.
+
+  Only upload content you have permission to publish. A customer posting about
+  your product has not granted you a licence to use their photo in an ad.
+
+  @example
+  {% content_for 'block', type: 'ugc-item', id: 'ugc' %}
+{% enddoc %}
+
+<figure class="ugc-item reveal" {{ block.shopify_attributes }}>
+  {% render 'responsive-image',
+    image: block.settings.image,
+    sizes: '(min-width: 750px) 25vw, 60vw',
+    width: 800,
+    height: 800,
+    crop: 'center',
+    class: 'ugc-item__image'
+  %}
+
+  {%- if block.settings.handle != blank or block.settings.caption != blank -%}
+    <figcaption class="ugc-item__caption">
+      {%- if block.settings.handle != blank -%}
+        <span class="ugc-item__handle">{{ block.settings.handle }}</span>
+      {%- endif -%}
+      {%- if block.settings.caption != blank -%}
+        <span class="muted">{{ block.settings.caption }}</span>
+      {%- endif -%}
+    </figcaption>
+  {%- endif -%}
+</figure>
+
+{% stylesheet %}
+  .ugc-item {
+    margin: 0;
+  }
+
+  .ugc-item__image {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: var(--style-border-radius-cards);
+  }
+
+  .ugc-item__caption {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    margin-block-start: var(--space-xs);
+    font-size: var(--font-size-sm);
+  }
+
+  .ugc-item__handle {
+    font-weight: 700;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks.ugc_item",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:labels.image"
+    },
+    {
+      "type": "text",
+      "id": "handle",
+      "label": "t:labels.handle"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "t:labels.caption"
+    }
+  ],
+  "presets": [{ "name": "t:blocks.ugc_item" }]
+}
+{% endschema %}

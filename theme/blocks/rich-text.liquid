@@ -1,0 +1,53 @@
+{% doc %}
+  A paragraph of formatted text.
+
+  The `richtext` setting supports dynamic sources, so the merchant can bind it
+  to a product metafield and have the copy travel with the product instead of
+  living in the theme.
+
+  @example
+  {% content_for 'block', type: 'rich-text', id: 'copy' %}
+{% enddoc %}
+
+<div
+  class="rich-text"
+  style="--text-align: {{ block.settings.alignment }};"
+  {{ block.shopify_attributes }}
+>
+  {{ block.settings.content }}
+</div>
+
+{% stylesheet %}
+  .rich-text {
+    text-align: var(--text-align);
+    max-width: 65ch;
+  }
+
+  .rich-text[style*='center'] {
+    margin-inline: auto;
+  }
+
+  .rich-text > * + * {
+    margin-block-start: var(--space-sm);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks.rich_text",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "t:labels.text"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "default": "left"
+    }
+  ],
+  "presets": [{ "name": "t:blocks.rich_text" }]
+}
+{% endschema %}

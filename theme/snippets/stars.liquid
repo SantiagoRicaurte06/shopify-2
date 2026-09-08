@@ -1,38 +1,60 @@
 {% doc %}
   Renders a star rating.
 
-  Reads only the standard `reviews.rating` and `reviews.rating_count`
-  metafields, which a reviews app maintains. If the product carries neither,
-  this renders nothing at all — an empty rating is worse than no rating, and
-  inventing one is not an option.
+  Two callers, one implementation:
 
-  @param {product} product - The product whose rating to show
-  @param {boolean} [show_count] - Appends the number of reviews
+  - Pass a `product` and the rating is read from the standard `reviews.rating`
+    and `reviews.rating_count` metafields, which a reviews app maintains. If
+    the product carries neither, this renders nothing at all. An empty rating
+    is worse than no rating, and inventing one is not an option.
+
+  - Pass an explicit `rating` and that value is drawn. This is how a
+    theme-authored testimonial shows its stars, and it never claims to be an
+    aggregate of anything.
+
+  @param {product} [product] - Read the rating from this product's metafields
+  @param {number} [rating] - An explicit rating, overriding the product
+  @param {number} [rating_max] - Scale maximum for an explicit rating. Defaults to 5
+  @param {boolean} [show_count] - Appends the number of reviews. Product ratings only
 
   @example
   {% render 'stars', product: product, show_count: true %}
+  {% render 'stars', rating: block.settings.rating %}
 {% enddoc %}
 
 {%- liquid
-  assign rating = product.metafields.reviews.rating.value
-  assign count = product.metafields.reviews.rating_count.value | plus: 0
+  assign value = 0
+  assign scale_max = 5
+  assign count = 0
+
+  if rating != blank
+    assign value = rating
+    assign scale_max = rating_max | default: 5
+  else
+    assign meta = product.metafields.reviews.rating.value
+    assign count = product.metafields.reviews.rating_count.value | plus: 0
+
+    if meta != blank and meta.rating != blank and count > 0
+      assign value = meta.rating
+      assign scale_max = meta.scale_max | default: 5
+    endif
+  endif
 -%}
 
-{%- if rating != blank and rating.rating != blank and count > 0 -%}
+{%- if value > 0 -%}
   {%- liquid
-    assign scale_max = rating.scale_max | default: 5
-    assign percent = rating.rating | divided_by: scale_max | times: 100
+    assign percent = value | times: 100.0 | divided_by: scale_max
   -%}
   <div class="stars">
     <span
       class="stars__track"
       role="img"
-      aria-label="{{ 'landing.rating_aria' | t: rating: rating.rating, max: scale_max }}"
+      aria-label="{{ 'landing.rating_aria' | t: rating: value, max: scale_max }}"
     >
       <span class="stars__fill" style="--rating-percent: {{ percent }}%"></span>
     </span>
 
-    {%- if show_count -%}
+    {%- if show_count and count > 0 -%}
       <span class="stars__count muted">
         {{- 'landing.rating_count' | t: count: count -}}
       </span>

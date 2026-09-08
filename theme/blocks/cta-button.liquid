@@ -1,0 +1,69 @@
+{% doc %}
+  A standalone call-to-action button.
+
+  Defaults to jumping to the offer section rather than to an external page, so
+  a button dropped anywhere on the landing sends the visitor to the place where
+  they can actually buy.
+
+  @example
+  {% content_for 'block', type: 'cta-button', id: 'cta' %}
+{% enddoc %}
+
+{%- liquid
+  assign destination = block.settings.url | default: '#landing-offer'
+-%}
+
+<div class="cta-button" {{ block.shopify_attributes }}>
+  {% render 'button',
+    label: block.settings.label,
+    url: destination,
+    style: block.settings.style,
+    size: 'large',
+    full_width: block.settings.full_width
+  %}
+</div>
+
+{% stylesheet %}
+  .cta-button {
+    display: flex;
+    justify-content: center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks.cta_button",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:labels.link_label",
+      "default": "Lo quiero"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "t:labels.link",
+      "info": "t:info.cta_default_url"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:labels.text_style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "t:options.button_style.primary" },
+        { "value": "secondary", "label": "t:options.button_style.secondary" },
+        { "value": "text", "label": "t:options.button_style.text" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:labels.full_width",
+      "default": false
+    }
+  ],
+  "presets": [{ "name": "t:blocks.cta_button" }]
+}
+{% endschema %}

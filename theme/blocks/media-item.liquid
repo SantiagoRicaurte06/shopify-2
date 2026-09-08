@@ -1,0 +1,184 @@
+{% doc %}
+  One piece of media: an image, a Shopify-hosted video, an external video, or
+  a before/after pair.
+
+  All four cases resolve through this one block so the demo, solution and UGC
+  sections do not each grow their own media handling.
+
+  @example
+  {% content_for 'block', type: 'media-item', id: 'media' %}
+{% enddoc %}
+
+<figure class="media-item reveal" {{ block.shopify_attributes }}>
+  {%- case block.settings.media_type -%}
+    {%- when 'video' -%}
+      {%- if block.settings.video != blank -%}
+        {{
+          block.settings.video
+          | video_tag:
+            controls: true,
+            preload: 'none',
+            muted: false,
+            autoplay: false,
+            loop: false,
+            image_size: '1100x',
+            poster: block.settings.image
+        }}
+      {%- endif -%}
+
+    {%- when 'external_video' -%}
+      {%- comment -%}
+        A `video_url` setting is not a media object, so `external_video_tag`
+        does not apply here — it exposes `id` and `type`, and the iframe is
+        ours to build. Loading is lazy and nothing autoplays.
+      {%- endcomment -%}
+      {%- if block.settings.external_video != blank -%}
+        <div class="media media--external">
+          {%- if block.settings.external_video.type == 'youtube' -%}
+            <iframe
+              src="https://www.youtube.com/embed/{{ block.settings.external_video.id }}?rel=0"
+              title="{{ block.settings.caption | default: product.title | escape }}"
+              loading="lazy"
+              allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          {%- elsif block.settings.external_video.type == 'vimeo' -%}
+            <iframe
+              src="https://player.vimeo.com/video/{{ block.settings.external_video.id }}"
+              title="{{ block.settings.caption | default: product.title | escape }}"
+              loading="lazy"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    {%- when 'before_after' -%}
+      <div class="media-item__pair">
+        <div>
+          {% render 'responsive-image',
+            image: block.settings.image_before,
+            sizes: '(min-width: 750px) 45vw, 45vw',
+            width: 900
+          %}
+          <figcaption class="muted">{{ 'landing.before' | t }}</figcaption>
+        </div>
+        <div>
+          {% render 'responsive-image',
+            image: block.settings.image_after,
+            sizes: '(min-width: 750px) 45vw, 45vw',
+            width: 900
+          %}
+          <figcaption class="muted">{{ 'landing.after' | t }}</figcaption>
+        </div>
+      </div>
+
+    {%- else -%}
+      {% render 'responsive-image',
+        image: block.settings.image,
+        image_mobile: block.settings.image_mobile,
+        sizes: '(min-width: 750px) 50vw, 100vw',
+        width: 1400
+      %}
+  {%- endcase -%}
+
+  {%- if block.settings.caption != blank -%}
+    <figcaption class="media-item__caption muted">{{ block.settings.caption }}</figcaption>
+  {%- endif -%}
+</figure>
+
+{% stylesheet %}
+  .media-item {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .media-item img,
+  .media-item video {
+    width: 100%;
+    border-radius: var(--style-border-radius-cards);
+  }
+
+  .media-item__pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+  }
+
+  .media-item__pair figcaption {
+    margin-block-start: var(--space-2xs);
+    text-align: center;
+    font-size: var(--font-size-sm);
+  }
+
+  .media-item__caption {
+    font-size: var(--font-size-sm);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks.media_item",
+  "settings": [
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "t:labels.media_type",
+      "default": "image",
+      "options": [
+        { "value": "image", "label": "t:options.media_type.image" },
+        { "value": "video", "label": "t:options.media_type.video" },
+        { "value": "external_video", "label": "t:options.media_type.external_video" },
+        { "value": "before_after", "label": "t:options.media_type.before_after" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:labels.image",
+      "info": "t:info.media_poster",
+      "visible_if": "{{ block.settings.media_type == 'image' or block.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:labels.image_mobile",
+      "visible_if": "{{ block.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:labels.video",
+      "visible_if": "{{ block.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "video_url",
+      "id": "external_video",
+      "label": "t:labels.external_video",
+      "accept": ["youtube", "vimeo"],
+      "visible_if": "{{ block.settings.media_type == 'external_video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_before",
+      "label": "t:labels.image_before",
+      "visible_if": "{{ block.settings.media_type == 'before_after' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_after",
+      "label": "t:labels.image_after",
+      "visible_if": "{{ block.settings.media_type == 'before_after' }}"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "t:labels.caption"
+    }
+  ],
+  "presets": [{ "name": "t:blocks.media_item" }]
+}
+{% endschema %}
