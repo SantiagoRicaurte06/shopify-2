@@ -1,0 +1,37 @@
+{% doc %}
+  Renders a WhatsApp link built from the theme settings.
+
+  Renders nothing when no number is configured, so an unconfigured store never
+  ships a dead button.
+
+  @param {string} [label] - Visible text. Defaults to the translated call to action
+  @param {string} [style] - Button style passed through to the button snippet
+  @param {product} [product] - Appends the product name to the preset message
+
+  @example
+  {% render 'whatsapp-link', product: product %}
+{% enddoc %}
+
+{%- if settings.whatsapp_number != blank -%}
+  {%- liquid
+    assign number = settings.whatsapp_number | remove: ' ' | remove: '+' | remove: '-'
+    assign message = settings.whatsapp_message
+
+    if product != blank
+      assign message = message | append: ' (' | append: product.title | append: ')'
+    endif
+
+    # Only the message is encoded. Encoding the whole URL would escape the
+    # scheme and the slashes along with it.
+    assign encoded_message = message | url_encode
+    assign href = 'https://wa.me/' | append: number | append: '?text=' | append: encoded_message
+
+    assign default_label = 'landing.whatsapp_cta' | t
+    assign link_label = label | default: default_label
+  -%}
+
+  <a class="whatsapp-link button button--{{ style | default: 'secondary' }}" href="{{ href }}" rel="noopener">
+    {% render 'icon', name: 'whatsapp' %}
+    {{ link_label }}
+  </a>
+{%- endif -%}

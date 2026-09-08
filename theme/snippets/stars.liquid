@@ -1,0 +1,81 @@
+{% doc %}
+  Renders a star rating.
+
+  Reads only the standard `reviews.rating` and `reviews.rating_count`
+  metafields, which a reviews app maintains. If the product carries neither,
+  this renders nothing at all — an empty rating is worse than no rating, and
+  inventing one is not an option.
+
+  @param {product} product - The product whose rating to show
+  @param {boolean} [show_count] - Appends the number of reviews
+
+  @example
+  {% render 'stars', product: product, show_count: true %}
+{% enddoc %}
+
+{%- liquid
+  assign rating = product.metafields.reviews.rating.value
+  assign count = product.metafields.reviews.rating_count.value | plus: 0
+-%}
+
+{%- if rating != blank and rating.rating != blank and count > 0 -%}
+  {%- liquid
+    assign scale_max = rating.scale_max | default: 5
+    assign percent = rating.rating | divided_by: scale_max | times: 100
+  -%}
+  <div class="stars">
+    <span
+      class="stars__track"
+      role="img"
+      aria-label="{{ 'landing.rating_aria' | t: rating: rating.rating, max: scale_max }}"
+    >
+      <span class="stars__fill" style="--rating-percent: {{ percent }}%"></span>
+    </span>
+
+    {%- if show_count -%}
+      <span class="stars__count muted">
+        {{- 'landing.rating_count' | t: count: count -}}
+      </span>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  /* One character per star, filled by a clipped overlay, so a 4.3 reads as 4.3. */
+  .stars__track {
+    position: relative;
+    display: inline-block;
+    color: var(--color-border);
+    font-size: var(--font-size-lg);
+    letter-spacing: 0.1em;
+    line-height: 1;
+  }
+
+  .stars__track::before {
+    content: '★★★★★';
+  }
+
+  .stars__fill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--rating-percent);
+    overflow: hidden;
+    color: var(--color-accent);
+    white-space: nowrap;
+  }
+
+  .stars__fill::before {
+    content: '★★★★★';
+  }
+
+  .stars__count {
+    font-size: var(--font-size-sm);
+  }
+{% endstylesheet %}

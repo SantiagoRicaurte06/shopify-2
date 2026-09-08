@@ -82,6 +82,15 @@
     "menu": "Menú",
     "close": "Cerrar",
     "before": "Antes",
-    "after": "Después"
+    "after": "Después",
+    "payment": {
+      "card": "Tarjeta de crédito o débito",
+      "pse": "PSE",
+      "nequi": "Nequi",
+      "daviplata": "Daviplata",
+      "bancolombia": "Bancolombia",
+      "cash": "Efectivo en corresponsales",
+      "bnpl": "Paga a cuotas"
+    }
   }
 }

@@ -1,0 +1,116 @@
+{% doc %}
+  Renders a link or a submit button with the theme's button styling.
+
+  @param {string} [label] - Visible text
+  @param {string} [url] - Destination. Renders an <a> when present, a <button> otherwise
+  @param {string} [style] - "primary" (default), "secondary" or "text"
+  @param {string} [size] - "large" for the main calls to action
+  @param {boolean} [full_width] - Stretches the button to its container
+  @param {string} [type] - Button type when no url is given. Defaults to submit
+  @param {string} [id] - DOM id, used by the sticky bar to watch the main button
+  @param {boolean} [disabled] - Renders the button as unavailable
+
+  @example
+  {% render 'button', label: 'Agregar al carrito', size: 'large', full_width: true %}
+{% enddoc %}
+
+{%- liquid
+  assign classes = 'button'
+  assign variant = style | default: 'primary'
+  assign classes = classes | append: ' button--' | append: variant
+
+  if size == 'large'
+    assign classes = classes | append: ' button--large'
+  endif
+
+  if full_width
+    assign classes = classes | append: ' button--full'
+  endif
+-%}
+
+{%- if url != blank -%}
+  <a
+    class="{{ classes }}"
+    href="{{ url }}"
+    {% if id %}
+      id="{{ id }}"
+    {% endif %}
+  >
+    {{- label -}}
+  </a>
+{%- else -%}
+  <button
+    class="{{ classes }}"
+    type="{{ type | default: 'submit' }}"
+    {% if id %}
+      id="{{ id }}"
+    {% endif %}
+    {% if disabled %}
+      disabled
+    {% endif %}
+  >
+    {{- label -}}
+  </button>
+{%- endif -%}
+
+{% stylesheet %}
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid transparent;
+    border-radius: var(--style-border-radius-inputs);
+    font: inherit;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .button--primary {
+    background-color: var(--color-cta-background);
+    color: var(--color-cta-foreground);
+  }
+
+  .button--secondary {
+    background-color: transparent;
+    border-color: currentcolor;
+    color: var(--color-foreground);
+  }
+
+  .button--text {
+    background-color: transparent;
+    padding-inline: 0;
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .button--large {
+    padding: var(--space-md) var(--space-xl);
+    font-size: var(--font-size-lg);
+  }
+
+  .button--full {
+    display: flex;
+    width: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .button {
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .button:hover:not([disabled]) {
+      transform: translateY(-1px);
+      opacity: 0.92;
+    }
+  }
+{% endstylesheet %}

@@ -1,0 +1,78 @@
+{% doc %}
+  Renders a price, with the compare-at price and saving when there is one.
+
+  Every figure comes from the variant. The theme never stores or computes a
+  price of its own, so what the customer reads here is what the checkout
+  charges.
+
+  @param {variant} [variant] - The variant to price. Defaults to the product's
+  @param {product} [product] - Used when no variant is given
+  @param {number} [quantity] - Multiplies the price, for bundle tiers
+  @param {boolean} [show_saving] - Renders the amount saved
+  @param {string} [class] - Extra classes
+
+  @example
+  {% render 'price', variant: product.selected_or_first_available_variant, show_saving: true %}
+{% enddoc %}
+
+{%- liquid
+  assign target = variant | default: product.selected_or_first_available_variant
+  assign units = quantity | default: 1
+
+  assign price = target.price | times: units
+  assign compare_at = target.compare_at_price | times: units
+
+  assign on_sale = false
+  if target.compare_at_price > target.price
+    assign on_sale = true
+    assign saving = compare_at | minus: price
+    assign saving_money = saving | money
+  endif
+-%}
+
+<div class="price {{ class }}">
+  <span class="price__current{% if on_sale %} price__current--sale{% endif %}">
+    {{- price | money -}}
+  </span>
+
+  {%- if on_sale -%}
+    <s class="price__compare">{{ compare_at | money }}</s>
+
+    {%- if show_saving -%}
+      <span class="price__saving">
+        {{- 'landing.save_amount' | t: amount: saving_money -}}
+      </span>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .price__current {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+  }
+
+  .price__current--sale {
+    color: var(--color-sale);
+  }
+
+  .price__compare {
+    color: var(--color-muted);
+  }
+
+  .price__saving {
+    background-color: var(--color-sale);
+    color: #fff;
+    border-radius: var(--style-border-radius-inputs);
+    padding: 0.1em 0.5em;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+  }
+{% endstylesheet %}

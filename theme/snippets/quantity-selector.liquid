@@ -1,0 +1,83 @@
+{% doc %}
+  Renders a number input with decrement and increment buttons.
+
+  The input is the source of truth, so typing and the browser's own spinners
+  keep working when JavaScript does not.
+
+  @param {string} [name] - Field name. Defaults to quantity
+  @param {number} [value] - Starting value. Defaults to 1
+  @param {number} [min] - Minimum value. Defaults to 1
+  @param {string} [form] - id of the form this field belongs to
+
+  @example
+  {% render 'quantity-selector', form: 'buy-form' %}
+{% enddoc %}
+
+<quantity-selector class="quantity">
+  <button
+    class="quantity__step"
+    type="button"
+    data-step="-1"
+    aria-label="{{ 'landing.decrease' | t }}"
+  >
+    {% render 'icon', name: 'minus' %}
+  </button>
+
+  <label class="visually-hidden" for="Quantity-{{ form | default: 'main' }}">
+    {{- 'landing.quantity' | t -}}
+  </label>
+  <input
+    class="quantity__input"
+    id="Quantity-{{ form | default: 'main' }}"
+    type="number"
+    name="{{ name | default: 'quantity' }}"
+    value="{{ value | default: 1 }}"
+    min="{{ min | default: 1 }}"
+    step="1"
+    inputmode="numeric"
+    {% if form %}
+      form="{{ form }}"
+    {% endif %}
+  >
+
+  <button
+    class="quantity__step"
+    type="button"
+    data-step="1"
+    aria-label="{{ 'landing.increase' | t }}"
+  >
+    {% render 'icon', name: 'plus' %}
+  </button>
+</quantity-selector>
+
+{% stylesheet %}
+  .quantity {
+    display: inline-flex;
+    align-items: stretch;
+    border: 1px solid var(--color-border);
+    border-radius: var(--style-border-radius-inputs);
+    overflow: hidden;
+  }
+
+  .quantity__step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--tap-target);
+    min-height: var(--tap-target);
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .quantity__input {
+    width: 3.5rem;
+    border: 0;
+    border-inline: 1px solid var(--color-border);
+    border-radius: 0;
+    text-align: center;
+    background: transparent;
+    color: inherit;
+  }
+{% endstylesheet %}

@@ -1,0 +1,75 @@
+{% doc %}
+  Lists the payment methods the merchant has actually enabled.
+
+  These are rendered as labelled pills rather than brand marks: the logos of
+  Visa, PSE, Nequi and the rest are trademarks that this theme has no licence
+  to redistribute. If you want the real marks, add the files the provider gives
+  you and swap the labels for images.
+
+  The list is driven entirely by theme settings, so it can never advertise a
+  method the store does not accept.
+
+  @example
+  {% render 'payment-icons' %}
+{% enddoc %}
+
+{%- if settings.show_payment_icons -%}
+  {%- liquid
+    assign methods = ''
+    if settings.payment_card
+      assign methods = methods | append: 'landing.payment.card,'
+    endif
+    if settings.payment_pse
+      assign methods = methods | append: 'landing.payment.pse,'
+    endif
+    if settings.payment_nequi
+      assign methods = methods | append: 'landing.payment.nequi,'
+    endif
+    if settings.payment_daviplata
+      assign methods = methods | append: 'landing.payment.daviplata,'
+    endif
+    if settings.payment_bancolombia
+      assign methods = methods | append: 'landing.payment.bancolombia,'
+    endif
+    if settings.payment_cash
+      assign methods = methods | append: 'landing.payment.cash,'
+    endif
+    if settings.payment_bnpl
+      assign methods = methods | append: 'landing.payment.bnpl,'
+    endif
+    assign method_list = methods | split: ','
+  -%}
+
+  {%- if method_list.size > 0 -%}
+    <ul class="payment-icons">
+      {%- for method in method_list -%}
+        <li class="payment-icons__item">
+          {% render 'icon', name: 'lock' %}
+          {{ method | t }}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+{%- endif -%}
+
+{% stylesheet %}
+  .payment-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .payment-icons__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    padding: 0.2em 0.6em;
+    border: 1px solid var(--color-border);
+    border-radius: var(--style-border-radius-inputs);
+    color: var(--color-muted);
+    font-size: var(--font-size-sm);
+  }
+{% endstylesheet %}

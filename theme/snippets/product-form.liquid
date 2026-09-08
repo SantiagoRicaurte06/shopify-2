@@ -1,0 +1,113 @@
+{% doc %}
+  Renders the buy form.
+
+  The form posts to Shopify's own cart endpoint and works with JavaScript
+  disabled. There is no custom order form and no third-party checkout: the
+  customer goes to Shopify's checkout, where the gateway handles payment.
+
+  When the offer section drives the selection, pass `show_variant_picker: false`
+  and it will keep the hidden `id` field in sync with the chosen bundle.
+
+  @param {product} product - The product being sold
+  @param {string} [form_id] - id for the form element
+  @param {boolean} [show_variant_picker] - Renders a native variant <select>
+  @param {boolean} [show_quantity] - Renders the quantity stepper
+  @param {boolean} [show_payment_button] - Renders the accelerated checkout button
+  @param {string} [button_label] - Overrides the submit label
+  @param {string} [button_id] - id for the submit button, watched by the sticky bar
+
+  @example
+  {% render 'product-form', product: product, form_id: 'buy-form', show_quantity: true %}
+{% enddoc %}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign has_options = false
+  if product.variants.size > 1
+    assign has_options = true
+  endif
+
+  assign default_label = 'landing.add_to_cart' | t
+  assign label = button_label | default: default_label
+
+  assign is_unavailable = false
+  unless product.available
+    assign is_unavailable = true
+    assign label = 'landing.sold_out' | t
+  endunless
+-%}
+
+{% form 'product', product, id: form_id, class: 'product-form' %}
+  {%- if show_variant_picker and has_options -%}
+    <div class="product-form__options">
+      <label class="product-form__label" for="Variant-{{ form_id | default: 'main' }}">
+        {{- 'landing.choose_option' | t -}}
+      </label>
+      <select
+        class="product-form__select"
+        id="Variant-{{ form_id | default: 'main' }}"
+        name="id"
+      >
+        {%- for variant in product.variants -%}
+          <option
+            value="{{ variant.id }}"
+            {% if variant == current_variant %}
+              selected
+            {% endif %}
+            {% unless variant.available %}
+              disabled
+            {% endunless %}
+          >
+            {{ variant.title }} — {{ variant.price | money }}
+            {%- unless variant.available %} ({{ 'landing.sold_out' | t }}){% endunless -%}
+          </option>
+        {%- endfor -%}
+      </select>
+    </div>
+  {%- else -%}
+    <input type="hidden" name="id" value="{{ current_variant.id }}">
+  {%- endif -%}
+
+  {%- if show_quantity -%}
+    {% render 'quantity-selector', form: form_id %}
+  {%- else -%}
+    <input type="hidden" name="quantity" value="1">
+  {%- endif -%}
+
+  {% render 'button',
+    label: label,
+    size: 'large',
+    full_width: true,
+    id: button_id,
+    disabled: is_unavailable
+  %}
+
+  {%- if show_payment_button -%}
+    {{ form | payment_button }}
+  {%- endif -%}
+{% endform %}
+
+{% stylesheet %}
+  .product-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .product-form__options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .product-form__label {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+  }
+
+  .product-form__select {
+    min-height: var(--tap-target);
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+  }
+{% endstylesheet %}

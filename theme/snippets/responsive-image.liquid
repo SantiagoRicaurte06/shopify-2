@@ -1,0 +1,101 @@
+{% doc %}
+  Renders a responsive image.
+
+  This is the ONLY place in the theme that decides `sizes`, `loading` and
+  `fetchpriority`. Sections and blocks pass their position on the page and let
+  this snippet work out the rest, so the LCP rules live in one file instead of
+  being re-litigated in fifteen sections.
+
+  The rules, from Shopify's performance guidance:
+
+  - Images in the first three sections load eagerly. Everything below loads lazily.
+  - The LCP candidate additionally gets `fetchpriority="high"`.
+  - `sizes` is always explicit. Without it the browser assumes 100vw and
+    downloads the largest source.
+  - `image_tag` writes `width` and `height` for us, which is what prevents the
+    layout shift.
+
+  Pass `image_mobile` when the phone needs a different crop rather than a
+  smaller version of the same one — that is a <picture> case, not a srcset case.
+
+  @param {image} image - The image to render
+  @param {image} [image_mobile] - A separate crop used below 750px
+  @param {string} [sizes] - The CSS sizes attribute. Defaults to 100vw
+  @param {number} [section_index] - Position of the section on the page. Defaults to 99
+  @param {boolean} [lcp] - Marks this image as the LCP candidate
+  @param {string} [class] - Classes for the <img>
+  @param {string} [alt] - Overrides the image's own alt text
+  @param {number} [width] - Largest width to request. Defaults to the image width
+  @param {string} [crop] - Crop position, when a fixed aspect ratio is wanted
+  @param {number} [height] - Height, when a fixed aspect ratio is wanted
+
+  @example
+  {% render 'responsive-image',
+    image: section.settings.image,
+    section_index: section.index,
+    lcp: true,
+    sizes: '(min-width: 750px) 50vw, 100vw'
+  %}
+{% enddoc %}
+
+{%- liquid
+  assign position = section_index | default: 99
+  assign attr_sizes = sizes | default: '100vw'
+  assign max_width = width | default: image.width
+
+  # Sections 1 to 3 are above or near the fold on most viewports.
+  if position <= 3
+    assign attr_loading = 'eager'
+  else
+    assign attr_loading = 'lazy'
+  endif
+
+  # The LCP image must never be lazy, whatever its position claims.
+  if lcp
+    assign attr_loading = 'eager'
+    assign attr_priority = 'high'
+  else
+    assign attr_priority = 'auto'
+  endif
+
+  assign attr_alt = alt | default: image.alt
+-%}
+
+{%- if image != blank -%}
+  {%- if image_mobile != blank -%}
+    <picture>
+      <source
+        media="(max-width: 749px)"
+        srcset="
+          {{ image_mobile | image_url: width: 450 }} 450w,
+          {{ image_mobile | image_url: width: 750 }} 750w,
+          {{ image_mobile | image_url: width: 1100 }} 1100w
+        "
+        sizes="100vw"
+        width="{{ image_mobile.width }}"
+        height="{{ image_mobile.height }}"
+      >
+      {{
+        image
+        | image_url: width: max_width, height: height, crop: crop
+        | image_tag:
+          class: class,
+          alt: attr_alt,
+          sizes: attr_sizes,
+          loading: attr_loading,
+          fetchpriority: attr_priority
+      }}
+    </picture>
+  {%- else -%}
+    {{
+      image
+      | image_url: width: max_width, height: height, crop: crop
+      | image_tag:
+        class: class,
+        alt: attr_alt,
+        sizes: attr_sizes,
+        loading: attr_loading,
+        fetchpriority: attr_priority
+    }}
+  {%- endif -%}
+{%- endif -%}

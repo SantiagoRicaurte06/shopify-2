@@ -82,6 +82,15 @@
     "menu": "Menu",
     "close": "Close",
     "before": "Before",
-    "after": "After"
+    "after": "After",
+    "payment": {
+      "card": "Credit or debit card",
+      "pse": "PSE",
+      "nequi": "Nequi",
+      "daviplata": "Daviplata",
+      "bancolombia": "Bancolombia",
+      "cash": "Cash at agent banks",
+      "bnpl": "Pay in installments"
+    }
   }
 }

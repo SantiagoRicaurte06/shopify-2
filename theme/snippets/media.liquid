@@ -1,0 +1,82 @@
+{% doc %}
+  Renders one piece of product media, whatever its type.
+
+  This is the ONLY place in the theme that branches on `media_type`. Sections
+  hand over a media object and get back the right element, so adding a new
+  media type later is one edit rather than fifteen.
+
+  Video defaults are deliberate: a poster is always requested, nothing
+  preloads, and nothing autoplays with sound. A hero video must not compete
+  with the LCP image for bandwidth.
+
+  @param {media} media - A product media object
+  @param {image} [poster] - Poster image for video. Defaults to the media preview
+  @param {string} [sizes] - The CSS sizes attribute for images
+  @param {number} [section_index] - Position of the section on the page
+  @param {boolean} [lcp] - Marks an image as the LCP candidate
+  @param {string} [class] - Classes for the rendered element
+
+  @example
+  {% render 'media', media: product.featured_media, section_index: section.index, lcp: true %}
+{% enddoc %}
+
+{%- liquid
+  assign poster_image = poster | default: media.preview_image
+-%}
+
+{%- case media.media_type -%}
+  {%- when 'image' -%}
+    {% render 'responsive-image',
+      image: media,
+      sizes: sizes,
+      section_index: section_index,
+      lcp: lcp,
+      class: class
+    %}
+
+  {%- when 'video' -%}
+    {{
+      media
+      | video_tag:
+        class: class,
+        controls: true,
+        preload: 'none',
+        muted: false,
+        autoplay: false,
+        loop: false,
+        image_size: '1100x',
+        poster: poster_image
+    }}
+
+  {%- when 'external_video' -%}
+    <div class="media media--external {{ class }}">
+      {%- if media.host == 'youtube' -%}
+        {{ media | external_video_url: loop: '0' | external_video_tag: loading: 'lazy' }}
+      {%- else -%}
+        {{ media | external_video_tag: loading: 'lazy' }}
+      {%- endif -%}
+    </div>
+
+  {%- else -%}
+    {%- comment -%}
+      3D models are not part of this system. Falling back to the preview image
+      keeps the layout intact instead of rendering nothing.
+    {%- endcomment -%}
+    {% render 'responsive-image',
+      image: poster_image,
+      sizes: sizes,
+      section_index: section_index,
+      class: class
+    %}
+{%- endcase -%}
+
+{% stylesheet %}
+  .media--external iframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: 0;
+    border-radius: var(--style-border-radius-cards);
+  }
+{% endstylesheet %}

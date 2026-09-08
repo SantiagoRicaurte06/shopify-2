@@ -1,0 +1,35 @@
+{% doc %}
+  Renders the eyebrow, heading and subheading shared by every landing section.
+
+  The heading level is a parameter because the page must keep a single <h1>
+  (the product name in the hero) and a sane h2/h3 hierarchy below it.
+
+  @param {string} [eyebrow] - Small label above the heading
+  @param {string} [heading] - The heading text
+  @param {string} [subheading] - Supporting text below the heading
+  @param {string} [level] - Heading tag. Defaults to h2
+  @param {boolean} [center] - Centers the block
+
+  @example
+  {% render 'section-header', heading: section.settings.heading, center: true %}
+{% enddoc %}
+
+{%- liquid
+  assign tag = level | default: 'h2'
+-%}
+
+{%- if eyebrow != blank or heading != blank or subheading != blank -%}
+  <div class="section-header{% if center %} section-header--center{% endif %}">
+    {%- if eyebrow != blank -%}
+      <p class="eyebrow">{{ eyebrow }}</p>
+    {%- endif -%}
+
+    {%- if heading != blank -%}
+      <{{ tag }}>{{ heading }}</{{ tag }}>
+    {%- endif -%}
+
+    {%- if subheading != blank -%}
+      <div class="section-header__subheading">{{ subheading }}</div>
+    {%- endif -%}
+  </div>
+{%- endif -%}
