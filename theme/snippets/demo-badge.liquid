@@ -15,18 +15,25 @@
 </p>
 
 {% stylesheet %}
+  /* Visible without shouting: a quiet outline rather than a dashed red
+     warning, so it reads as a factual label, not an alarm. */
   .demo-badge {
     display: inline-flex;
     align-items: center;
     gap: var(--space-2xs);
     margin-block-end: var(--space-xs);
-    padding: 0.15em 0.6em;
-    border: 1px dashed var(--color-sale);
-    border-radius: var(--style-border-radius-inputs);
-    color: var(--color-sale);
-    font-size: var(--font-size-sm);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    padding: 0.2em 0.65em;
+    border: 1px solid var(--color-border);
+    border-radius: var(--style-border-radius-pill);
+    background-color: var(--color-surface);
+    color: var(--color-muted);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .demo-badge .icon {
+    width: 0.85em;
+    height: 0.85em;
   }
 {% endstylesheet %}

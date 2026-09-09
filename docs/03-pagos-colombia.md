@@ -24,18 +24,18 @@ Shopify localizable.
 Leído en su documentación oficial de métodos de pago
 ([docs.wompi.co](https://docs.wompi.co/docs/colombia/metodos-de-pago/)):
 
-| Identificador | Medio |
-|---|---|
-| `CARD` | Tarjeta de crédito y débito |
-| `PSE` | Transferencia bancaria por PSE |
-| `NEQUI` | Nequi |
-| `DAVIPLATA` | Daviplata |
+| Identificador          | Medio                                  |
+| ---------------------- | -------------------------------------- |
+| `CARD`                 | Tarjeta de crédito y débito            |
+| `PSE`                  | Transferencia bancaria por PSE         |
+| `NEQUI`                | Nequi                                  |
+| `DAVIPLATA`            | Daviplata                              |
 | `BANCOLOMBIA_TRANSFER` | Transferencia desde cuenta Bancolombia |
-| `BANCOLOMBIA_QR` | Pago con QR de Bancolombia |
-| `BANCOLOMBIA_COLLECT` | Efectivo en corresponsales bancarios |
-| `BANCOLOMBIA_BNPL` | Cuatro cuotas sin interés |
-| `SU_PLUS` | Pago a cuotas SU+ |
-| `PCOL` | Redención de Puntos Colombia |
+| `BANCOLOMBIA_QR`       | Pago con QR de Bancolombia             |
+| `BANCOLOMBIA_COLLECT`  | Efectivo en corresponsales bancarios   |
+| `BANCOLOMBIA_BNPL`     | Cuatro cuotas sin interés              |
+| `SU_PLUS`              | Pago a cuotas SU+                      |
+| `PCOL`                 | Redención de Puntos Colombia           |
 
 Esto cubre tarjeta, transferencia, billeteras, efectivo y financiación. **Addi
 queda fuera del plan**: la financiación ya está cubierta por la propia pasarela,
@@ -50,7 +50,7 @@ Los pasos, según la documentación de Wompi:
 2. Wompi aparece como opción de pago. Pulsar **Connect**.
 3. **Install App**.
 4. Introducir las llaves **de producción** (pública y privada), que están en
-   Wompi en *Desarrolladores*. Pulsar **Connect**.
+   Wompi en _Desarrolladores_. Pulsar **Connect**.
 5. Confirmar.
 6. Introducir las credenciales de **sandbox** y conectar en modo de pruebas.
 7. Elegir qué medios de pago se muestran en el checkout.
@@ -64,8 +64,8 @@ notificaciones de transacción.
 
 ## Sin contraentrega: qué implica
 
-La contraentrega es un **método de pago manual nativo** de Shopify (*Configuración
-→ Pagos → Métodos de pago manuales → Pago contra entrega*). El pedido queda en
+La contraentrega es un **método de pago manual nativo** de Shopify (_Configuración
+→ Pagos → Métodos de pago manuales → Pago contra entrega_). El pedido queda en
 estado **Pendiente** hasta que lo marcas como pagado a mano.
 → [contra entrega](https://help.shopify.com/en/manual/payments/cash-on-delivery/activate-or-deactivate)
 · [métodos manuales](https://help.shopify.com/en/manual/payments/manual-payments)
@@ -92,12 +92,12 @@ mensajes de confianza se apoyan en lo que Wompi sí cubre.
 Existen y funcionan con Shopify. No se han evaluado a fondo porque la decisión ya
 está tomada, pero quedan aquí por si hace falta comparar:
 
-| Proveedor | Nota |
-|---|---|
-| PayU Latam | Tarjetas, PSE, efectivo, cuotas |
-| Mercado Pago | Tarjetas, PSE, cuotas, monedero |
-| ePayco | Tarjetas, PSE, efectivo |
-| Addi | Financiación sin tarjeta. Requiere persona jurídica y documentación societaria. [Ficha](https://apps.shopify.com/addi-payment-app) |
+| Proveedor    | Nota                                                                                                                               |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| PayU Latam   | Tarjetas, PSE, efectivo, cuotas                                                                                                    |
+| Mercado Pago | Tarjetas, PSE, cuotas, monedero                                                                                                    |
+| ePayco       | Tarjetas, PSE, efectivo                                                                                                            |
+| Addi         | Financiación sin tarjeta. Requiere persona jurídica y documentación societaria. [Ficha](https://apps.shopify.com/addi-payment-app) |
 
 ---
 
@@ -117,7 +117,7 @@ Cuando las tengas, anótalas aquí con la fecha en que las consultaste.
 
 ## Configuración en los ajustes del theme
 
-En *Medios de pago*, marca **solo** los que tengas realmente activos en Wompi.
+En _Medios de pago_, marca **solo** los que tengas realmente activos en Wompi.
 El aviso del propio editor lo dice: mostrar un medio que no ofreces es
 publicidad engañosa.
 

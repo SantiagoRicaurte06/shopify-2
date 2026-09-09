@@ -29,14 +29,14 @@ usa `metaobject_list` porque una lista no cabe en un ajuste de texto.
 
 ## Dónde vive cada dato
 
-| Dato | Dónde | Por qué |
-|---|---|---|
-| Nombre, precio, precio de referencia, imágenes, vídeo, inventario | Producto y variante | Es dato nativo. Nunca se duplica |
-| Paquetes x1/x2/x3 | **Variantes** (modo por defecto) | El precio mostrado y el del checkout son el mismo dato |
-| Valoración media y número de opiniones | Metacampos estándar `reviews.rating` y `reviews.rating_count` | Los escribe la app de opiniones. Interoperable |
-| Titulares y copy | Ajustes de sección o bloque, conectables a metacampos | El merchant edita en contexto; el metacampo es opcional |
-| Opiniones, preguntas, filas de envío | Metaobjetos + `metaobject_list` | Biblioteca central reutilizable entre productos |
-| Política de envíos, garantía, WhatsApp, medios de pago, JSON-LD | Ajustes del theme | Igual en toda la tienda. Se cambia en un sitio |
+| Dato                                                              | Dónde                                                         | Por qué                                                 |
+| ----------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------- |
+| Nombre, precio, precio de referencia, imágenes, vídeo, inventario | Producto y variante                                           | Es dato nativo. Nunca se duplica                        |
+| Paquetes x1/x2/x3                                                 | **Variantes** (modo por defecto)                              | El precio mostrado y el del checkout son el mismo dato  |
+| Valoración media y número de opiniones                            | Metacampos estándar `reviews.rating` y `reviews.rating_count` | Los escribe la app de opiniones. Interoperable          |
+| Titulares y copy                                                  | Ajustes de sección o bloque, conectables a metacampos         | El merchant edita en contexto; el metacampo es opcional |
+| Opiniones, preguntas, filas de envío                              | Metaobjetos + `metaobject_list`                               | Biblioteca central reutilizable entre productos         |
+| Política de envíos, garantía, WhatsApp, medios de pago, JSON-LD   | Ajustes del theme                                             | Igual en toda la tienda. Se cambia en un sitio          |
 
 ## Los dos snippets que concentran el riesgo
 

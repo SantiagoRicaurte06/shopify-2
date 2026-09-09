@@ -6,7 +6,7 @@
 {% endcomment %}
 
 {%- if section.blocks.size > 0 -%}
-  <landing-reveal class="landing-ugc">
+  <landing-reveal class="landing-ugc{% if section.settings.background != 'none' %} bg-{{ section.settings.background }}{% endif %}">
     {% render 'section-header',
       eyebrow: section.settings.eyebrow,
       heading: section.settings.heading,
@@ -19,7 +19,7 @@
         {% content_for 'blocks' %}
       </div>
 
-      <div class="landing-ugc__controls">
+      <div class="carousel-controls">
         <button
           class="carousel-control"
           type="button"
@@ -40,15 +40,6 @@
     </landing-carousel>
   </landing-reveal>
 {%- endif -%}
-
-{% stylesheet %}
-  .landing-ugc__controls {
-    display: flex;
-    justify-content: flex-end;
-    gap: var(--space-xs);
-    margin-block-start: var(--space-sm);
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
@@ -75,6 +66,18 @@
       "type": "richtext",
       "id": "subheading",
       "label": "t:labels.subheading"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "info": "t:info.section_background",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "t:options.background.none" },
+        { "value": "soft", "label": "t:options.background.soft" },
+        { "value": "dark", "label": "t:options.background.dark" }
+      ]
     }
   ],
   "presets": [

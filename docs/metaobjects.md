@@ -23,9 +23,9 @@ no).
 
 ## Cómo crearlos
 
-*Configuración → Datos personalizados → Metaobjetos → Añadir definición.*
+_Configuración → Datos personalizados → Metaobjetos → Añadir definición._
 
-En cada definición, **activa el acceso desde el escaparate** (*Storefronts*). Sin
+En cada definición, **activa el acceso desde el escaparate** (_Storefronts_). Sin
 eso el theme no puede leer las entradas.
 
 ---
@@ -34,14 +34,14 @@ eso el theme no puede leer las entradas.
 
 Opiniones de clientes.
 
-| Campo | Tipo | Obligatorio | Nota |
-|---|---|---|---|
-| `body` | Texto multilínea | Sí | La opinión |
-| `rating` | Entero | Sí | De 0 a 5 |
-| `author` | Una línea de texto | No | Nombre |
-| `location` | Una línea de texto | No | Ciudad o región |
-| `image` | Referencia a archivo | No | Foto del autor |
-| `is_demo` | Verdadero o falso | Sí | **Marca el contenido ficticio** |
+| Campo      | Tipo                 | Obligatorio | Nota                            |
+| ---------- | -------------------- | ----------- | ------------------------------- |
+| `body`     | Texto multilínea     | Sí          | La opinión                      |
+| `rating`   | Entero               | Sí          | De 0 a 5                        |
+| `author`   | Una línea de texto   | No          | Nombre                          |
+| `location` | Una línea de texto   | No          | Ciudad o región                 |
+| `image`    | Referencia a archivo | No          | Foto del autor                  |
+| `is_demo`  | Verdadero o falso    | Sí          | **Marca el contenido ficticio** |
 
 `is_demo` no es decorativo. Cuando está activo, la tarjeta muestra una etiqueta
 visible que dice que es un testimonio de demostración, y la entrada queda fuera
@@ -56,10 +56,10 @@ de los datos estructurados. Déjalo activo en cualquier entrada de relleno.
 
 Preguntas frecuentes reutilizables.
 
-| Campo | Tipo | Obligatorio |
-|---|---|---|
-| `question` | Una línea de texto | Sí |
-| `answer` | Texto enriquecido | Sí |
+| Campo      | Tipo               | Obligatorio |
+| ---------- | ------------------ | ----------- |
+| `question` | Una línea de texto | Sí          |
+| `answer`   | Texto enriquecido  | Sí          |
 
 ---
 
@@ -67,11 +67,11 @@ Preguntas frecuentes reutilizables.
 
 Filas de la tabla de envíos.
 
-| Campo | Tipo | Obligatorio |
-|---|---|---|
-| `zone` | Una línea de texto | Sí |
-| `time` | Una línea de texto | Sí |
-| `note` | Una línea de texto | No |
+| Campo  | Tipo               | Obligatorio |
+| ------ | ------------------ | ----------- |
+| `zone` | Una línea de texto | Sí          |
+| `time` | Una línea de texto | Sí          |
+| `note` | Una línea de texto | No          |
 
 Los plazos son una promesa al cliente. Escribe solo lo que la transportadora
 cumple.
@@ -80,7 +80,7 @@ cumple.
 
 ## Cómo se usan
 
-En la sección de opiniones: cambia *Origen de las opiniones* a **Entradas de
+En la sección de opiniones: cambia _Origen de las opiniones_ a **Entradas de
 metaobjeto** y elige las entradas en el selector.
 
 Las secciones de preguntas y envíos usan bloques por ahora. Si quieres

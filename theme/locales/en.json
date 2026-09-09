@@ -1,8 +1,8 @@
 {
   "404": {
-    "title": "404",
+    "back_to_shopping": "Back to shopping",
     "not_found": "Page not found.",
-    "back_to_shopping": "Back to shopping"
+    "title": "404"
   },
   "blog": {
     "article_comments": "Comments",
@@ -15,9 +15,22 @@
   },
   "cart": {
     "checkout": "Checkout",
+    "remove": "Remove",
     "title": "Cart",
-    "update": "Update",
-    "remove": "Remove"
+    "update": "Update"
+  },
+  "collections": {
+    "title": "Collections"
+  },
+  "contact": {
+    "email": "Email",
+    "message": "Message",
+    "name": "Name",
+    "phone": "Phone",
+    "required": "Required field",
+    "send": "Send message",
+    "success": "Thank you. We have received your message and will reply soon.",
+    "title": "Get in touch"
   },
   "customers": {
     "login": {
@@ -27,8 +40,13 @@
       "title": "Login"
     }
   },
-  "collections": {
-    "title": "Collections"
+  "footer": {
+    "contact": "Contact",
+    "follow_us": "Follow us",
+    "legal": "Legal",
+    "navigation": "Navigation",
+    "payment_methods": "Accepted payment methods",
+    "rights": "All rights reserved."
   },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",
@@ -37,60 +55,73 @@
     "expires_on": "Expires on {{ expires_on }}",
     "use_at_checkout": "Use this gift card at checkout"
   },
-  "password": {
-    "title": "This shop is private",
-    "password": "Password",
-    "enter": "Enter"
-  },
-  "search": {
-    "title": "Search",
-    "placeholder": "Search articles, pages, or products",
-    "submit": "Search",
-    "no_results_html": "No results found for {{ terms }}",
-    "results_for_html": "{{ count }} results found for {{ terms }}"
-  },
   "landing": {
+    "account": "My account",
     "add_to_cart": "Add to cart",
+    "after": "After",
+    "back_to_top": "Back to top",
+    "based_on_reviews": "Based on {{ count }} reviews",
+    "before": "Before",
+    "best_value": "Best value",
     "buy_now": "Buy now",
-    "sold_out": "Sold out",
-    "unavailable": "Unavailable",
-    "quantity": "Quantity",
-    "decrease": "Remove one unit",
-    "increase": "Add one unit",
     "choose_option": "Choose an option",
     "choose_pack": "Choose your bundle",
-    "save_amount": "You save {{ amount }}",
-    "save_percent": "You save {{ percent }}%",
-    "per_unit": "{{ price }} per unit",
-    "most_popular": "Most popular",
-    "best_value": "Best value",
+    "close": "Close",
+    "decrease": "Remove one unit",
+    "demo_badge": "Demo testimonial — fictional content",
+    "demo_notice": "This section shows sample content. Replace it with real reviews before publishing.",
     "discount_at_checkout": "The discount is applied at checkout.",
+    "faq_title": "Frequently asked questions",
+    "from_price": "From {{ price }}",
+    "gallery": "Product gallery",
+    "home": "Home",
+    "in_stock": "In stock",
+    "increase": "Add one unit",
+    "menu": "Menu",
+    "most_popular": "Most popular",
+    "next": "Next",
+    "payment": {
+      "bancolombia": "Bancolombia",
+      "bnpl": "Pay in installments",
+      "card": "Credit or debit card",
+      "cash": "Cash at agent banks",
+      "daviplata": "Daviplata",
+      "nequi": "Nequi",
+      "pse": "PSE"
+    },
+    "per_unit": "{{ price }} per unit",
+    "play_video": "Play video",
+    "previous": "Previous",
+    "quantity": "Quantity",
     "rating_aria": "Average rating of {{ rating }} out of {{ max }}",
     "rating_count": {
       "one": "{{ count }} review",
       "other": "{{ count }} reviews"
     },
-    "demo_badge": "Demo testimonial — fictional content",
-    "demo_notice": "This section shows sample content. Replace it with real reviews before publishing.",
-    "verified_buyer": "Verified purchase",
-    "previous": "Previous",
-    "next": "Next",
-    "play_video": "Play video",
-    "whatsapp_cta": "Message us on WhatsApp",
-    "faq_title": "Frequently asked questions",
+    "rating_summary": "{{ rating }} out of {{ max }}",
+    "read_more_reviews": "Read all reviews",
+    "save_amount": "You save {{ amount }}",
+    "save_percent": "You save {{ percent }}%",
+    "search": "Search",
+    "shop": "Shop",
     "skip_to_content": "Skip to content",
-    "menu": "Menu",
-    "close": "Close",
-    "before": "Before",
-    "after": "After",
-    "payment": {
-      "card": "Credit or debit card",
-      "pse": "PSE",
-      "nequi": "Nequi",
-      "daviplata": "Daviplata",
-      "bancolombia": "Bancolombia",
-      "cash": "Cash at agent banks",
-      "bnpl": "Pay in installments"
-    }
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable",
+    "verified_buyer": "Verified purchase",
+    "view_image": "View image {{ index }}",
+    "view_product": "View product",
+    "whatsapp_cta": "Message us on WhatsApp"
+  },
+  "password": {
+    "enter": "Enter",
+    "password": "Password",
+    "title": "This shop is private"
+  },
+  "search": {
+    "no_results_html": "No results found for {{ terms }}",
+    "placeholder": "Search articles, pages, or products",
+    "results_for_html": "{{ count }} results found for {{ terms }}",
+    "submit": "Search",
+    "title": "Search"
   }
 }

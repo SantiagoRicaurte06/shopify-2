@@ -5,9 +5,11 @@
   "description": "Sistema reutilizable de landings de producto para Shopify — mercado colombiano",
   "license": "MIT",
   "scripts": {
-    "check": "shopify theme check --path theme",
-    "format": "prettier --write \"theme/**/*.{liquid,json,css,js}\"",
-    "format:check": "prettier --check \"theme/**/*.{liquid,json,css,js}\"",
+    "check": "shopify theme check --path theme && node scripts/auditar-theme.js",
+    "check:theme": "shopify theme check --path theme",
+    "audit": "node scripts/auditar-theme.js",
+    "format": "prettier --write \"theme/**/*.{liquid,json,css,js}\" \"scripts/**/*.js\"",
+    "format:check": "prettier --check \"theme/**/*.{liquid,json,css,js}\" \"scripts/**/*.js\"",
     "dev": "shopify theme dev --path theme",
     "push": "shopify theme push --unpublished --path theme"
   },

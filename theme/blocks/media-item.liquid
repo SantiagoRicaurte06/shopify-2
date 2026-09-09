@@ -56,21 +56,27 @@
 
     {%- when 'before_after' -%}
       <div class="media-item__pair">
-        <div>
-          {% render 'responsive-image',
-            image: block.settings.image_before,
-            sizes: '(min-width: 750px) 45vw, 45vw',
-            width: 900
-          %}
-          <figcaption class="muted">{{ 'landing.before' | t }}</figcaption>
+        <div class="media-item__pane">
+          <div class="media-frame media-frame--square">
+            {% render 'responsive-image',
+              image: block.settings.image_before,
+              sizes: '(min-width: 750px) 45vw, 45vw',
+              width: 900
+            %}
+          </div>
+          <figcaption class="pill pill--soft media-item__tag">
+            {{ 'landing.before' | t }}
+          </figcaption>
         </div>
-        <div>
-          {% render 'responsive-image',
-            image: block.settings.image_after,
-            sizes: '(min-width: 750px) 45vw, 45vw',
-            width: 900
-          %}
-          <figcaption class="muted">{{ 'landing.after' | t }}</figcaption>
+        <div class="media-item__pane">
+          <div class="media-frame media-frame--square">
+            {% render 'responsive-image',
+              image: block.settings.image_after,
+              sizes: '(min-width: 750px) 45vw, 45vw',
+              width: 900
+            %}
+          </div>
+          <figcaption class="pill pill--soft media-item__tag">{{ 'landing.after' | t }}</figcaption>
         </div>
       </div>
 
@@ -108,10 +114,15 @@
     gap: var(--space-sm);
   }
 
-  .media-item__pair figcaption {
-    margin-block-start: var(--space-2xs);
-    text-align: center;
-    font-size: var(--font-size-sm);
+  .media-item__pane {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs);
+  }
+
+  .media-item__tag {
+    margin: 0;
   }
 
   .media-item__caption {

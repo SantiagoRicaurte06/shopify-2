@@ -19,7 +19,7 @@
 
 {% stylesheet %}
   .faq-item {
-    border-block-end: 1px solid var(--color-border);
+    border-block-end: 1px solid var(--color-border-soft);
   }
 
   .faq-item__question {
@@ -29,7 +29,7 @@
     gap: var(--space-md);
     padding-block: var(--space-md);
     min-height: var(--tap-target);
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
     list-style: none;
   }
@@ -39,21 +39,32 @@
     display: none;
   }
 
-  .faq-item__marker {
+  .faq-item__question:hover {
     color: var(--color-accent);
   }
 
+  .faq-item__marker {
+    flex: none;
+    color: var(--color-accent);
+  }
+
+  /* A "+" rotated 45° reads as a "×" with no second icon and no script. */
   .faq-item[open] .faq-item__marker {
     transform: rotate(45deg);
   }
 
   .faq-item__answer {
+    max-width: var(--reading-width);
     padding-block-end: var(--space-md);
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .faq-item__marker {
       transition: transform 0.2s ease;
+    }
+
+    .faq-item__question {
+      transition: color var(--transition-fast);
     }
   }
 {% endstylesheet %}

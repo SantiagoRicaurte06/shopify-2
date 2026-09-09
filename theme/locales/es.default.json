@@ -1,8 +1,8 @@
 {
   "404": {
-    "title": "404",
+    "back_to_shopping": "Volver a la tienda",
     "not_found": "No encontramos esta página.",
-    "back_to_shopping": "Volver a la tienda"
+    "title": "404"
   },
   "blog": {
     "article_comments": "Comentarios",
@@ -15,9 +15,22 @@
   },
   "cart": {
     "checkout": "Finalizar compra",
+    "remove": "Quitar",
     "title": "Carrito",
-    "update": "Actualizar",
-    "remove": "Quitar"
+    "update": "Actualizar"
+  },
+  "collections": {
+    "title": "Colecciones"
+  },
+  "contact": {
+    "email": "Correo electrónico",
+    "message": "Mensaje",
+    "name": "Nombre",
+    "phone": "Teléfono",
+    "required": "Campo obligatorio",
+    "send": "Enviar mensaje",
+    "success": "Gracias. Hemos recibido tu mensaje y te responderemos pronto.",
+    "title": "Escríbenos"
   },
   "customers": {
     "login": {
@@ -27,8 +40,13 @@
       "title": "Iniciar sesión"
     }
   },
-  "collections": {
-    "title": "Colecciones"
+  "footer": {
+    "contact": "Contacto",
+    "follow_us": "Síguenos",
+    "legal": "Legal",
+    "navigation": "Navegación",
+    "payment_methods": "Medios de pago aceptados",
+    "rights": "Todos los derechos reservados."
   },
   "gift_card": {
     "add_to_apple_wallet": "Añadir a Apple Wallet",
@@ -37,60 +55,73 @@
     "expires_on": "Caduca el {{ expires_on }}",
     "use_at_checkout": "Usa esta tarjeta al finalizar la compra"
   },
-  "password": {
-    "title": "Esta tienda es privada",
-    "password": "Contraseña",
-    "enter": "Entrar"
-  },
-  "search": {
-    "title": "Buscar",
-    "placeholder": "Busca artículos, páginas o productos",
-    "submit": "Buscar",
-    "no_results_html": "No hay resultados para {{ terms }}",
-    "results_for_html": "{{ count }} resultados para {{ terms }}"
-  },
   "landing": {
+    "account": "Mi cuenta",
     "add_to_cart": "Agregar al carrito",
+    "after": "Después",
+    "back_to_top": "Volver arriba",
+    "based_on_reviews": "Basado en {{ count }} opiniones",
+    "before": "Antes",
+    "best_value": "Mejor precio",
     "buy_now": "Comprar ahora",
-    "sold_out": "Agotado",
-    "unavailable": "No disponible",
-    "quantity": "Cantidad",
-    "decrease": "Quitar una unidad",
-    "increase": "Añadir una unidad",
     "choose_option": "Elige una opción",
     "choose_pack": "Elige tu paquete",
-    "save_amount": "Ahorras {{ amount }}",
-    "save_percent": "Ahorras {{ percent }} %",
-    "per_unit": "{{ price }} por unidad",
-    "most_popular": "Más elegido",
-    "best_value": "Mejor precio",
+    "close": "Cerrar",
+    "decrease": "Quitar una unidad",
+    "demo_badge": "Testimonio demo — contenido ficticio",
+    "demo_notice": "Esta sección muestra contenido de ejemplo. Sustitúyelo por opiniones reales antes de publicar.",
     "discount_at_checkout": "El descuento se aplica al finalizar la compra.",
+    "faq_title": "Preguntas frecuentes",
+    "from_price": "Desde {{ price }}",
+    "gallery": "Galería del producto",
+    "home": "Inicio",
+    "in_stock": "Disponible",
+    "increase": "Añadir una unidad",
+    "menu": "Menú",
+    "most_popular": "Más elegido",
+    "next": "Siguiente",
+    "payment": {
+      "bancolombia": "Bancolombia",
+      "bnpl": "Paga a cuotas",
+      "card": "Tarjeta de crédito o débito",
+      "cash": "Efectivo en corresponsales",
+      "daviplata": "Daviplata",
+      "nequi": "Nequi",
+      "pse": "PSE"
+    },
+    "per_unit": "{{ price }} por unidad",
+    "play_video": "Reproducir vídeo",
+    "previous": "Anterior",
+    "quantity": "Cantidad",
     "rating_aria": "Valoración media de {{ rating }} sobre {{ max }}",
     "rating_count": {
       "one": "{{ count }} opinión",
       "other": "{{ count }} opiniones"
     },
-    "demo_badge": "Testimonio demo — contenido ficticio",
-    "demo_notice": "Esta sección muestra contenido de ejemplo. Sustitúyelo por opiniones reales antes de publicar.",
-    "verified_buyer": "Compra verificada",
-    "previous": "Anterior",
-    "next": "Siguiente",
-    "play_video": "Reproducir vídeo",
-    "whatsapp_cta": "Escríbenos por WhatsApp",
-    "faq_title": "Preguntas frecuentes",
+    "rating_summary": "{{ rating }} de {{ max }}",
+    "read_more_reviews": "Ver todas las opiniones",
+    "save_amount": "Ahorras {{ amount }}",
+    "save_percent": "Ahorras {{ percent }} %",
+    "search": "Buscar",
+    "shop": "Tienda",
     "skip_to_content": "Saltar al contenido",
-    "menu": "Menú",
-    "close": "Cerrar",
-    "before": "Antes",
-    "after": "Después",
-    "payment": {
-      "card": "Tarjeta de crédito o débito",
-      "pse": "PSE",
-      "nequi": "Nequi",
-      "daviplata": "Daviplata",
-      "bancolombia": "Bancolombia",
-      "cash": "Efectivo en corresponsales",
-      "bnpl": "Paga a cuotas"
-    }
+    "sold_out": "Agotado",
+    "unavailable": "No disponible",
+    "verified_buyer": "Compra verificada",
+    "view_image": "Ver imagen {{ index }}",
+    "view_product": "Ver producto",
+    "whatsapp_cta": "Escríbenos por WhatsApp"
+  },
+  "password": {
+    "enter": "Entrar",
+    "password": "Contraseña",
+    "title": "Esta tienda es privada"
+  },
+  "search": {
+    "no_results_html": "No hay resultados para {{ terms }}",
+    "placeholder": "Busca artículos, páginas o productos",
+    "results_for_html": "{{ count }} resultados para {{ terms }}",
+    "submit": "Buscar",
+    "title": "Buscar"
   }
 }

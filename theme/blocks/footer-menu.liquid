@@ -1,0 +1,60 @@
+{% doc %}
+  One column of links in the footer.
+
+  A block rather than a fixed set of columns, so the merchant decides whether
+  the footer carries two columns or four and what each one is called, without
+  a developer. Each column points at a menu created in Navigation.
+
+  Renders nothing when its menu is empty, which keeps a half-configured footer
+  from showing a heading with nothing under it.
+
+  @example
+  {% content_for 'block', type: 'footer-menu', id: 'links' %}
+{% enddoc %}
+
+{%- if block.settings.menu.links.size > 0 -%}
+  <div class="footer-menu" {{ block.shopify_attributes }}>
+    {%- if block.settings.heading != blank -%}
+      <h2 class="footer-menu__heading">{{ block.settings.heading }}</h2>
+    {%- endif -%}
+
+    <ul class="footer-links">
+      {%- for link in block.settings.menu.links -%}
+        <li>
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .footer-menu__heading {
+    margin-block-end: var(--space-sm);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks.footer_menu",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Enlaces"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu",
+      "info": "t:info.footer_columns"
+    }
+  ],
+  "presets": [{ "name": "t:blocks.footer_menu" }]
+}
+{% endschema %}

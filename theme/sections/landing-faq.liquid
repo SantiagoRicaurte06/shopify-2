@@ -11,7 +11,7 @@
   return. The questions still help the reader, which is the point.
 {% endcomment %}
 
-<landing-reveal class="landing-faq">
+<landing-reveal class="landing-faq{% if section.settings.background != 'none' %} bg-{{ section.settings.background }}{% endif %}">
   {% render 'section-header',
     eyebrow: section.settings.eyebrow,
     heading: section.settings.heading,
@@ -81,6 +81,18 @@
       "label": "t:labels.help_text",
       "default": "¿Te queda otra duda?",
       "visible_if": "{{ section.settings.show_whatsapp }}"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "info": "t:info.section_background",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "t:options.background.none" },
+        { "value": "soft", "label": "t:options.background.soft" },
+        { "value": "dark", "label": "t:options.background.dark" }
+      ]
     }
   ],
   "presets": [

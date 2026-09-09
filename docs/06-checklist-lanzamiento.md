@@ -105,7 +105,7 @@ npm run format:check
 ## Seguimiento
 
 - [ ] Meta y TikTok conectados por sus canales oficiales.
-- [ ] Custom Pixel pegado en *Configuración → Eventos de cliente*.
+- [ ] Custom Pixel pegado en _Configuración → Eventos de cliente_.
 - [ ] **Ningún pixel pegado en el theme.**
 - [ ] Comprobar en los paneles de Meta y TikTok que los eventos **no llegan
       duplicados**.

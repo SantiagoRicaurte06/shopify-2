@@ -11,12 +11,13 @@
 
 <li class="step-item reveal" {{ block.shopify_attributes }}>
   {%- if block.settings.image != blank -%}
-    {% render 'responsive-image',
-      image: block.settings.image,
-      sizes: '(min-width: 750px) 30vw, 80vw',
-      width: 700,
-      class: 'step-item__image'
-    %}
+    <div class="media-frame media-frame--landscape step-item__media">
+      {% render 'responsive-image',
+        image: block.settings.image,
+        sizes: '(min-width: 750px) 30vw, 80vw',
+        width: 700
+      %}
+    </div>
   {%- endif -%}
 
   {%- if block.settings.heading != blank -%}
@@ -36,25 +37,24 @@
     counter-increment: step;
   }
 
+  /* An elegant circular counter, sized to match .icon-tile so a step and a
+     benefit read as the same family of shape. */
   .step-item::before {
     content: counter(step);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.75rem;
+    height: 2.75rem;
     border-radius: 50%;
     background-color: var(--color-cta-background);
     color: var(--color-cta-foreground);
+    font-size: var(--font-size-lg);
     font-weight: 700;
   }
 
-  .step-item__image {
-    border-radius: var(--style-border-radius-cards);
-  }
-
-  .step-item__heading {
-    font-size: var(--font-size-lg);
+  .step-item__media {
+    margin-block-end: var(--space-2xs);
   }
 {% endstylesheet %}
 

@@ -26,7 +26,10 @@
   assign entries = section.settings.reviews.value | default: section.settings.reviews
 -%}
 
-<landing-reveal class="landing-reviews" id="landing-reviews">
+<landing-reveal
+  class="landing-reviews{% if section.settings.background != 'none' %} bg-{{ section.settings.background }}{% endif %}"
+  id="landing-reviews"
+>
   {% render 'section-header',
     eyebrow: section.settings.eyebrow,
     heading: section.settings.heading,
@@ -35,14 +38,34 @@
   %}
 
   {%- if section.settings.show_aggregate -%}
-    <div class="landing-reviews__aggregate">
-      {% render 'stars', product: product, show_count: true %}
-    </div>
+    {%- liquid
+      # The average and the count are a measurement. They come only from the
+      # standard metafields a reviews app writes, never from the cards below,
+      # so the panel simply does not appear until real data exists.
+      assign aggregate = product.metafields.reviews.rating.value
+      assign review_count = product.metafields.reviews.rating_count.value | plus: 0
+    -%}
+
+    {%- if aggregate != blank and aggregate.rating != blank and review_count > 0 -%}
+      <div class="landing-reviews__summary">
+        <p class="landing-reviews__score">
+          {{- aggregate.rating -}}
+          <span class="landing-reviews__scale muted">/ {{ aggregate.scale_max | default: 5 }}</span>
+        </p>
+
+        <div class="landing-reviews__summary-meta">
+          {% render 'stars', product: product %}
+          <p class="muted text-sm">
+            {{- 'landing.based_on_reviews' | t: count: review_count -}}
+          </p>
+        </div>
+      </div>
+    {%- endif -%}
   {%- endif -%}
 
   {%- if section.settings.source == 'metaobject' and entries.size > 0 -%}
     <div
-      class="landing-grid"
+      class="landing-grid landing-reviews__list"
       style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: 1;"
     >
       {%- for entry in entries limit: section.settings.limit -%}
@@ -58,7 +81,7 @@
     </div>
   {%- else -%}
     <div
-      class="landing-grid"
+      class="landing-grid landing-reviews__list"
       style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: 1;"
     >
       {% content_for 'blocks' %}
@@ -67,10 +90,64 @@
 </landing-reveal>
 
 {% stylesheet %}
-  .landing-reviews__aggregate {
+  .landing-reviews__summary {
     display: flex;
+    align-items: center;
     justify-content: center;
-    margin-block-end: var(--space-lg);
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
+    max-width: 26rem;
+    margin: 0 auto var(--space-xl);
+    padding: var(--space-md) var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--style-border-radius-cards);
+    background-color: var(--color-background);
+  }
+
+  .landing-reviews__score {
+    font-family: var(--font-heading--family);
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .landing-reviews__scale {
+    margin-inline-start: var(--space-3xs);
+    font-size: var(--font-size-base);
+    font-weight: 400;
+  }
+
+  .landing-reviews__summary-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+
+  /* On a phone three review cards stacked is a long scroll past the offer.
+     They become a swipeable rail instead, which is how people read them. */
+  @media screen and (max-width: 749px) {
+    .landing-reviews__list {
+      display: grid;
+      grid-auto-columns: minmax(min(19rem, 82%), 1fr);
+      grid-auto-flow: column;
+      grid-template-columns: none;
+      gap: var(--space-md);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      margin-inline: calc(var(--page-margin) * -1);
+      padding-inline: var(--page-margin);
+      padding-block-end: var(--space-2xs);
+    }
+
+    .landing-reviews__list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .landing-reviews__list > * {
+      scroll-snap-align: start;
+    }
   }
 {% endstylesheet %}
 
@@ -139,6 +216,18 @@
       "max": 4,
       "step": 1,
       "default": 3
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "info": "t:info.section_background",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "t:options.background.none" },
+        { "value": "soft", "label": "t:options.background.soft" },
+        { "value": "dark", "label": "t:options.background.dark" }
+      ]
     }
   ],
   "presets": [

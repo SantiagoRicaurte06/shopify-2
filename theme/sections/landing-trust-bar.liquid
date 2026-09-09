@@ -4,28 +4,63 @@
   It reuses the same trust-item block as the hero and the final call to
   action, so the three places a visitor looks for reassurance stay worded
   consistently without the copy being written three times.
+
+  The band is a card rather than a full-width stripe: at this point in the
+  page the product is still the subject, and a stripe would cut it in half.
+  The items are separated by hairlines instead of by cards, which keeps the
+  count of boxes on the page down.
 {% endcomment %}
 
-<div class="landing-trust-bar full-width">
+<div class="landing-trust-bar{% if section.settings.background != 'none' %} bg-{{ section.settings.background }}{% endif %}">
   <ul class="landing-trust-bar__list">
     {% content_for 'blocks' %}
   </ul>
 </div>
 
 {% stylesheet %}
-  .landing-trust-bar {
-    background-color: var(--color-surface);
-    padding-block: var(--space-md);
+  .landing-trust-bar__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--style-border-radius-cards);
+    background-color: var(--color-background);
+    list-style: none;
+    overflow: hidden;
   }
 
-  .landing-trust-bar__list {
-    display: flex;
-    flex-wrap: wrap;
+  .landing-trust-bar__list .trust-item {
     justify-content: center;
-    gap: var(--space-md) var(--space-xl);
-    margin: 0;
-    padding-inline: var(--page-margin);
-    list-style: none;
+    gap: var(--space-xs);
+    padding: var(--space-md) var(--space-sm);
+    text-align: center;
+    font-size: var(--font-size-sm);
+  }
+
+  /* Hairlines between the cells, drawn with box-shadow so no cell needs to
+     know whether it is first or last in its row. */
+  .landing-trust-bar__list .trust-item {
+    box-shadow:
+      1px 0 0 var(--color-border),
+      0 1px 0 var(--color-border);
+  }
+
+  .landing-trust-bar .bg-dark .landing-trust-bar__list,
+  .landing-trust-bar.bg-dark .landing-trust-bar__list {
+    background-color: transparent;
+    border-color: var(--color-dark-border);
+  }
+
+  @media screen and (min-width: 750px) {
+    .landing-trust-bar__list {
+      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    }
+
+    .landing-trust-bar__list .trust-item {
+      padding-block: var(--space-lg);
+    }
   }
 {% endstylesheet %}
 
@@ -34,7 +69,20 @@
   "name": "t:sections.trust_bar",
   "tag": "section",
   "blocks": [{ "type": "trust-item" }, { "type": "@app" }],
-  "settings": [],
+  "settings": [
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "info": "t:info.section_background",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "t:options.background.none" },
+        { "value": "soft", "label": "t:options.background.soft" },
+        { "value": "dark", "label": "t:options.background.dark" }
+      ]
+    }
+  ],
   "presets": [
     {
       "name": "t:sections.trust_bar",

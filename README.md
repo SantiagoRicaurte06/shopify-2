@@ -12,13 +12,18 @@ producto nuevo → metacampos → elegir secciones → publicar landing
 
 ## Qué hay dentro
 
-- **15 secciones** de landing (`LP · …`), todas con presets, así que se añaden,
+- **16 secciones** de landing (`LP · …`), todas con presets, así que se añaden,
   reordenan y eliminan desde el editor de themes.
-- **15 theme blocks** en /blocks, trece propios y dos que vienen del Skeleton,
-  reutilizables entre secciones.
+- **3 secciones de inicio** (`Inicio · …`) y un formulario de contacto nativo,
+  para que la tienda tenga una portada y una página de contacto de verdad.
+- **17 theme blocks** en /blocks, reutilizables entre secciones.
 - **17 snippets**, de los que dos concentran la lógica delicada:
   `responsive-image` decide todo lo relativo a LCP y `media` resuelve todos los
   tipos de medio.
+- Un sistema de diseño en dos archivos: `snippets/css-variables.liquid` (los
+  tokens) y `assets/critical.css` (las primitivas compartidas). Si una regla la
+  usan dos secciones, vive ahí; si la usa una, se queda en su
+  `{% stylesheet %}`.
 - Un solo `landing.js`, **sin dependencias**. Las preguntas frecuentes usan
   `<details>` nativo, así que no cargan script.
 - Español como idioma principal, inglés como secundario.
@@ -49,23 +54,30 @@ npm run check
 npm run format
 ```
 
-`theme check` funciona sin conexión a una tienda. Estado actual: **85 archivos,
-0 incidencias**.
+`npm run check` ejecuta dos cosas: `shopify theme check`, que funciona sin
+conexión a una tienda, y `scripts/auditar-theme.js`, que comprueba lo que
+`theme check` **no** ve y solo falla al subir — bloques renderizados dos veces,
+rangos de menos de tres pasos, selects con valores numéricos en las plantillas,
+claves de traducción que faltan en cualquiera de los cuatro archivos de idioma y
+nombres de sección de más de 25 caracteres. Cada comprobación viene de un error
+real documentado en [ERRORES.md](ERRORES.md).
+
+Estado actual: **93 archivos, 0 incidencias** en ambos.
 
 ## Documentación
 
-| | |
-|---|---|
-| [00-investigacion.md](docs/00-investigacion.md) | Qué dice la documentación oficial, con enlaces |
-| [01-arquitectura.md](docs/01-arquitectura.md) | Cómo está montado y por qué |
-| [02-dropi.md](docs/02-dropi.md) | Las dos apps, qué está confirmado y qué no |
-| [03-pagos-colombia.md](docs/03-pagos-colombia.md) | Wompi, medios de pago, y por qué no hay contraentrega |
-| [04-configuracion-shopify.md](docs/04-configuracion-shopify.md) | Puesta en marcha paso a paso |
-| [05-nuevo-producto.md](docs/05-nuevo-producto.md) | **Lanzar un producto nuevo sin código** |
-| [06-checklist-lanzamiento.md](docs/06-checklist-lanzamiento.md) | Lo que hay que comprobar antes de publicar |
-| [07-riesgos.md](docs/07-riesgos.md) | Qué está verificado y qué no |
-| [metafields.md](docs/metafields.md) · [metaobjects.md](docs/metaobjects.md) | Datos personalizados |
-| [pixels/](docs/pixels/) | Seguimiento, y por qué el theme no carga ningún pixel |
+|                                                                             |                                                       |
+| --------------------------------------------------------------------------- | ----------------------------------------------------- |
+| [00-investigacion.md](docs/00-investigacion.md)                             | Qué dice la documentación oficial, con enlaces        |
+| [01-arquitectura.md](docs/01-arquitectura.md)                               | Cómo está montado y por qué                           |
+| [02-dropi.md](docs/02-dropi.md)                                             | Las dos apps, qué está confirmado y qué no            |
+| [03-pagos-colombia.md](docs/03-pagos-colombia.md)                           | Wompi, medios de pago, y por qué no hay contraentrega |
+| [04-configuracion-shopify.md](docs/04-configuracion-shopify.md)             | Puesta en marcha paso a paso                          |
+| [05-nuevo-producto.md](docs/05-nuevo-producto.md)                           | **Lanzar un producto nuevo sin código**               |
+| [06-checklist-lanzamiento.md](docs/06-checklist-lanzamiento.md)             | Lo que hay que comprobar antes de publicar            |
+| [07-riesgos.md](docs/07-riesgos.md)                                         | Qué está verificado y qué no                          |
+| [metafields.md](docs/metafields.md) · [metaobjects.md](docs/metaobjects.md) | Datos personalizados                                  |
+| [pixels/](docs/pixels/)                                                     | Seguimiento, y por qué el theme no carga ningún pixel |
 
 ## Tres decisiones que conviene conocer
 

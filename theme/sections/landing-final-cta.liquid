@@ -4,58 +4,149 @@
   It links up to the offer section rather than repeating the buy form, so the
   page keeps exactly one place where the purchase is configured and there is
   no second form to keep in sync.
+
+  The price, when shown, is read from the variant like everywhere else. There
+  is no countdown and no scarcity line: by this point the reader has seen the
+  product, the reviews, the shipping and the guarantee, and what closes the
+  sale is a clear price and a clear button, not a timer.
+
+  The image is optional. With one, the section reads as a closing panel; with
+  none, as a centred statement. Both are deliberate, which is why the layout
+  follows the image rather than being a separate setting.
 {% endcomment %}
 
-<div class="landing-final-cta full-width">
-  <landing-reveal class="landing-final-cta__inner">
-    {% render 'section-header',
-      eyebrow: section.settings.eyebrow,
-      heading: section.settings.heading,
-      subheading: section.settings.subheading,
-      center: true
-    %}
+{%- liquid
+  assign band = section.settings.background | default: 'soft'
 
-    {% render 'button', label: section.settings.cta_label, url: '#landing-offer', size: 'large' %}
+  assign has_image = false
+  assign center_header = true
+  if section.settings.image != blank
+    assign has_image = true
+    assign center_header = false
+  endif
 
-    {%- if section.blocks.size > 0 -%}
-      <ul class="landing-final-cta__trust">
-        {% content_for 'blocks' %}
-      </ul>
+  # Los argumentos de render no admiten filtros ni comparaciones, así que el
+  # destino del botón y la alineación del encabezado se resuelven aquí.
+  assign cta_destination = section.settings.cta_url | default: '#landing-offer'
+-%}
+
+<div class="landing-final-cta full-width bg-{{ band }}">
+  <landing-reveal class="landing-final-cta__inner{% if has_image %} landing-final-cta__inner--split{% endif %}">
+    {%- if has_image -%}
+      <div class="landing-final-cta__media media-frame media-frame--landscape reveal">
+        {% render 'responsive-image',
+          image: section.settings.image,
+          sizes: '(min-width: 750px) 45vw, 100vw',
+          width: 1200,
+          section_index: section.index
+        %}
+      </div>
     {%- endif -%}
 
-    {%- if section.settings.show_whatsapp -%}
-      {% render 'whatsapp-link', product: product, style: 'text' %}
-    {%- endif -%}
+    <div class="landing-final-cta__content reveal">
+      {% render 'section-header',
+        eyebrow: section.settings.eyebrow,
+        heading: section.settings.heading,
+        subheading: section.settings.subheading,
+        center: center_header
+      %}
+
+      {%- if section.settings.show_price and product != blank -%}
+        {% render 'price', product: product, show_saving: true %}
+      {%- endif -%}
+
+      {% render 'button', label: section.settings.cta_label, url: cta_destination, size: 'large' %}
+
+      {%- if section.settings.show_whatsapp -%}
+        {% render 'whatsapp-link', product: product, style: 'text' %}
+      {%- endif -%}
+    </div>
   </landing-reveal>
+
+  {%- if section.blocks.size > 0 -%}
+    <ul class="landing-final-cta__trust">
+      {% content_for 'blocks' %}
+    </ul>
+  {%- endif -%}
 </div>
 
 {% stylesheet %}
   .landing-final-cta {
-    background-color: var(--color-surface);
-    padding-block: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    /* The vertical rhythm belongs to .shopify-section; this only re-applies
+       the page margin the full-width child gave up. */
+    padding-inline: var(--page-margin);
   }
 
   .landing-final-cta__inner {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-md);
-    padding-inline: var(--page-margin);
+    gap: var(--space-lg);
+    width: 100%;
+    max-width: var(--page-width);
+    margin-inline: auto;
     text-align: center;
   }
 
-  .landing-final-cta__inner .section-header {
+  .landing-final-cta__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .landing-final-cta__content .section-header {
     margin-block-end: 0;
+  }
+
+  .landing-final-cta__content h2 {
+    font-size: var(--font-size-display);
+  }
+
+  .landing-final-cta__media {
+    width: 100%;
+    max-width: 34rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .landing-final-cta__inner--split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: var(--space-2xl);
+      text-align: start;
+    }
+
+    /* With an image, the words come first and the picture closes the row. */
+    .landing-final-cta__inner--split .landing-final-cta__media {
+      order: 2;
+      max-width: none;
+    }
+
+    .landing-final-cta__inner--split .landing-final-cta__content {
+      align-items: flex-start;
+    }
   }
 
   .landing-final-cta__trust {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: var(--space-md) var(--space-lg);
-    margin: 0;
+    gap: var(--space-md) var(--space-xl);
+    width: 100%;
+    max-width: var(--page-width);
+    margin-inline: auto;
     padding: 0;
+    padding-block-start: var(--space-lg);
+    border-block-start: 1px solid var(--color-border);
     list-style: none;
+  }
+
+  .landing-final-cta.bg-dark .landing-final-cta__trust {
+    border-block-start-color: var(--color-dark-border);
   }
 {% endstylesheet %}
 
@@ -82,16 +173,45 @@
       "label": "t:labels.subheading"
     },
     {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:labels.image",
+      "info": "t:info.final_cta_image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "t:labels.show_price",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "cta_label",
       "label": "t:labels.cta_label",
       "default": "Elegir mi paquete"
     },
     {
+      "type": "url",
+      "id": "cta_url",
+      "label": "t:labels.cta_url",
+      "info": "t:info.cta_default_url"
+    },
+    {
       "type": "checkbox",
       "id": "show_whatsapp",
       "label": "t:labels.show_whatsapp",
       "default": true
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "info": "t:info.section_background",
+      "default": "soft",
+      "options": [
+        { "value": "soft", "label": "t:options.background.soft" },
+        { "value": "dark", "label": "t:options.background.dark" }
+      ]
     }
   ],
   "presets": [
@@ -99,7 +219,8 @@
       "name": "t:sections.final_cta",
       "blocks": [
         { "type": "trust-item", "settings": { "icon": "truck", "text": "Envíos a toda Colombia" } },
-        { "type": "trust-item", "settings": { "icon": "lock", "text": "Pago seguro" } }
+        { "type": "trust-item", "settings": { "icon": "lock", "text": "Compra segura" } },
+        { "type": "trust-item", "settings": { "icon": "shield", "text": "Garantía" } }
       ]
     }
   ]

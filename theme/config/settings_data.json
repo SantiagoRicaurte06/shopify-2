@@ -25,6 +25,16 @@
     "payment_daviplata": false,
     "payment_bancolombia": true,
     "payment_cash": false,
-    "payment_bnpl": false
+    "payment_bnpl": false,
+    "brand_tagline": "Texto de demostración. Escribe aquí el lema de tu marca.",
+    "brand_description": "Texto de demostración. Escribe dos o tres frases sobre quién eres y qué vendes. Es lo primero que lee alguien que no te conoce.",
+    "contact_email": "",
+    "contact_phone": "",
+    "contact_address": "",
+    "contact_hours": "",
+    "social_instagram": "",
+    "social_facebook": "",
+    "social_tiktok": "",
+    "social_youtube": ""
   }
 }

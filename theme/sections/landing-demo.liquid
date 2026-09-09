@@ -18,7 +18,7 @@
   endif
 -%}
 
-<landing-reveal class="landing-demo">
+<landing-reveal class="landing-demo{% if section.settings.background != 'none' %} bg-{{ section.settings.background }}{% endif %}">
   {% render 'section-header',
     eyebrow: section.settings.eyebrow,
     heading: section.settings.heading,
@@ -36,7 +36,7 @@
     </div>
 
     {%- if section.settings.layout == 'carousel' -%}
-      <div class="landing-demo__controls">
+      <div class="carousel-controls">
         <button
           class="carousel-control"
           type="button"
@@ -57,15 +57,6 @@
     {%- endif -%}
   </landing-carousel>
 </landing-reveal>
-
-{% stylesheet %}
-  .landing-demo__controls {
-    display: flex;
-    justify-content: flex-end;
-    gap: var(--space-xs);
-    margin-block-start: var(--space-sm);
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
@@ -114,6 +105,18 @@
       "step": 1,
       "default": 2,
       "visible_if": "{{ section.settings.layout == 'grid' }}"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "info": "t:info.section_background",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "t:options.background.none" },
+        { "value": "soft", "label": "t:options.background.soft" },
+        { "value": "dark", "label": "t:options.background.dark" }
+      ]
     }
   ],
   "presets": [

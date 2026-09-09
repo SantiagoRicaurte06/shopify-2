@@ -13,17 +13,31 @@
   "sections": {
     "announcement-bar": {
       "type": "announcement-bar",
+      "blocks": {
+        "claim-shipping": {
+          "type": "trust-item",
+          "settings": { "icon": "truck", "text": "Envíos a toda Colombia" }
+        },
+        "claim-secure": {
+          "type": "trust-item",
+          "settings": { "icon": "lock", "text": "Compra segura" }
+        },
+        "claim-support": {
+          "type": "trust-item",
+          "settings": { "icon": "chat", "text": "Soporte por WhatsApp" }
+        }
+      },
+      "block_order": ["claim-shipping", "claim-secure", "claim-support"],
       "settings": {}
     },
     "header": {
       "type": "header",
       "settings": {
+        "sticky": true,
+        "show_search": true,
         "show_shipping_claim": true
       }
     }
   },
-  "order": [
-    "announcement-bar",
-    "header"
-  ]
+  "order": ["announcement-bar", "header"]
 }

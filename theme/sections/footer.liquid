@@ -1,56 +1,410 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+{% comment %}
+  The footer.
+
+  On a store nobody has heard of, this is where the reader checks whether a
+  company exists: a name, something it says about itself, a way to reach a
+  human, an address, and the policies. So it carries all of that, and every
+  piece of it renders only when it has been configured — a footer with an
+  empty "Contacto" heading is worse than no contact column.
+
+  The link columns are blocks, so the merchant chooses how many there are and
+  what each is called. The legal column is not: it is built from the shop's
+  own policy pages, which means it cannot list a returns policy that does not
+  exist, and it updates itself when one is published.
+
+  The inverted palette comes from the shared `bg-dark` marker, so the footer,
+  the announcement bar and the final call to action are the same dark, and
+  changing that dark is one setting rather than three.
+{% endcomment %}
+
+{%- liquid
+  # Dentro de una etiqueta liquid cada línea se analiza por separado, así que
+  # la condición entera tiene que caber en una sola línea. Partirla haría que
+  # el "or" de la segunda línea se leyera como una etiqueta desconocida.
+  assign has_social = false
+  if settings.social_instagram != blank or settings.social_facebook != blank or settings.social_tiktok != blank or settings.social_youtube != blank
+    assign has_social = true
+  endif
+
+  assign has_contact = false
+  if settings.contact_email != blank or settings.contact_phone != blank or settings.contact_address != blank or settings.contact_hours != blank or settings.whatsapp_number != blank
+    assign has_contact = true
+  endif
+-%}
+
+<div class="footer bg-dark">
+  <div class="footer__top">
+    <div class="footer__brand">
+      {%- if section.settings.logo != blank -%}
+        <a class="footer__logo" href="{{ routes.root_url }}">
+          {% render 'responsive-image',
+            image: section.settings.logo,
+            sizes: '180px',
+            width: 360,
+            alt: shop.name
+          %}
+        </a>
+      {%- else -%}
+        <p class="footer__name">{{ shop.name }}</p>
+      {%- endif -%}
+
+      {%- if settings.brand_tagline != blank -%}
+        <p class="footer__tagline">{{ settings.brand_tagline }}</p>
+      {%- endif -%}
+
+      {%- if settings.brand_description != blank -%}
+        <p class="footer__description">{{ settings.brand_description }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.show_social and has_social -%}
+        <div class="footer__social">
+          <h2 class="footer__heading">{{ 'footer.follow_us' | t }}</h2>
+          <ul class="footer__social-list">
+            {%- if settings.social_instagram != blank -%}
+              <li>
+                <a href="{{ settings.social_instagram }}" rel="noopener">
+                  <span class="visually-hidden">Instagram</span>
+                  {% render 'icon', name: 'instagram' %}
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_facebook != blank -%}
+              <li>
+                <a href="{{ settings.social_facebook }}" rel="noopener">
+                  <span class="visually-hidden">Facebook</span>
+                  {% render 'icon', name: 'facebook' %}
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_tiktok != blank -%}
+              <li>
+                <a href="{{ settings.social_tiktok }}" rel="noopener">
+                  <span class="visually-hidden">TikTok</span>
+                  {% render 'icon', name: 'tiktok' %}
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_youtube != blank -%}
+              <li>
+                <a href="{{ settings.social_youtube }}" rel="noopener">
+                  <span class="visually-hidden">YouTube</span>
+                  {% render 'icon', name: 'youtube' %}
+                </a>
+              </li>
+            {%- endif -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_contact and has_contact -%}
+      <div class="footer__column">
+        <h2 class="footer__heading">{{ 'footer.contact' | t }}</h2>
+        <ul class="footer__contact">
+          {%- if settings.contact_phone != blank -%}
+            <li>
+              {% render 'icon', name: 'phone' %}
+              <a href="tel:{{ settings.contact_phone | remove: ' ' | remove: '-' }}">
+                {{- settings.contact_phone -}}
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.contact_email != blank -%}
+            <li>
+              {% render 'icon', name: 'mail' %}
+              <a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a>
+            </li>
+          {%- endif -%}
+          {%- if settings.contact_address != blank -%}
+            <li>
+              {% render 'icon', name: 'pin' %}
+              <span>{{ settings.contact_address }}</span>
+            </li>
+          {%- endif -%}
+          {%- if settings.contact_hours != blank -%}
+            <li>
+              {% render 'icon', name: 'clock' %}
+              <span>{{ settings.contact_hours }}</span>
+            </li>
+          {%- endif -%}
+        </ul>
+
+        {%- if settings.whatsapp_number != blank -%}
+          <div class="footer__whatsapp">
+            {% render 'whatsapp-link', style: 'secondary' %}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {% content_for 'blocks' %}
+
+    {%- if section.settings.show_policies and shop.policies.size > 0 -%}
+      <div class="footer__column">
+        <h2 class="footer__heading">{{ 'footer.legal' | t }}</h2>
+        <ul class="footer-links">
+          {%- for policy in shop.policies -%}
+            {%- if policy != blank -%}
+              <li>
+                <a href="{{ policy.url }}">{{ policy.title }}</a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
   </div>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+  <div class="footer__bottom">
+    <p class="footer__copyright">
+      &copy; {{ 'now' | date: '%Y' }}
+      {{ shop.name }}. {{ 'footer.rights' | t }}
+    </p>
 
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+    {%- if section.settings.bottom_text != blank -%}
+      <p class="footer__legal">{{ section.settings.bottom_text }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+      <div class="footer__payment">
+        <span class="visually-hidden">{{ 'footer.payment_methods' | t }}</span>
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag }}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
-</footer>
+</div>
 
 {% stylesheet %}
-  footer {
+  .footer {
     display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
+    flex-direction: column;
+    gap: var(--space-xl);
   }
-  footer a {
+
+  .footer__top {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media screen and (min-width: 750px) {
+    .footer__top {
+      /* The brand column is wider than the link columns: it carries prose,
+         they carry single words. */
+      grid-template-columns: minmax(0, 1.6fr) repeat(auto-fit, minmax(9rem, 1fr));
+      gap: var(--space-2xl);
+    }
+  }
+
+  .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-width: 32rem;
+  }
+
+  .footer__logo img {
+    max-height: 2.5rem;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .footer__name {
+    font-family: var(--font-heading--family);
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .footer__tagline {
+    color: var(--color-dark-muted);
+  }
+
+  .footer__description {
+    color: var(--color-dark-muted);
+    font-size: var(--font-size-sm);
+    max-width: 42ch;
+  }
+
+  .footer__heading {
+    margin-block-end: var(--space-sm);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .footer__social {
+    margin-block-start: var(--space-sm);
+  }
+
+  .footer__social-list {
+    display: flex;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer__social-list a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--tap-target);
+    height: var(--tap-target);
+    border: 1px solid var(--color-dark-border);
+    border-radius: var(--style-border-radius-inputs);
+    color: var(--color-dark-foreground);
+  }
+
+  .footer__social-list a:hover {
+    background-color: var(--color-dark-border);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    color: var(--color-dark-muted);
+    font-size: var(--font-size-sm);
     text-decoration: none;
-    color: var(--color-foreground);
   }
-  footer .footer__links,
-  footer .footer__payment {
+
+  .footer-links a:hover {
+    color: var(--color-dark-foreground);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .footer__contact {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--font-size-sm);
+  }
+
+  .footer__contact li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    color: var(--color-dark-muted);
+  }
+
+  .footer__contact .icon {
+    margin-block-start: 0.15em;
+    opacity: 0.7;
+  }
+
+  .footer__contact a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .footer__contact a:hover {
+    color: var(--color-dark-foreground);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .footer__whatsapp {
+    margin-block-start: var(--space-md);
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm) var(--space-lg);
+    padding-block-start: var(--space-lg);
+    border-block-start: 1px solid var(--color-dark-border);
+    color: var(--color-dark-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .footer__legal {
+    flex: 1 1 100%;
+    order: 3;
+    font-size: var(--font-size-xs);
+    opacity: 0.75;
+  }
+
+  .footer__payment {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin-inline-start: auto;
+  }
+
+  .footer__payment svg {
+    height: 1.5rem;
+    width: auto;
+    border-radius: 3px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .footer a {
+      transition: color var(--transition-fast);
+    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.footer",
+  "blocks": [{ "type": "footer-menu" }, { "type": "@app" }],
   "settings": [
     {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
+      "type": "paragraph",
+      "content": "t:info.footer_brand"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "t:labels.logo"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact",
+      "label": "t:labels.show_contact",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "t:labels.show_social",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_policies",
+      "label": "t:labels.show_policies",
+      "info": "t:info.show_policies",
+      "default": true
     },
     {
       "type": "checkbox",
       "id": "show_payment_icons",
       "label": "t:labels.show_payment_icons",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "bottom_text",
+      "label": "t:labels.bottom_text",
+      "info": "t:info.bottom_text"
     }
   ]
 }

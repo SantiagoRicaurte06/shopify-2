@@ -1,0 +1,142 @@
+{% comment %}
+  What is in the box.
+
+  A short section that removes the last practical objection before the offer:
+  the reader knows what the product does by now and wants to know what
+  actually arrives. It is a list, not prose, because the reader is scanning.
+
+  The image is optional and turns the section into a split. Blocks are
+  rendered exactly once in both layouts — the layout is switched with a class,
+  never by duplicating the container.
+
+  Nothing here is invented: every line is a block the merchant typed, so the
+  section is empty until someone states what ships.
+{% endcomment %}
+
+{%- liquid
+  assign has_image = false
+  assign center_header = true
+  if section.settings.image != blank
+    assign has_image = true
+    # Junto a una imagen el encabezado se alinea a la izquierda. Se resuelve
+    # aquí porque los argumentos de render no admiten comparaciones.
+    assign center_header = false
+  endif
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <landing-reveal class="landing-includes{% if section.settings.background != 'none' %} bg-{{ section.settings.background }}{% endif %}">
+    {% render 'section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      subheading: section.settings.subheading,
+      center: center_header
+    %}
+
+    <div class="landing-includes__layout{% if has_image %} landing-split{% if section.settings.media_position == 'right' %} landing-split--media-right{% endif %}{% endif %}">
+      {%- if has_image -%}
+        <div class="landing-includes__media media-frame media-frame--landscape reveal">
+          {% render 'responsive-image',
+            image: section.settings.image,
+            sizes: '(min-width: 750px) 50vw, 100vw',
+            width: 1200,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      <ul class="landing-includes__list card reveal">
+        {% content_for 'blocks' %}
+      </ul>
+    </div>
+  </landing-reveal>
+{%- endif -%}
+
+{% stylesheet %}
+  .landing-includes__list {
+    margin: 0;
+    padding: var(--space-md) var(--space-lg);
+    list-style: none;
+  }
+
+  /* Without an image the list would run the full page width and become hard
+     to scan, so it keeps a measure of its own. */
+  .landing-includes__layout:not(.landing-split) .landing-includes__list {
+    max-width: var(--reading-width);
+    margin-inline: auto;
+  }
+
+  .landing-includes__list > * + * {
+    border-block-start: 1px solid var(--color-border);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.includes",
+  "tag": "section",
+  "blocks": [{ "type": "include-item" }, { "type": "@app" }],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Qué incluye la compra"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "t:labels.subheading"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:labels.image",
+      "info": "t:info.includes_image"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "t:labels.media_position",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "info": "t:info.section_background",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "t:options.background.none" },
+        { "value": "soft", "label": "t:options.background.soft" },
+        { "value": "dark", "label": "t:options.background.dark" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.includes",
+      "blocks": [
+        { "type": "include-item" },
+        { "type": "include-item", "settings": { "text": "Manual de uso" } },
+        {
+          "type": "include-item",
+          "settings": { "state": "excluded", "text": "Pilas no incluidas" }
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

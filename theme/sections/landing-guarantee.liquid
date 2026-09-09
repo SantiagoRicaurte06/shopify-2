@@ -5,7 +5,7 @@
   once and stays identical on every landing.
 {% endcomment %}
 
-<landing-reveal class="landing-guarantee">
+<landing-reveal class="landing-guarantee{% if section.settings.background != 'none' %} bg-{{ section.settings.background }}{% endif %}">
   {% render 'section-header',
     eyebrow: section.settings.eyebrow,
     heading: section.settings.heading,
@@ -66,6 +66,18 @@
       "max": 4,
       "step": 1,
       "default": 3
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "info": "t:info.section_background",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "t:options.background.none" },
+        { "value": "soft", "label": "t:options.background.soft" },
+        { "value": "dark", "label": "t:options.background.dark" }
+      ]
     }
   ],
   "presets": [

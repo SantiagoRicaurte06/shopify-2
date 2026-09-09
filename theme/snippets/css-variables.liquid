@@ -18,15 +18,34 @@
     {% # Modular type scale. Each step multiplies the previous one. %}
     --type-scale: {{ settings.type_scale }};
     --font-size-base: 1rem;
+    --font-size-xs: calc(var(--font-size-sm) / var(--type-scale));
     --font-size-sm: calc(var(--font-size-base) / var(--type-scale));
     --font-size-lg: calc(var(--font-size-base) * var(--type-scale));
     --font-size-xl: calc(var(--font-size-lg) * var(--type-scale));
     --font-size-2xl: calc(var(--font-size-xl) * var(--type-scale));
     --font-size-3xl: calc(var(--font-size-2xl) * var(--type-scale));
 
+    {% comment %}
+      One fluid step above the scale, for the two headings that carry the page:
+      the product name in the hero and the final call to action. It grows with
+      the viewport instead of jumping at a breakpoint, and it still respects the
+      merchant's scale setting because both ends are derived from it.
+    {% endcomment %}
+    --font-size-display: clamp(
+      var(--font-size-2xl),
+      calc(var(--font-size-2xl) + 1.8vw),
+      calc(var(--font-size-3xl) * 1.25)
+    );
+
     --page-width: {{ settings.max_page_width }};
     --page-margin: {{ settings.min_page_margin }}px;
     --section-spacing: {{ settings.section_spacing }}px;
+
+    {% comment %}
+      A narrower measure for anything meant to be read as prose. Long lines are
+      the single most common reason a landing feels like a template.
+    {% endcomment %}
+    --reading-width: 42rem;
 
     --color-background: {{ settings.background_color }};
     --color-foreground: {{ settings.foreground_color }};
@@ -37,14 +56,43 @@
     --color-cta-background: {{ settings.cta_background_color }};
     --color-cta-foreground: {{ settings.cta_foreground_color }};
     --color-sale: {{ settings.sale_color }};
+    --color-star: {{ settings.star_color }};
+
+    {% comment %}
+      The inverted panel used by the announcement bar, the final call to action
+      and the footer. Having it as a pair of settings keeps those three from
+      drifting apart, and keeps the dark areas out of the sections' own CSS.
+    {% endcomment %}
+    --color-dark: {{ settings.dark_background_color }};
+    --color-dark-foreground: {{ settings.dark_foreground_color }};
+    --color-dark-muted: {{ settings.dark_foreground_color | color_mix: settings.dark_background_color, 65 }};
+    --color-dark-border: {{ settings.dark_foreground_color | color_mix: settings.dark_background_color, 18 }};
 
     {% # Translucent variants derived from the merchant's own colors. %}
-    --color-accent-soft: {{ settings.accent_color | color_mix: settings.background_color, 12 }};
+    --color-accent-soft: {{ settings.accent_color | color_mix: settings.background_color, 10 }};
     --color-foreground-soft: {{ settings.foreground_color | color_mix: settings.background_color, 8 }};
+    --color-border-soft: {{ settings.border_color | color_mix: settings.background_color, 55 }};
+    --color-surface-sunken: {{ settings.surface_color | color_mix: settings.foreground_color, 96 }};
 
     --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
     --style-border-radius-cards: {{ settings.card_corner_radius }}px;
+    --style-border-radius-pill: 999px;
 
+    {% comment %}
+      Shadows are built from the merchant's own foreground colour rather than
+      pure black, so they read as depth instead of as grime on a warm palette.
+      Three steps only: resting, raised, floating. More than three and every
+      card ends up with its own.
+    {% endcomment %}
+    --shadow-sm: 0 1px 2px {{ settings.foreground_color | color_modify: 'alpha', 0.05 }};
+    --shadow-md:
+      0 1px 2px {{ settings.foreground_color | color_modify: 'alpha', 0.04 }},
+      0 8px 24px -12px {{ settings.foreground_color | color_modify: 'alpha', 0.12 }};
+    --shadow-lg:
+      0 2px 4px {{ settings.foreground_color | color_modify: 'alpha', 0.04 }},
+      0 18px 40px -16px {{ settings.foreground_color | color_modify: 'alpha', 0.18 }};
+
+    --space-3xs: 0.125rem;
     --space-2xs: 0.25rem;
     --space-xs: 0.5rem;
     --space-sm: 0.75rem;
@@ -52,7 +100,11 @@
     --space-lg: 1.5rem;
     --space-xl: 2.5rem;
     --space-2xl: 4rem;
+    --space-3xl: 6rem;
 
     --tap-target: 44px;
+
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 {% endstyle %}

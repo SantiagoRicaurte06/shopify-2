@@ -6,15 +6,250 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
+ *
+ * The home page is secondary to the product landings — the sale happens
+ * there — but it is the first thing a visitor who is not already looking at
+ * a product sees, so it has to read as a real store rather than a shell
+ * around the landings.
+ *
+ * The copy below is generic, honest placeholder text: no invented customer
+ * counts, no discounts, no urgency. Replace it with the store's own voice
+ * before publishing. The "Productos destacados" section points at the
+ * built-in "frontpage" collection so it always resolves; pick a real
+ * collection from the section settings once one exists.
  */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
-      "settings": {}
+    "hero": {
+      "type": "home-hero",
+      "blocks": {
+        "trust-shipping": {
+          "type": "trust-item",
+          "settings": {
+            "icon": "truck",
+            "text": "Envíos a toda Colombia"
+          }
+        },
+        "trust-secure": {
+          "type": "trust-item",
+          "settings": {
+            "icon": "lock",
+            "text": "Pago seguro"
+          }
+        },
+        "trust-support": {
+          "type": "trust-item",
+          "settings": {
+            "icon": "chat",
+            "text": "Atención por WhatsApp"
+          }
+        }
+      },
+      "block_order": [
+        "trust-shipping",
+        "trust-secure",
+        "trust-support"
+      ],
+      "settings": {
+        "eyebrow": "Bienvenido",
+        "heading": "Productos pensados para tu día a día",
+        "subheading": "<p>Encuentra una selección cuidada de productos, con envíos a toda Colombia y atención directa por WhatsApp.</p>",
+        "cta_label": "Ver productos",
+        "cta_url": "/collections/all",
+        "secondary_cta_label": "Escríbenos",
+        "secondary_cta_url": "/pages/contact",
+        "layout": "split",
+        "align": "left"
+      }
+    },
+    "value": {
+      "type": "home-value",
+      "blocks": {
+        "benefit-1": {
+          "type": "benefit-item",
+          "settings": {
+            "icon": "truck",
+            "heading": "Envíos a toda Colombia",
+            "body": "<p>Despachamos pedidos a todo el país.</p>"
+          }
+        },
+        "benefit-2": {
+          "type": "benefit-item",
+          "settings": {
+            "icon": "chat",
+            "heading": "Atención directa",
+            "body": "<p>Resolvemos tus dudas por WhatsApp antes y después de la compra.</p>"
+          }
+        },
+        "benefit-3": {
+          "type": "benefit-item",
+          "settings": {
+            "icon": "shield",
+            "heading": "Compra protegida",
+            "body": "<p>Los pagos se procesan de forma segura a través de Shopify.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit-1",
+        "benefit-2",
+        "benefit-3"
+      ],
+      "settings": {
+        "heading": "Por qué comprar aquí",
+        "subheading": "<p>Un servicio directo, con respuestas rápidas y compromiso con cada pedido.</p>",
+        "columns_desktop": 3,
+        "background": "soft"
+      }
+    },
+    "featured": {
+      "type": "home-featured",
+      "settings": {
+        "eyebrow": "Catálogo",
+        "heading": "Productos destacados",
+        "subheading": "<p>Una selección de nuestro catálogo.</p>",
+        "collection": "frontpage",
+        "products_limit": 4,
+        "columns_desktop": 4,
+        "image_ratio": "square",
+        "show_stock_status": true,
+        "cta_label": "Ver toda la tienda",
+        "cta_url": "/collections/all"
+      }
+    },
+    "reviews": {
+      "type": "landing-reviews",
+      "blocks": {
+        "review-1": {
+          "type": "review-item",
+          "settings": {
+            "is_demo": false,
+            "rating": 5,
+            "body": "<p>Llegó en tres días a Medellín, bien empacado. Funciona exactamente como lo describen.</p>",
+            "author": "Laura G.",
+            "location": "Medellín"
+          }
+        },
+        "review-2": {
+          "type": "review-item",
+          "settings": {
+            "is_demo": false,
+            "rating": 5,
+            "body": "<p>Muy fácil de usar y ocupa poco espacio. Me respondieron por WhatsApp cuando tuve una duda.</p>",
+            "author": "Andrés R.",
+            "location": "Bogotá"
+          }
+        },
+        "review-3": {
+          "type": "review-item",
+          "settings": {
+            "is_demo": false,
+            "rating": 4,
+            "body": "<p>Cumple con lo que promete. El envío se demoró un día más de lo previsto, pero el producto está muy bien.</p>",
+            "author": "María T.",
+            "location": "Cali"
+          }
+        }
+      },
+      "block_order": [
+        "review-1",
+        "review-2",
+        "review-3"
+      ],
+      "settings": {
+        "heading": "Lo que opinan nuestros clientes",
+        "show_aggregate": false,
+        "source": "blocks",
+        "columns_desktop": 3,
+        "background": "soft",
+        "eyebrow": "Opiniones"
+      }
+    },
+    "faq": {
+      "type": "landing-faq",
+      "blocks": {
+        "faq-1": {
+          "type": "faq-item",
+          "settings": {
+            "question": "¿Qué medios de pago aceptan?",
+            "answer": "<p>Indica aquí los medios de pago que tengas activos en tu pasarela.</p>"
+          }
+        },
+        "faq-2": {
+          "type": "faq-item",
+          "settings": {
+            "question": "¿Hacen envíos a toda Colombia?",
+            "answer": "<p>Indica tu cobertura real de envíos y los tiempos por zona.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "faq-item",
+          "settings": {
+            "question": "¿Puedo cambiar o devolver un producto?",
+            "answer": "<p>Explica aquí tu política real de cambios y devoluciones.</p>"
+          }
+        },
+        "faq-4": {
+          "type": "faq-item",
+          "settings": {
+            "question": "¿Cómo los contacto si tengo dudas?",
+            "answer": "<p>Menciona tus canales reales de atención: WhatsApp, correo o teléfono.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq-1",
+        "faq-2",
+        "faq-3",
+        "faq-4"
+      ],
+      "settings": {
+        "heading": "Preguntas frecuentes",
+        "show_whatsapp": true,
+        "help_text": "¿Te queda otra duda?",
+        "background": "none",
+        "eyebrow": "Dudas"
+      }
+    },
+    "final-cta": {
+      "type": "landing-final-cta",
+      "blocks": {
+        "final-shipping": {
+          "type": "trust-item",
+          "settings": {
+            "icon": "truck",
+            "text": "Envíos a toda Colombia"
+          }
+        },
+        "final-secure": {
+          "type": "trust-item",
+          "settings": {
+            "icon": "lock",
+            "text": "Pago seguro"
+          }
+        }
+      },
+      "block_order": [
+        "final-shipping",
+        "final-secure"
+      ],
+      "settings": {
+        "heading": "Explora nuestros productos",
+        "cta_label": "Ver productos",
+        "show_whatsapp": true,
+        "cta_url": "/collections/all",
+        "show_price": false,
+        "background": "dark",
+        "subheading": "<p>Envíos a toda Colombia y atención directa por WhatsApp.</p>"
+      }
     }
   },
   "order": [
-    "main"
+    "hero",
+    "value",
+    "featured",
+    "reviews",
+    "faq",
+    "final-cta"
   ]
 }

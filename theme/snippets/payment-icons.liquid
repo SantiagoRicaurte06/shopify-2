@@ -41,35 +41,48 @@
   -%}
 
   {%- if method_list.size > 0 -%}
-    <ul class="payment-icons">
-      {%- for method in method_list -%}
-        <li class="payment-icons__item">
-          {% render 'icon', name: 'lock' %}
-          {{ method | t }}
-        </li>
-      {%- endfor -%}
-    </ul>
+    <div class="payment-icons">
+      {% render 'icon', name: 'lock', class: 'payment-icons__lock' %}
+      <ul class="payment-icons__list">
+        {%- for method in method_list -%}
+          <li class="payment-icons__item">{{ method | t }}</li>
+        {%- endfor -%}
+      </ul>
+    </div>
   {%- endif -%}
 {%- endif -%}
 
 {% stylesheet %}
+  /* One lock stands for the whole row rather than one per pill — repeating it
+     reads as noise, not as reassurance. */
   .payment-icons {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: var(--space-xs);
+    color: var(--color-muted);
+  }
+
+  .payment-icons__lock {
+    flex: none;
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  .payment-icons__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2xs);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .payment-icons__item {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2xs);
-    padding: 0.2em 0.6em;
-    border: 1px solid var(--color-border);
-    border-radius: var(--style-border-radius-inputs);
+    padding: 0.2em 0.65em;
+    border-radius: var(--style-border-radius-pill);
+    background-color: var(--color-surface);
     color: var(--color-muted);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
   }
 {% endstylesheet %}

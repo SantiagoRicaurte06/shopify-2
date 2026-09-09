@@ -1,0 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ *
+ * Assign this template to a page from the admin (Online store > Pages >
+ * Theme template) named, for example, "Contact". The heading and success
+ * message default to the theme's own contact translations, so they stay
+ * consistent even if this file is never touched again.
+ */
+{
+  "sections": {
+    "main": {
+      "type": "contact-form",
+      "settings": {
+        "eyebrow": "Contacto",
+        "subheading": "<p>Escríbenos y te responderemos lo antes posible.</p>",
+        "show_contact": true
+      }
+    }
+  },
+  "order": ["main"]
+}

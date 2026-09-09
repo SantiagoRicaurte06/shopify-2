@@ -1,44 +1,97 @@
 {% comment %}
-  A thin band above the header carrying the shipping claim.
+  A thin band above the header carrying two or three factual claims.
 
-  The text defaults to the shop-wide claim in the theme settings, so changing
-  it once changes it on every landing.
+  Deliberately not a promotion. No countdown, no "offer ends today", no stock
+  scarcity: this is the first thing a visitor sees and it should read as
+  information about the shop, not as pressure.
+
+  Each claim is a trust-item block, the same one the hero and the trust bar
+  use, so the wording stays consistent across the page without being typed
+  three times. With no blocks it falls back to the shop-wide shipping claim,
+  which means an unconfigured store still shows something true.
+
+  On a phone the claims scroll horizontally instead of stacking, so the bar
+  stays one line tall and never pushes the product down the page.
 {% endcomment %}
 
 {%- liquid
-  assign text = section.settings.text | default: settings.shipping_claim
+  assign fallback = section.settings.text | default: settings.shipping_claim
+  assign has_blocks = false
+  if section.blocks.size > 0
+    assign has_blocks = true
+  endif
 -%}
 
-{%- if text != blank -%}
-  <div class="announcement-bar full-width">
-    <p class="announcement-bar__text">
-      {% render 'icon', name: 'truck' %}
-      {{ text }}
-    </p>
+{%- if has_blocks or fallback != blank -%}
+  <div class="announcement-bar bg-dark full-width">
+    {%- if has_blocks -%}
+      <ul class="announcement-bar__list">
+        {% content_for 'blocks' %}
+      </ul>
+    {%- else -%}
+      <p class="announcement-bar__text">
+        {% render 'icon', name: 'truck' %}
+        {{ fallback }}
+      </p>
+    {%- endif -%}
   </div>
 {%- endif -%}
 
 {% stylesheet %}
   .announcement-bar {
-    background-color: var(--color-cta-background);
-    color: var(--color-cta-foreground);
+    background-color: var(--color-dark);
+    color: var(--color-dark-foreground);
     padding-block: var(--space-xs);
+    font-size: var(--font-size-sm);
   }
 
+  .announcement-bar__list,
   .announcement-bar__text {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-xs);
+    gap: var(--space-xs) var(--space-xl);
+    margin: 0;
     padding-inline: var(--page-margin);
-    font-size: var(--font-size-sm);
-    text-align: center;
+    list-style: none;
+    min-height: 1.75rem;
+  }
+
+  /* The trust-item block paints itself for a light background. Inside the bar
+     it inherits the inverted palette instead. */
+  .announcement-bar .trust-item {
+    color: inherit;
+    white-space: nowrap;
+  }
+
+  .announcement-bar .trust-item .icon {
+    color: inherit;
+    opacity: 0.75;
+  }
+
+  @media screen and (max-width: 749px) {
+    .announcement-bar__list {
+      justify-content: flex-start;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .announcement-bar__list::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Only the first claim is guaranteed to be read on a phone, so it is the
+       one that should be true of every order. */
+    .announcement-bar__list {
+      gap: var(--space-lg);
+    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.announcement_bar",
+  "blocks": [{ "type": "trust-item" }],
   "settings": [
     {
       "type": "text",
@@ -47,6 +100,18 @@
       "info": "t:info.announcement_text"
     }
   ],
-  "presets": [{ "name": "t:general.announcement_bar" }]
+  "presets": [
+    {
+      "name": "t:general.announcement_bar",
+      "blocks": [
+        { "type": "trust-item", "settings": { "icon": "truck", "text": "Envíos a toda Colombia" } },
+        { "type": "trust-item", "settings": { "icon": "lock", "text": "Compra segura" } },
+        {
+          "type": "trust-item",
+          "settings": { "icon": "chat", "text": "Soporte por WhatsApp" }
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

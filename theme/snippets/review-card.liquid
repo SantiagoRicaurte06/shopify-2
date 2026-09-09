@@ -60,12 +60,13 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
-    background-color: var(--color-background);
   }
 
+  /* No italics: a real customer's words read as plain, credible text. */
   .review-card__body {
     margin: 0;
-    font-style: italic;
+    color: var(--color-foreground);
+    line-height: 1.6;
   }
 
   .review-card__meta {
@@ -73,6 +74,8 @@
     align-items: center;
     gap: var(--space-sm);
     margin-block-start: auto;
+    padding-block-start: var(--space-sm);
+    border-block-start: 1px solid var(--color-border-soft);
   }
 
   .review-card__avatar {
@@ -80,6 +83,7 @@
     height: 48px;
     border-radius: 50%;
     object-fit: cover;
+    flex: none;
   }
 
   .review-card__author {

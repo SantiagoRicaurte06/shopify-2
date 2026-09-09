@@ -5,7 +5,7 @@
 **El theme no carga ningún pixel.** Ni uno.
 
 No es una omisión: es lo único que garantiza que los eventos no se cuenten dos
-veces. Si un pixel está en el theme *y* además el canal oficial está conectado,
+veces. Si un pixel está en el theme _y_ además el canal oficial está conectado,
 cada acción se registra por partida doble, la campaña optimiza sobre datos falsos
 y el coste por adquisición que ves no es real.
 
@@ -15,12 +15,12 @@ los pixels corren en un sandbox y se suscriben a los eventos.
 
 ## Dónde va cada cosa
 
-| Herramienta | Dónde se configura |
-|---|---|
+| Herramienta                     | Dónde se configura                                                                             |
+| ------------------------------- | ---------------------------------------------------------------------------------------------- |
 | **Meta (Facebook e Instagram)** | Canal oficial de Meta en Shopify. Pixel de navegador más API de conversiones del lado servidor |
-| **TikTok** | Canal oficial de TikTok en Shopify |
-| **Google** | Canal oficial de Google y YouTube |
-| **Cualquier otra** | Custom Pixel en *Configuración → Eventos de cliente* |
+| **TikTok**                      | Canal oficial de TikTok en Shopify                                                             |
+| **Google**                      | Canal oficial de Google y YouTube                                                              |
+| **Cualquier otra**              | Custom Pixel en _Configuración → Eventos de cliente_                                           |
 
 Para la última opción tienes
 [`custom-pixel-template.js`](custom-pixel-template.js): pégalo en el admin,

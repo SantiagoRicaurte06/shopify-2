@@ -1,0 +1,98 @@
+{% comment %}
+  The home page's value proposition band: three or four short reasons to buy
+  from this store rather than somewhere else. Same benefit-item block as the
+  product landing pages, so a merchant who already wrote good copy there does
+  not have to write it twice in different words.
+
+  The background is a setting rather than a fixed color because this section
+  is one of the few candidates for an alternating band on the home page — see
+  the note on `bg-soft`/`bg-dark` in critical.css for how that is painted.
+{% endcomment %}
+
+{%- liquid
+  assign band_class = ''
+  if section.settings.background == 'soft'
+    assign band_class = ' bg-soft'
+  elsif section.settings.background == 'dark'
+    assign band_class = ' bg-dark'
+  endif
+-%}
+
+<landing-reveal class="home-value{{ band_class }}">
+  {% render 'section-header',
+    eyebrow: section.settings.eyebrow,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    center: true
+  %}
+
+  <div
+    class="landing-grid"
+    style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: 1;"
+  >
+    {% content_for 'blocks' %}
+  </div>
+</landing-reveal>
+
+{% schema %}
+{
+  "name": "t:sections.home_value",
+  "tag": "section",
+  "blocks": [{ "type": "benefit-item" }, { "type": "@app" }],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Por qué comprar aquí"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "t:labels.subheading"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "t:labels.columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "info": "t:info.section_background",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "t:options.background.none" },
+        { "value": "soft", "label": "t:options.background.soft" },
+        { "value": "dark", "label": "t:options.background.dark" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.home_value",
+      "blocks": [
+        {
+          "type": "benefit-item",
+          "settings": { "icon": "truck", "heading": "Envíos a toda Colombia" }
+        },
+        { "type": "benefit-item", "settings": { "icon": "chat", "heading": "Atención directa" } },
+        { "type": "benefit-item", "settings": { "icon": "shield", "heading": "Compra protegida" } }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["index"]
+  }
+}
+{% endschema %}

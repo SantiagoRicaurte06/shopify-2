@@ -2,3 +2,11 @@
 theme/config/settings_data.json
 theme/sections/*-group.json
 theme/templates/*.json
+
+# Fuera del alcance de formateo, a propósito:
+# - el brief original del encargo, que se conserva tal cual se recibió
+# - la licencia del Skeleton Theme, que es de Shopify
+# - el lockfile, que genera npm
+instrucciones.md
+theme/LICENSE.md
+package-lock.json

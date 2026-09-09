@@ -20,10 +20,10 @@ por su nombre porque son un estándar de la plataforma.
 
 Los escribe tu app de opiniones. Tú no los creas a mano.
 
-| Metacampo | Tipo | Para qué |
-|---|---|---|
-| `reviews.rating` | Valoración | Media de las opiniones |
-| `reviews.rating_count` | Entero | Número de opiniones |
+| Metacampo              | Tipo       | Para qué               |
+| ---------------------- | ---------- | ---------------------- |
+| `reviews.rating`       | Valoración | Media de las opiniones |
+| `reviews.rating_count` | Entero     | Número de opiniones    |
 
 → [definiciones estándar de Shopify](https://shopify.dev/docs/apps/build/metafields/list-of-standard-definitions)
 
@@ -34,20 +34,20 @@ valor por defecto ni estimación. Una valoración inventada es peor que ninguna.
 
 ## Los opcionales que puedes crear
 
-*Configuración → Datos personalizados → Productos → Añadir definición.*
+_Configuración → Datos personalizados → Productos → Añadir definición._
 
 Namespace `custom` (`app--` y `shopify--` están reservados).
 
-| Clave | Tipo | Se conecta a |
-|---|---|---|
-| `custom.hero_subtitle` | Una línea de texto | Subtítulo de LP · Portada |
-| `custom.problem_intro` | Texto enriquecido | Subtítulo de LP · Problema |
-| `custom.solution_body` | Texto enriquecido | Texto de LP · Solución |
-| `custom.guarantee` | Texto enriquecido | Subtítulo de LP · Garantía |
-| `custom.hero_video` | Referencia a archivo | Vídeo de un bloque de medio |
-| `custom.reviews` | Lista de referencias a metaobjeto → `landing_review` | Opiniones de LP · Opiniones |
-| `custom.faq` | Lista de referencias a metaobjeto → `landing_faq` | Preguntas |
-| `custom.shipping_rows` | Lista de referencias a metaobjeto → `landing_shipping_row` | Filas de envío |
+| Clave                  | Tipo                                                       | Se conecta a                |
+| ---------------------- | ---------------------------------------------------------- | --------------------------- |
+| `custom.hero_subtitle` | Una línea de texto                                         | Subtítulo de LP · Portada   |
+| `custom.problem_intro` | Texto enriquecido                                          | Subtítulo de LP · Problema  |
+| `custom.solution_body` | Texto enriquecido                                          | Texto de LP · Solución      |
+| `custom.guarantee`     | Texto enriquecido                                          | Subtítulo de LP · Garantía  |
+| `custom.hero_video`    | Referencia a archivo                                       | Vídeo de un bloque de medio |
+| `custom.reviews`       | Lista de referencias a metaobjeto → `landing_review`       | Opiniones de LP · Opiniones |
+| `custom.faq`           | Lista de referencias a metaobjeto → `landing_faq`          | Preguntas                   |
+| `custom.shipping_rows` | Lista de referencias a metaobjeto → `landing_shipping_row` | Filas de envío              |
 
 En todas, **activa el acceso desde el escaparate**. Sin eso el theme no las ve.
 
@@ -85,10 +85,10 @@ producto.
 
 ## Cuándo usar qué
 
-| Situación | Dónde ponerlo |
-|---|---|
-| Copy de un solo producto que debe sobrevivir a un cambio de theme | Metacampo `custom.*` |
-| Copy de un solo producto que no te importa perder | Ajuste de sección, sin conectar |
-| Contenido repetible reutilizable entre productos | Metaobjeto ([metaobjects.md](metaobjects.md)) |
-| Algo igual en toda la tienda | Ajuste del theme |
-| Precio, nombre, imágenes, inventario | El producto. **Nunca lo dupliques** |
+| Situación                                                         | Dónde ponerlo                                 |
+| ----------------------------------------------------------------- | --------------------------------------------- |
+| Copy de un solo producto que debe sobrevivir a un cambio de theme | Metacampo `custom.*`                          |
+| Copy de un solo producto que no te importa perder                 | Ajuste de sección, sin conectar               |
+| Contenido repetible reutilizable entre productos                  | Metaobjeto ([metaobjects.md](metaobjects.md)) |
+| Algo igual en toda la tienda                                      | Ajuste del theme                              |
+| Precio, nombre, imágenes, inventario                              | El producto. **Nunca lo dupliques**           |

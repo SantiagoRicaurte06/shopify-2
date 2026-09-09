@@ -39,7 +39,7 @@
     <s class="price__compare">{{ compare_at | money }}</s>
 
     {%- if show_saving -%}
-      <span class="price__saving">
+      <span class="pill pill--sale">
         {{- 'landing.save_amount' | t: amount: saving_money -}}
       </span>
     {%- endif -%}
@@ -55,7 +55,7 @@
   }
 
   .price__current {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-2xl);
     font-weight: 700;
   }
 
@@ -65,14 +65,5 @@
 
   .price__compare {
     color: var(--color-muted);
-  }
-
-  .price__saving {
-    background-color: var(--color-sale);
-    color: #fff;
-    border-radius: var(--style-border-radius-inputs);
-    padding: 0.1em 0.5em;
-    font-size: var(--font-size-sm);
-    font-weight: 700;
   }
 {% endstylesheet %}

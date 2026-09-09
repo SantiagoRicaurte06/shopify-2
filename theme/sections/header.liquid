@@ -6,9 +6,49 @@
   with keyboard support and correct semantics without a line of script. The
   `scroll-lock` attribute is the hook the skeleton's critical CSS already uses
   to stop the page scrolling behind an open panel.
+
+  Sticky is optional and applied to the section wrapper, not to the <header>:
+  a sticky element only travels inside its own containing block, and the
+  wrapper is exactly as tall as the header, so sticking the inner element
+  would do nothing. A section cannot set a class on its own wrapper, so the
+  marker class goes on the child and `:has()` does the rest.
+
+  On a phone the order is menu / brand / actions. The brand sits in the middle
+  because that is where the eye lands, and both edges stay clear for thumbs.
 {% endcomment %}
 
-<header class="header">
+{%- liquid
+  assign has_menu = false
+  if section.settings.menu.links.size > 0
+    assign has_menu = true
+  endif
+-%}
+
+<header class="header{% if section.settings.sticky %} header--sticky{% endif %}">
+  {%- if has_menu -%}
+    <details class="header__disclosure" scroll-lock>
+      <summary class="header__toggle">
+        <span class="visually-hidden">{{ 'landing.menu' | t }}</span>
+        {% render 'icon', name: 'menu' %}
+      </summary>
+
+      <nav class="header__panel" aria-label="{{ 'landing.menu' | t }}">
+        <ul>
+          {%- for link in section.settings.menu.links -%}
+            <li>{{ link.title | link_to: link.url }}</li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if settings.contact_phone != blank -%}
+          <p class="header__panel-contact muted">
+            {% render 'icon', name: 'chat' %}
+            {{ settings.contact_phone }}
+          </p>
+        {%- endif -%}
+      </nav>
+    </details>
+  {%- endif -%}
+
   <div class="header__brand">
     {%- if section.settings.logo != blank -%}
       <a class="header__logo" href="{{ routes.root_url }}">
@@ -27,7 +67,7 @@
     {%- endif -%}
   </div>
 
-  {%- if section.settings.menu.links.size > 0 -%}
+  {%- if has_menu -%}
     <nav class="header__nav" aria-label="{{ 'landing.menu' | t }}">
       <ul class="header__menu">
         {%- for link in section.settings.menu.links -%}
@@ -42,46 +82,47 @@
       <span class="header__claim muted">{{ settings.shipping_claim }}</span>
     {%- endif -%}
 
+    {%- if section.settings.show_search -%}
+      <a class="header__action" href="{{ routes.search_url }}">
+        <span class="visually-hidden">{{ 'landing.search' | t }}</span>
+        {% render 'icon', name: 'search' %}
+      </a>
+    {%- endif -%}
+
     {%- if shop.customer_accounts_enabled -%}
       <shopify-account menu="{{ section.settings.customer_account_menu }}">
         {{ 'icon-account.svg' | inline_asset_content }}
       </shopify-account>
     {%- endif -%}
 
-    <a class="header__cart" href="{{ routes.cart_url }}">
+    <a class="header__action header__cart" href="{{ routes.cart_url }}">
       <span class="visually-hidden">{{ 'cart.title' | t }}</span>
       {% render 'icon', name: 'cart' %}
       {%- if cart.item_count > 0 -%}
         <span class="header__count">{{ cart.item_count }}</span>
       {%- endif -%}
     </a>
-
-    {%- if section.settings.menu.links.size > 0 -%}
-      <details class="header__disclosure" scroll-lock>
-        <summary class="header__toggle">
-          <span class="visually-hidden">{{ 'landing.menu' | t }}</span>
-          {% render 'icon', name: 'menu' %}
-        </summary>
-
-        <nav class="header__panel" aria-label="{{ 'landing.menu' | t }}">
-          <ul>
-            {%- for link in section.settings.menu.links -%}
-              <li>{{ link.title | link_to: link.url }}</li>
-            {%- endfor -%}
-          </ul>
-        </nav>
-      </details>
-    {%- endif -%}
   </div>
 </header>
 
 {% stylesheet %}
+  /* The wrapper, not the header, is what sticks. See the note at the top. */
+  .shopify-section:has(> .header--sticky) {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 10;
+    background-color: var(--color-background);
+  }
+
+  .shopify-section:has(> .header) {
+    border-block-end: 1px solid var(--color-border);
+  }
+
   .header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: var(--space-md);
-    min-height: 4rem;
+    min-height: 4.25rem;
   }
 
   .header a {
@@ -89,10 +130,22 @@
     text-decoration: none;
   }
 
+  .header__brand {
+    display: flex;
+    align-items: center;
+  }
+
   .header__title {
     font-family: var(--font-heading--family);
     font-weight: 700;
     font-size: var(--font-size-lg);
+    letter-spacing: -0.02em;
+  }
+
+  .header__logo img {
+    max-height: 2.25rem;
+    width: auto;
+    object-fit: contain;
   }
 
   .header__nav {
@@ -105,12 +158,26 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+  }
+
+  .header__menu a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-target);
+    color: var(--color-muted);
+  }
+
+  .header__menu a:hover {
+    color: var(--color-foreground);
   }
 
   .header__actions {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
+    gap: var(--space-2xs);
+    margin-inline-start: auto;
   }
 
   .header__claim {
@@ -118,35 +185,41 @@
     font-size: var(--font-size-sm);
   }
 
-  .header__cart {
-    position: relative;
+  .header__action,
+  .header__toggle,
+  .header shopify-account {
     display: flex;
     align-items: center;
     justify-content: center;
     min-width: var(--tap-target);
     min-height: var(--tap-target);
+    border-radius: var(--style-border-radius-inputs);
+  }
+
+  .header__action:hover {
+    background-color: var(--color-surface);
+  }
+
+  .header__cart {
+    position: relative;
   }
 
   .header__count {
     position: absolute;
-    inset-block-start: 0.25rem;
-    inset-inline-end: 0.25rem;
+    inset-block-start: 0.35rem;
+    inset-inline-end: 0.3rem;
     min-width: 1.15rem;
     padding: 0 0.25rem;
-    border-radius: 1rem;
-    background-color: var(--color-accent);
+    border-radius: var(--style-border-radius-pill);
+    background-color: var(--color-cta-background);
     color: var(--color-cta-foreground);
     font-size: 0.7rem;
+    font-weight: 700;
     line-height: 1.15rem;
     text-align: center;
   }
 
   .header__toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: var(--tap-target);
-    min-height: var(--tap-target);
     cursor: pointer;
     list-style: none;
   }
@@ -159,30 +232,70 @@
     position: absolute;
     inset-inline: 0;
     z-index: 4;
-    padding: var(--space-md) var(--page-margin);
+    padding: var(--space-sm) var(--page-margin) var(--space-lg);
     background-color: var(--color-background);
     border-block-end: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
   }
 
   .header__panel ul {
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
+  .header__panel li + li {
+    border-block-start: 1px solid var(--color-border);
+  }
+
   .header__panel a {
     display: flex;
     align-items: center;
-    min-height: var(--tap-target);
+    min-height: 3rem;
+    font-weight: 600;
+  }
+
+  .header__panel-contact {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-block-start: var(--space-md);
+    font-size: var(--font-size-sm);
+  }
+
+  @media screen and (max-width: 749px) {
+    /* Menu, brand, actions. The brand is centred between the two edges. */
+    .header__disclosure {
+      order: 1;
+    }
+
+    .header__brand {
+      order: 2;
+      margin-inline: auto;
+    }
+
+    .header__actions {
+      order: 3;
+    }
+
+    /* Without a menu there is nothing on the left, so the brand goes back to
+       the start rather than floating in the middle of an empty row. */
+    .header:not(:has(.header__disclosure)) .header__brand {
+      margin-inline-start: 0;
+    }
   }
 
   @media screen and (min-width: 750px) {
-    .header__nav,
+    .header__nav {
+      display: block;
+      margin-inline: auto;
+    }
+
     .header__claim {
       display: block;
+      margin-inline-end: var(--space-sm);
     }
 
     .header__disclosure {
@@ -204,6 +317,23 @@
       "type": "link_list",
       "id": "menu",
       "label": "t:labels.menu"
+    },
+    {
+      "type": "header",
+      "content": "t:general.behaviour"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "t:labels.sticky_header",
+      "info": "t:info.sticky_header",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "t:labels.show_search",
+      "default": true
     },
     {
       "type": "checkbox",

@@ -31,16 +31,16 @@ Leído en la fuente que se cita en [00-investigacion.md](00-investigacion.md):
 Nada de esto se ha podido ejecutar en esta sesión, y **no se afirma que
 funcione**:
 
-| Punto | Cómo comprobarlo |
-|---|---|
-| Que el theme suba e instale sin errores | `theme push` |
-| Que cada sección se añada, reordene y elimine en el editor | A mano |
-| Que duplicar `product.landing` funcione | A mano |
-| Que el selector de origen dinámico conecte un ajuste a un metacampo | A mano |
-| Que el `metaobject_list` encuentre `landing_review` | Tras crear la definición |
-| Que la compra llegue al checkout con la variante y cantidad correctas | Pedido de prueba |
-| Que la barra fija se oculte cuando el botón está en pantalla | A mano en móvil |
-| Métricas reales de LCP, CLS e INP | Lighthouse |
+| Punto                                                                 | Cómo comprobarlo         |
+| --------------------------------------------------------------------- | ------------------------ |
+| Que el theme suba e instale sin errores                               | `theme push`             |
+| Que cada sección se añada, reordene y elimine en el editor            | A mano                   |
+| Que duplicar `product.landing` funcione                               | A mano                   |
+| Que el selector de origen dinámico conecte un ajuste a un metacampo   | A mano                   |
+| Que el `metaobject_list` encuentre `landing_review`                   | Tras crear la definición |
+| Que la compra llegue al checkout con la variante y cantidad correctas | Pedido de prueba         |
+| Que la barra fija se oculte cuando el botón está en pantalla          | A mano en móvil          |
+| Métricas reales de LCP, CLS e INP                                     | Lighthouse               |
 
 ## Riesgos abiertos
 

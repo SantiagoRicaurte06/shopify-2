@@ -6,7 +6,9 @@
 {% enddoc %}
 
 <div class="guarantee-item card reveal" {{ block.shopify_attributes }}>
-  <span class="guarantee-item__icon">{% render 'icon', name: block.settings.icon %}</span>
+  <span class="icon-tile icon-tile--round icon-tile--lg">
+    {% render 'icon', name: block.settings.icon %}
+  </span>
 
   {%- if block.settings.heading != blank -%}
     <h3 class="guarantee-item__heading">{{ block.settings.heading }}</h3>
@@ -24,22 +26,6 @@
     align-items: center;
     gap: var(--space-xs);
     text-align: center;
-    background-color: var(--color-background);
-  }
-
-  .guarantee-item__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background-color: var(--color-accent-soft);
-    color: var(--color-accent);
-  }
-
-  .guarantee-item__heading {
-    font-size: var(--font-size-lg);
   }
 {% endstylesheet %}
 

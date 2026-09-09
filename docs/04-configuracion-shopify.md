@@ -23,16 +23,16 @@ npx shopify theme dev --path theme
 
 ## 2. Ajustes del theme
 
-*Editor de themes → Configuración*.
+_Editor de themes → Configuración_.
 
-| Grupo | Qué configurar |
-|---|---|
-| **Tipografía** | Fuente principal y de títulos. La escala tipográfica multiplica el tamaño de cada nivel |
-| **Diseño** | El ancho por defecto es «Landing (estrecho)», que es el que conviene a una página de venta |
-| **Colores** | Fondo, texto, texto secundario, superficie, borde, acento, botón y color de oferta. **Comprueba el contraste del texto secundario sobre el fondo** |
-| **Conversión** | Número de WhatsApp en formato internacional sin signos (`573001234567`), mensaje predefinido, mensaje de envío, política de envíos y política de garantía |
-| **Medios de pago** | Marca solo los que tengas activos en Wompi |
-| **SEO** | Deja los datos estructurados activos salvo que una app de SEO ya los emita |
+| Grupo              | Qué configurar                                                                                                                                            |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tipografía**     | Fuente principal y de títulos. La escala tipográfica multiplica el tamaño de cada nivel                                                                   |
+| **Diseño**         | El ancho por defecto es «Landing (estrecho)», que es el que conviene a una página de venta                                                                |
+| **Colores**        | Fondo, texto, texto secundario, superficie, borde, acento, botón y color de oferta. **Comprueba el contraste del texto secundario sobre el fondo**        |
+| **Conversión**     | Número de WhatsApp en formato internacional sin signos (`573001234567`), mensaje predefinido, mensaje de envío, política de envíos y política de garantía |
+| **Medios de pago** | Marca solo los que tengas activos en Wompi                                                                                                                |
+| **SEO**            | Deja los datos estructurados activos salvo que una app de SEO ya los emita                                                                                |
 
 Los textos de envío y garantía vienen con contenido de demostración. **Sustitúyelos
 antes de publicar.** Describen promesas al cliente.
@@ -68,15 +68,15 @@ opiniones: acepta bloques de app.
 Ver [pixels/](pixels/). Resumen:
 
 1. Meta y TikTok van por sus **canales oficiales**, no por el theme.
-2. Todo lo demás va como **Custom Pixel** en *Configuración → Eventos de
-   cliente*.
+2. Todo lo demás va como **Custom Pixel** en _Configuración → Eventos de
+   cliente_.
 3. **No pegues ningún pixel en el theme.** Es lo único que garantiza que no se
    dupliquen eventos.
 
 ## 7. Descuentos automáticos
 
-Solo si vas a usar el modo `quantity` de la oferta. En *Descuentos*, crea uno de
-tipo *Cantidad de productos* con una cantidad mínima, y luego declara el mismo
+Solo si vas a usar el modo `quantity` de la oferta. En _Descuentos_, crea uno de
+tipo _Cantidad de productos_ con una cantidad mínima, y luego declara el mismo
 porcentaje en cada nivel de la sección de oferta.
 
 Si usas el modo `variants`, que es el recomendado, **no configures nada aquí**.

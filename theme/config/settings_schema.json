@@ -47,9 +47,18 @@
         "id": "max_page_width",
         "label": "t:labels.page_width",
         "options": [
-          { "value": "75rem", "label": "t:options.page_width.landing" },
-          { "value": "90rem", "label": "t:options.page_width.narrow" },
-          { "value": "110rem", "label": "t:options.page_width.wide" }
+          {
+            "value": "75rem",
+            "label": "t:options.page_width.landing"
+          },
+          {
+            "value": "90rem",
+            "label": "t:options.page_width.narrow"
+          },
+          {
+            "value": "110rem",
+            "label": "t:options.page_width.wide"
+          }
         ],
         "default": "75rem"
       },
@@ -88,26 +97,26 @@
       {
         "type": "color",
         "id": "foreground_color",
-        "default": "#1A1A1A",
+        "default": "#152234",
         "label": "t:labels.foreground"
       },
       {
         "type": "color",
         "id": "muted_color",
-        "default": "#5C5C5C",
+        "default": "#5B6675",
         "label": "t:labels.muted",
         "info": "t:info.muted"
       },
       {
         "type": "color",
         "id": "surface_color",
-        "default": "#F5F5F4",
+        "default": "#F6F7F9",
         "label": "t:labels.surface"
       },
       {
         "type": "color",
         "id": "border_color",
-        "default": "#E2E2DF",
+        "default": "#E3E7EC",
         "label": "t:labels.border"
       },
       {
@@ -117,13 +126,13 @@
       {
         "type": "color",
         "id": "accent_color",
-        "default": "#1F6F4A",
+        "default": "#1F3D5C",
         "label": "t:labels.accent"
       },
       {
         "type": "color",
         "id": "cta_background_color",
-        "default": "#1F6F4A",
+        "default": "#16283F",
         "label": "t:labels.cta_background"
       },
       {
@@ -135,9 +144,33 @@
       {
         "type": "color",
         "id": "sale_color",
-        "default": "#B3261E",
+        "default": "#B42318",
         "label": "t:labels.sale",
         "info": "t:info.sale"
+      },
+      {
+        "type": "color",
+        "id": "star_color",
+        "default": "#E0A526",
+        "label": "t:labels.star",
+        "info": "t:info.star"
+      },
+      {
+        "type": "header",
+        "content": "t:general.dark_panel"
+      },
+      {
+        "type": "color",
+        "id": "dark_background_color",
+        "default": "#12233A",
+        "label": "t:labels.dark_background",
+        "info": "t:info.dark_panel"
+      },
+      {
+        "type": "color",
+        "id": "dark_foreground_color",
+        "default": "#FFFFFF",
+        "label": "t:labels.dark_foreground"
       },
       {
         "type": "header",
@@ -151,7 +184,7 @@
         "step": 1,
         "unit": "px",
         "label": "t:labels.input_corner_radius",
-        "default": 8
+        "default": 10
       },
       {
         "type": "range",
@@ -161,7 +194,7 @@
         "step": 1,
         "unit": "px",
         "label": "t:labels.card_corner_radius",
-        "default": 12
+        "default": 14
       }
     ]
   },
@@ -207,6 +240,82 @@
         "id": "guarantee_policy",
         "label": "t:labels.guarantee_policy",
         "info": "t:info.guarantee_policy"
+      }
+    ]
+  },
+  {
+    "name": "t:general.brand",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "t:info.brand_intro"
+      },
+      {
+        "type": "text",
+        "id": "brand_tagline",
+        "label": "t:labels.brand_tagline",
+        "info": "t:info.brand_tagline"
+      },
+      {
+        "type": "textarea",
+        "id": "brand_description",
+        "label": "t:labels.brand_description",
+        "info": "t:info.brand_description"
+      },
+      {
+        "type": "header",
+        "content": "t:general.contact"
+      },
+      {
+        "type": "text",
+        "id": "contact_email",
+        "label": "t:labels.contact_email"
+      },
+      {
+        "type": "text",
+        "id": "contact_phone",
+        "label": "t:labels.contact_phone",
+        "info": "t:info.contact_phone"
+      },
+      {
+        "type": "text",
+        "id": "contact_address",
+        "label": "t:labels.contact_address",
+        "info": "t:info.contact_address"
+      },
+      {
+        "type": "text",
+        "id": "contact_hours",
+        "label": "t:labels.contact_hours",
+        "info": "t:info.contact_hours"
+      },
+      {
+        "type": "header",
+        "content": "t:general.social"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:info.social_intro"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube",
+        "label": "YouTube"
       }
     ]
   },

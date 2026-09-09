@@ -6,6 +6,10 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
+ *
+ * Las columnas de enlaces apuntan a menús que se crean en el admin, en
+ * Navegación. Mientras el menú no exista, la columna no se pinta: es mejor
+ * que un encabezado con nada debajo.
  */
 {
   "type": "footer",
@@ -13,13 +17,25 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "links-shop": {
+          "type": "footer-menu",
+          "settings": { "heading": "Tienda", "menu": "main-menu" }
+        },
+        "links-help": {
+          "type": "footer-menu",
+          "settings": { "heading": "Ayuda", "menu": "footer" }
+        }
+      },
+      "block_order": ["links-shop", "links-help"],
       "settings": {
-        "menu": "",
-        "show_payment_icons": true
+        "show_contact": true,
+        "show_social": true,
+        "show_policies": true,
+        "show_payment_icons": true,
+        "bottom_text": ""
       }
     }
   },
-  "order": [
-    "footer"
-  ]
+  "order": ["footer"]
 }

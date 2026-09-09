@@ -20,17 +20,21 @@
   .shipping-row {
     display: grid;
     grid-template-columns: 1fr auto;
+    align-items: baseline;
     gap: var(--space-2xs) var(--space-md);
     padding-block: var(--space-sm);
-    border-block-end: 1px solid var(--color-border);
+    border-block-end: 1px solid var(--color-border-soft);
   }
 
   .shipping-row__label {
-    font-weight: 700;
+    font-weight: 600;
   }
 
+  /* The delivery time is the answer the reader came for, so it carries the
+     most weight in the row. */
   .shipping-row__value {
     text-align: end;
+    font-weight: 700;
   }
 
   .shipping-row__note {

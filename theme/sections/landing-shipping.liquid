@@ -5,7 +5,7 @@
   Delivery times are a promise. Only state what the carrier actually meets.
 {% endcomment %}
 
-<landing-reveal class="landing-shipping">
+<landing-reveal class="landing-shipping{% if section.settings.background != 'none' %} bg-{{ section.settings.background }}{% endif %}">
   {% render 'section-header',
     eyebrow: section.settings.eyebrow,
     heading: section.settings.heading,
@@ -13,33 +13,55 @@
     center: true
   %}
 
-  <div class="landing-shipping__panel card">
+  <div class="landing-shipping__panel">
     {%- if section.blocks.size > 0 -%}
-      <div class="landing-shipping__table">
+      <div class="landing-shipping__table card">
         {% content_for 'blocks' %}
       </div>
     {%- endif -%}
 
     {%- if settings.shipping_policy != blank -%}
-      <div class="landing-shipping__policy muted">{{ settings.shipping_policy }}</div>
+      <div class="landing-shipping__policy prose">
+        <span class="icon-tile icon-tile--round">{% render 'icon', name: 'truck' %}</span>
+        <div class="muted">{{ settings.shipping_policy }}</div>
+      </div>
     {%- endif -%}
   </div>
 </landing-reveal>
 
 {% stylesheet %}
   .landing-shipping__panel {
-    max-width: 42rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 44rem;
     margin-inline: auto;
-    background-color: var(--color-background);
+  }
+
+  /* The rows sit in a single card with hairlines between them, so the table
+     reads as one object instead of as a stack of boxes. */
+  .landing-shipping__table {
+    padding-block: var(--space-2xs);
   }
 
   .landing-shipping__table > :last-child {
     border-block-end: 0;
   }
 
+  /* The shop-wide policy is a note, not another row: it is the sentence a
+     reader checks before paying, so it gets its own quiet panel. */
   .landing-shipping__policy {
-    margin-block-start: var(--space-md);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border-radius: var(--style-border-radius-cards);
+    background-color: var(--color-surface);
     font-size: var(--font-size-sm);
+  }
+
+  .shopify-section:has(> .bg-soft) .landing-shipping__policy {
+    background-color: var(--color-background);
   }
 {% endstylesheet %}
 
@@ -64,6 +86,18 @@
       "type": "richtext",
       "id": "subheading",
       "label": "t:labels.subheading"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "info": "t:info.section_background",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "t:options.background.none" },
+        { "value": "soft", "label": "t:options.background.soft" },
+        { "value": "dark", "label": "t:options.background.dark" }
+      ]
     }
   ],
   "presets": [

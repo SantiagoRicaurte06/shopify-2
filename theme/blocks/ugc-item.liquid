@@ -9,14 +9,15 @@
 {% enddoc %}
 
 <figure class="ugc-item reveal" {{ block.shopify_attributes }}>
-  {% render 'responsive-image',
-    image: block.settings.image,
-    sizes: '(min-width: 750px) 25vw, 60vw',
-    width: 800,
-    height: 800,
-    crop: 'center',
-    class: 'ugc-item__image'
-  %}
+  <div class="media-frame media-frame--square">
+    {% render 'responsive-image',
+      image: block.settings.image,
+      sizes: '(min-width: 750px) 25vw, 60vw',
+      width: 800,
+      height: 800,
+      crop: 'center'
+    %}
+  </div>
 
   {%- if block.settings.handle != blank or block.settings.caption != blank -%}
     <figcaption class="ugc-item__caption">
@@ -33,13 +34,6 @@
 {% stylesheet %}
   .ugc-item {
     margin: 0;
-  }
-
-  .ugc-item__image {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    border-radius: var(--style-border-radius-cards);
   }
 
   .ugc-item__caption {

@@ -3,26 +3,55 @@
 
   Kept as a real <ul> so the structure survives a screen reader and so the
   merchant can reorder the points in the theme editor.
+
+  An optional image turns the section into an editorial split: a photograph of
+  the situation on one side, the points on the other. That reads as a brand
+  talking about its customer rather than as a list of marketing bullets, which
+  is the whole reason this section exists. Without an image the section falls
+  back to the centred two-column list.
+
+  The blocks are rendered exactly once, in both layouts. Shopify rejects a
+  section that renders its blocks twice, even in branches that can never both
+  run, so the layout is switched with a class.
 {% endcomment %}
 
-<landing-reveal class="landing-problem">
-  {% render 'section-header',
-    eyebrow: section.settings.eyebrow,
-    heading: section.settings.heading,
-    subheading: section.settings.subheading,
-    center: section.settings.center
-  %}
+{%- liquid
+  assign has_image = false
+  if section.settings.image != blank
+    assign has_image = true
+  endif
+-%}
 
-  <ul class="landing-problem__list">
-    {% content_for 'blocks' %}
-  </ul>
+<landing-reveal class="landing-problem{% if section.settings.background != 'none' %} bg-{{ section.settings.background }}{% endif %}">
+  <div class="landing-problem__layout{% if has_image %} landing-split{% if section.settings.media_position == 'right' %} landing-split--media-right{% endif %}{% endif %}">
+    {%- if has_image -%}
+      <div class="landing-problem__media media-frame media-frame--landscape reveal">
+        {% render 'responsive-image',
+          image: section.settings.image,
+          image_mobile: section.settings.image_mobile,
+          sizes: '(min-width: 750px) 50vw, 100vw',
+          width: 1200,
+          section_index: section.index
+        %}
+      </div>
+    {%- endif -%}
+
+    <div class="landing-problem__body">
+      {% render 'section-header',
+        eyebrow: section.settings.eyebrow,
+        heading: section.settings.heading,
+        subheading: section.settings.subheading,
+        center: section.settings.center
+      %}
+
+      <ul class="landing-problem__list">
+        {% content_for 'blocks' %}
+      </ul>
+    </div>
+  </div>
 </landing-reveal>
 
 {% stylesheet %}
-  .landing-problem {
-    display: block;
-  }
-
   .landing-problem__list {
     display: grid;
     gap: var(--space-md);
@@ -31,11 +60,22 @@
     list-style: none;
   }
 
+  .landing-problem__body .section-header {
+    margin-block-end: var(--space-lg);
+  }
+
+  /* Two columns of points only when they are not already sitting beside an
+     image. Beside one, a single column keeps the measure readable. */
   @media screen and (min-width: 750px) {
-    .landing-problem__list {
+    .landing-problem__layout:not(.landing-split) .landing-problem__list {
       grid-template-columns: 1fr 1fr;
       gap: var(--space-lg) var(--space-xl);
     }
+  }
+
+  .landing-split .landing-problem__body .section-header--center {
+    align-items: flex-start;
+    text-align: start;
   }
 {% endstylesheet %}
 
@@ -66,17 +106,49 @@
       "id": "center",
       "label": "t:labels.center_header",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:general.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:labels.image",
+      "info": "t:info.problem_image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:labels.image_mobile"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "t:labels.media_position",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "t:labels.background",
+      "info": "t:info.section_background",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "t:options.background.none" },
+        { "value": "soft", "label": "t:options.background.soft" },
+        { "value": "dark", "label": "t:options.background.dark" }
+      ]
     }
   ],
   "presets": [
     {
       "name": "t:sections.problem",
-      "blocks": [
-        { "type": "problem-item" },
-        { "type": "problem-item" },
-        { "type": "problem-item" },
-        { "type": "problem-item" }
-      ]
+      "blocks": [{ "type": "problem-item" }, { "type": "problem-item" }, { "type": "problem-item" }]
     }
   ]
 }

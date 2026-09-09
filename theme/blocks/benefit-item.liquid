@@ -10,7 +10,7 @@
 
 <div class="benefit-item reveal" {{ block.shopify_attributes }}>
   {%- if block.settings.image != blank -%}
-    <div class="benefit-item__media">
+    <div class="media-frame media-frame--landscape benefit-item__media">
       {% render 'responsive-image',
         image: block.settings.image,
         sizes: '(min-width: 750px) 25vw, 80vw',
@@ -18,7 +18,7 @@
       %}
     </div>
   {%- elsif block.settings.icon != 'none' -%}
-    <span class="benefit-item__icon">
+    <span class="icon-tile">
       {% render 'icon', name: block.settings.icon %}
     </span>
   {%- endif -%}
@@ -28,7 +28,7 @@
   {%- endif -%}
 
   {%- if block.settings.body != blank -%}
-    <div class="benefit-item__body muted">{{ block.settings.body }}</div>
+    <div class="benefit-item__body prose muted">{{ block.settings.body }}</div>
   {%- endif -%}
 </div>
 
@@ -39,23 +39,8 @@
     gap: var(--space-xs);
   }
 
-  .benefit-item__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 50%;
-    background-color: var(--color-accent-soft);
-    color: var(--color-accent);
-  }
-
-  .benefit-item__media img {
-    border-radius: var(--style-border-radius-cards);
-  }
-
-  .benefit-item__heading {
-    font-size: var(--font-size-lg);
+  .benefit-item__media {
+    margin-block-end: var(--space-2xs);
   }
 {% endstylesheet %}
 

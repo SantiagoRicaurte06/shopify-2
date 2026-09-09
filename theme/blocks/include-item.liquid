@@ -1,0 +1,109 @@
+{% doc %}
+  One line of the "what you receive" list.
+
+  Two states, because both are useful and only one of them is flattering: what
+  comes in the box, and what does not. Saying out loud that the batteries are
+  not included costs one line here and saves a complaint later, so the block
+  supports it as a first-class option rather than making the merchant write it
+  in as a footnote.
+
+  @example
+  {% content_for 'block', type: 'include-item', id: 'included' %}
+{% enddoc %}
+
+{%- liquid
+  assign excluded = false
+  if block.settings.state == 'excluded'
+    assign excluded = true
+  endif
+-%}
+
+<li
+  class="include-item{% if excluded %} include-item--excluded{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  <span class="include-item__mark" aria-hidden="true">
+    {%- if excluded -%}
+      {% render 'icon', name: 'close' %}
+    {%- else -%}
+      {% render 'icon', name: 'check' %}
+    {%- endif -%}
+  </span>
+
+  <span class="include-item__text">
+    {%- if block.settings.quantity != blank -%}
+      <span class="include-item__quantity">{{ block.settings.quantity }} ×</span>
+    {%- endif -%}
+    {{ block.settings.text }}
+  </span>
+</li>
+
+{% stylesheet %}
+  .include-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding-block: var(--space-xs);
+  }
+
+  .include-item__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+
+  .include-item__mark .icon {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  .include-item--excluded .include-item__mark {
+    background-color: var(--color-surface);
+    color: var(--color-muted);
+  }
+
+  .include-item--excluded .include-item__text {
+    color: var(--color-muted);
+  }
+
+  .include-item__quantity {
+    font-weight: 700;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:blocks.include_item",
+  "settings": [
+    {
+      "type": "select",
+      "id": "state",
+      "label": "t:labels.include_state",
+      "default": "included",
+      "options": [
+        { "value": "included", "label": "t:options.include_state.included" },
+        { "value": "excluded", "label": "t:options.include_state.excluded" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "quantity",
+      "label": "t:labels.quantity",
+      "info": "t:info.include_quantity"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:labels.text",
+      "default": "Producto principal"
+    }
+  ],
+  "presets": [{ "name": "t:blocks.include_item" }]
+}
+{% endschema %}

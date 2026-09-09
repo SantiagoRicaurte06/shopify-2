@@ -1,0 +1,15 @@
+# Fin de línea normalizado a LF dentro del repositorio.
+#
+# Sin esto, prettier escribe LF, Windows devuelve CRLF y cada pasada de formato
+# marca como modificados archivos que nadie ha tocado. Con esto el contenido
+# guardado es siempre LF y el checkout en Windows sigue viéndose igual.
+* text=auto eol=lf
+
+# Binarios: nunca convertir.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.woff binary
+*.woff2 binary

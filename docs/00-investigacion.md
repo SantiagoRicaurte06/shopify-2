@@ -12,15 +12,15 @@ consultes tú.
 
 ## Arquitectura de themes
 
-| Hecho | Fuente |
-|---|---|
-| Directorios: `assets`, `blocks`, `config`, `layout`, `locales`, `sections`, `snippets`, `templates`. Solo `layout/theme.liquid` es obligatorio para poder subir el theme | [theme architecture](https://shopify.dev/docs/storefronts/themes/architecture) |
-| `content_for_header` y `content_for_layout` son obligatorios en el layout | [layouts](https://shopify.dev/docs/storefronts/themes/architecture/layouts) |
-| Una plantilla JSON renderiza **hasta 25 secciones**, y cada sección **hasta 50 bloques** | [JSON templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/json-templates) |
-| Una sección necesita `presets` para poder añadirse desde el editor | [JSON templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/json-templates) |
+| Hecho                                                                                                                                                                                              | Fuente                                                                                                                                                                                |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Directorios: `assets`, `blocks`, `config`, `layout`, `locales`, `sections`, `snippets`, `templates`. Solo `layout/theme.liquid` es obligatorio para poder subir el theme                           | [theme architecture](https://shopify.dev/docs/storefronts/themes/architecture)                                                                                                        |
+| `content_for_header` y `content_for_layout` son obligatorios en el layout                                                                                                                          | [layouts](https://shopify.dev/docs/storefronts/themes/architecture/layouts)                                                                                                           |
+| Una plantilla JSON renderiza **hasta 25 secciones**, y cada sección **hasta 50 bloques**                                                                                                           | [JSON templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/json-templates)                                                                                   |
+| Una sección necesita `presets` para poder añadirse desde el editor                                                                                                                                 | [JSON templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/json-templates)                                                                                   |
 | Los theme blocks viven en `/blocks`, se reutilizan entre secciones, se anidan **hasta 8 niveles** excluyendo la sección, y se renderizan con `{% content_for 'blocks' %}`. Tipos `@theme` y `@app` | [blocks](https://shopify.dev/docs/storefronts/themes/architecture/blocks/theme-blocks), [schema](https://shopify.dev/docs/storefronts/themes/architecture/blocks/theme-blocks/schema) |
-| Los section groups son JSON en `sections/`, referenciados desde el layout con `{% sections %}` | [section groups](https://shopify.dev/docs/storefronts/themes/architecture/section-groups) |
-| `{% stylesheet %}` y `{% javascript %}` se agrupan en un único bundle con subsetting por página | [JS & stylesheet tags](https://shopify.dev/docs/storefronts/themes/best-practices/javascript-and-stylesheet-tags) |
+| Los section groups son JSON en `sections/`, referenciados desde el layout con `{% sections %}`                                                                                                     | [section groups](https://shopify.dev/docs/storefronts/themes/architecture/section-groups)                                                                                             |
+| `{% stylesheet %}` y `{% javascript %}` se agrupan en un único bundle con subsetting por página                                                                                                    | [JS & stylesheet tags](https://shopify.dev/docs/storefronts/themes/best-practices/javascript-and-stylesheet-tags)                                                                     |
 
 **La documentación no fija un número máximo de theme blocks por theme.** El plan
 inicial citaba «300»; no aparece en la fuente y se ha retirado.
@@ -48,14 +48,15 @@ Tres mecanismos, los tres verificados:
 1. **Plantillas alternas por producto.** `product.landing.json` se asigna a cada
    producto desde su ficha en el admin.
 2. **El merchant crea plantillas nuevas desde el editor de themes**, sin código:
-   menú de página → *Crear plantilla* → nombre → plantilla base. Límite de
+   menú de página → _Crear plantilla_ → nombre → plantilla base. Límite de
    **1.000 plantillas** en total. La plantilla nueva hereda las secciones de la
    base y luego se modifica. Asignarla a un producto se hace desde el admin, no
    desde el editor.
    → [plantillas](https://help.shopify.com/en/manual/online-store/themes/theme-structure/templates)
 
-   *Este punto era el pilar sin verificar del plan anterior. Ahora está
-   confirmado en la documentación oficial.*
+   _Este punto era el pilar sin verificar del plan anterior. Ahora está
+   confirmado en la documentación oficial._
+
 3. **Theme blocks reutilizables** entre secciones.
 
 ---

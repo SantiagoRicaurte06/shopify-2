@@ -116,5 +116,16 @@
     min-height: var(--tap-target);
     padding: var(--space-xs) var(--space-sm);
     border: 1px solid var(--color-border);
+    background-color: var(--color-background);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .product-form__select {
+      transition: border-color var(--transition-fast);
+    }
+  }
+
+  .product-form__select:hover {
+    border-color: var(--color-muted);
   }
 {% endstylesheet %}
